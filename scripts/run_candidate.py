@@ -18,6 +18,7 @@ from common import (
     CHOOSE_END,
     HOLDOUT_MIN_ORIGIN,
     RESULTS,
+    ROOT,
     compare_to_naive,
     evaluate_by_horizon,
     evaluate_folds,
@@ -28,14 +29,13 @@ from common import (
     provenance,
     write_result,
 )
-from vintageforensics.candidates import CandidateLightGBM
+from vintageforensics.candidates import CandidateLightGBM, ThetaMethod
 from vintageforensics.harness import vintage_panel_backtest
 from vintageforensics.models import GlobalLightGBM, PerSeriesPanelAdapter, SeasonalNaive
 
 
 def build_candidate(name: str, panel: pd.DataFrame):
-    """Candidate registry. H1 variants take the vintage panel; later
-    hypotheses extend this function in their own commits."""
+    """Candidate registry. Each hypothesis commit extends this function."""
     if name == "gate_lightgbm":
         return lambda: CandidateLightGBM(version="gate_baseline")
     if name == "global_lightgbm":
@@ -51,6 +51,20 @@ def build_candidate(name: str, panel: pd.DataFrame):
         return lambda: CandidateLightGBM(
             version="h1_drop_unrevised", drop_unrevised=True, vintage_panel=panel
         )
+    if name == "h2_revision_features":
+        return lambda: CandidateLightGBM(
+            version="h2_revision_features", revision_features=True, vintage_panel=panel
+        )
+    if name == "h4_log_level":
+        return lambda: CandidateLightGBM(version="h4_log_level", target_mode="log_level")
+    if name == "h4_yoy_diff":
+        return lambda: CandidateLightGBM(version="h4_yoy_diff", target_mode="yoy_diff")
+    if name == "h4_stl_yoy":
+        return lambda: CandidateLightGBM(
+            version="h4_stl_yoy", target_mode="yoy_diff", stl_detrend=True
+        )
+    if name == "h5_theta":
+        return lambda: PerSeriesPanelAdapter(ThetaMethod)
     raise SystemExit(f"unknown candidate: {name}")
 
 
@@ -131,6 +145,9 @@ def main() -> None:
         "windows": windows,
     }
     write_result(f"cand_{args.out or args.candidate}", payload)
+    folds_out = RESULTS / f"folds_{args.out or args.candidate}.csv"
+    folds.to_csv(folds_out, index=False)
+    print(f"wrote {folds_out.relative_to(ROOT)}")
 
     full = windows["full"]
     print(f"mean category WAPE: naive {naive_eval['mean_category_wape']:.4f} -> "
