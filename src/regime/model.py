@@ -238,6 +238,7 @@ class FrozenPolicy:
     oof_brier: float
     choose_policy_wape: float
     sweep: pd.DataFrame = field(repr=False, default=None)
+    oof_probs: pd.Series = field(repr=False, default=None)
 
     def probabilities(self, table: pd.DataFrame) -> pd.Series:
         x = design_matrix(table, self.series_categories)
@@ -249,11 +250,19 @@ class FrozenPolicy:
         return (probs >= self.tau).map({True: "theta", False: "naive"}).rename("choice")
 
 
-def restrict_sums(sums: PairSums, keys: pd.MultiIndex) -> PairSums:
+def restrict_to_pairs(sums: PairSums, keys: pd.MultiIndex) -> PairSums:
     """Restrict fold material to the given (series, origin) pairs so sweep
     references measure the same pairs as the policy selection."""
     shared = sums.sums.index.intersection(keys)
     return PairSums(sums=sums.sums.loc[shared])
+
+
+def restrict_sums(sums: PairSums, origins) -> PairSums:
+    """Restrict fold material to the given forecast origins."""
+    keep = sums.sums.index.get_level_values("forecast_origin").isin(pd.DatetimeIndex(origins))
+    if not keep.any():
+        raise AssertionError("origin restriction kept no folds")
+    return PairSums(sums=sums.sums.loc[keep])
 
 
 def fit_policy(
@@ -279,9 +288,9 @@ def fit_policy(
     # OOF probabilities are pair-keyed so the tau sweep's selections join
     # against the fold material directly.
     oof_probs = pd.Series(iso.predict(scores), index=train_keys)
-    naive_tr = restrict_sums(naive, train_keys)
-    theta_tr = restrict_sums(theta, train_keys)
-    blend_tr = restrict_sums(blend, train_keys)
+    naive_tr = restrict_to_pairs(naive, train_keys)
+    theta_tr = restrict_to_pairs(theta, train_keys)
+    blend_tr = restrict_to_pairs(blend, train_keys)
     sweep = sweep_tau(oof_probs, naive_tr, theta_tr, blend_tr)
     tau = choose_tau(sweep)
     if tau is None:
@@ -303,4 +312,5 @@ def fit_policy(
         oof_brier=oof_brier,
         choose_policy_wape=choose_wape,
         sweep=sweep,
+        oof_probs=oof_probs,
     )

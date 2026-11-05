@@ -105,6 +105,11 @@ def main() -> None:
     )
     policy = policies[chosen_kind]
 
+    oof_labels = pd.Series(
+        train["theta_wins"].astype(bool).to_numpy(), index=policy.oof_probs.index,
+        name="theta_wins",
+    )
+
     sweep_frame = policy.sweep
     sweep_records = sweep_frame.drop(columns=[], errors="ignore").to_dict("records")
     sweep_json = [
@@ -173,6 +178,8 @@ def main() -> None:
         {
             "policy": policy,
             "train_table": train,
+            "oof_probs": policy.oof_probs,
+            "oof_labels": oof_labels,
             "series_categories": series_categories,
             "global_theta_weight": GLOBAL_THETA_WEIGHT,
             "provenance": payload["provenance"],
