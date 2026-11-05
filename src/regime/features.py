@@ -58,7 +58,7 @@ def _series_snapshot_features(group: pd.DataFrame) -> dict[str, float]:
     mom = np.diff(logv)
     vol_12 = float(np.std(mom[-12:], ddof=1))
     vol_10y = float(np.std(mom[-120:], ddof=1))
-    yoy = logv[-12:]
+    yoy = logv[-12:] - logv[-24:-12]
     return {
         "trend_tstat_24": slope_tstat(logv[-24:]),
         "trend_tstat_36": slope_tstat(logv[-36:]),
