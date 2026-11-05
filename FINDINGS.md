@@ -237,3 +237,38 @@ past cannot predict a regime break before it starts; once the break is in the
 (vintage-visible) present, adaptive models beat the carried-forward year-ago
 value decisively. Any future challenger evaluation should state which side of
 a regime break its window measures.
+
+## 9. Addendum — the two question shapes, measured
+
+**Q1 (single year)**: "can the past N years predict a year?" — answered for
+2020 in §8: the blank is 5 years (the protocol floor), window length is
+second-order, and the answer flips by side of the shock (pre-shock no,
+in-shock yes, 8/11 categories).
+
+**Q2 (decade scale)**: "can the last decade / two decades predict the
+2020s?" — windows {10y, 20y, full} x {LightGBM, theta} vs naive on
+exploration-side 2020s origins (2020-01..2022-10, 11 origins, 484 folds;
+2023+ origins remain reserved):
+
+- **Window length does not matter for the decade question**: theta 10y/20y/
+  full score 8.09/8.02/8.03% mean-category (10/11 categories each vs naive's
+  11.59%); LightGBM 10.10/11.20/11.41% (6/11 each). Ten years is enough; two
+  decades and the full 1992 panel add nothing.
+- **The decade's predictability moved by phase, not by level**: theta beats
+  naive in 10/11 categories on 2021 targets (7.9% vs 16.8% — halving naive's
+  error through the inflationary rebound); models win 2020-2022 broadly;
+  naive re-takes the lead on 2023-target folds (6.86% vs theta ~7.3%, 5/11;
+  LightGBM 2-4/11). Same split as §8: adaptive methods own the volatile
+  phase, naive owns the settled tail.
+
+**Descriptive decade shift** (results/decade_shift.json, latest-revised
+values, nominal): retail total sits +11.9% above its 2010s trend line today;
+per-category trend CAGR shifted materially (motor vehicles 6.1%->1.0%,
+electronics -1.5%->+2.0%, furniture 4.3%->-1.0%, gasoline -0.4%->+2.5%,
+sporting goods 0.2%->3.2%); volatility has largely reverted to pre-2020
+levels outside the crash months, but preliminary->final revision magnitudes
+remain ~60% larger than the 2010s (median 1.96% -> 3.17% in the settled era)
+— the 2020s are a persistently noisier *data* regime even after the
+*volatility* regime reverted. Naive predictability by target year: 4.4% (2019)
+-> 18.1% (2020) -> 16.8% (2021) -> 8.9% (2022) -> 6.9% (2023 spillover): a
+4x collapse with only partial recovery.

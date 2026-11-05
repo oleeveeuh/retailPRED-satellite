@@ -1,0 +1,190 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "7c3de1920fa078fb3a1132e4851a690fbf86561f",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T05:01:49.844492+00:00",
+    "purpose": "Q2 decade-scale window question (exploration origins only)"
+  },
+  "design": {
+    "origins": "2020-01..2022-10 (exploration side)",
+    "windows_years": [
+      10,
+      20,
+      "full"
+    ],
+    "primary_metric": "categories beating naive (of 11)",
+    "holdout_note": "2023+ origins not re-scored; see results/decade_shift.json"
+  },
+  "overall": {
+    "folds": 484,
+    "origins": 11,
+    "categories_beating_naive_of_11": {
+      "lgbm_10": 6,
+      "lgbm_20": 6,
+      "lgbm_0": 6,
+      "theta_10": 10,
+      "theta_20": 10,
+      "theta_0": 10
+    },
+    "mean_category_wape_pp": {
+      "seasonal_naive": 11.591,
+      "lgbm_10": 10.102,
+      "lgbm_20": 11.2,
+      "lgbm_0": 11.412,
+      "theta_10": 8.089,
+      "theta_20": 8.024,
+      "theta_0": 8.03
+    },
+    "pooled_wape_pp": {
+      "seasonal_naive": 9.054,
+      "lgbm_10": 5.952,
+      "lgbm_20": 6.507,
+      "lgbm_0": 6.722,
+      "theta_10": 5.005,
+      "theta_20": 4.803,
+      "theta_0": 4.8
+    }
+  },
+  "by_target_year": {
+    "2020": {
+      "folds": 66,
+      "origins": 2,
+      "categories_beating_naive_of_11": {
+        "lgbm_10": 8,
+        "lgbm_20": 7,
+        "lgbm_0": 7,
+        "theta_10": 6,
+        "theta_20": 7,
+        "theta_0": 7
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 17.375,
+        "lgbm_10": 12.077,
+        "lgbm_20": 12.951,
+        "lgbm_0": 11.734,
+        "theta_10": 12.354,
+        "theta_20": 12.134,
+        "theta_0": 12.019
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 9.586,
+        "lgbm_10": 7.217,
+        "lgbm_20": 7.498,
+        "lgbm_0": 7.183,
+        "theta_10": 8.676,
+        "theta_20": 7.37,
+        "theta_0": 7.346
+      }
+    },
+    "2021": {
+      "folds": 132,
+      "origins": 7,
+      "categories_beating_naive_of_11": {
+        "lgbm_10": 7,
+        "lgbm_20": 6,
+        "lgbm_0": 7,
+        "theta_10": 10,
+        "theta_20": 10,
+        "theta_0": 10
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 16.784,
+        "lgbm_10": 14.668,
+        "lgbm_20": 15.88,
+        "lgbm_0": 15.511,
+        "theta_10": 8.061,
+        "theta_20": 7.929,
+        "theta_0": 7.877
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 15.279,
+        "lgbm_10": 9.545,
+        "lgbm_20": 9.884,
+        "lgbm_0": 9.538,
+        "theta_10": 5.583,
+        "theta_20": 5.395,
+        "theta_0": 5.378
+      }
+    },
+    "2022": {
+      "folds": 209,
+      "origins": 9,
+      "categories_beating_naive_of_11": {
+        "lgbm_10": 6,
+        "lgbm_20": 6,
+        "lgbm_0": 6,
+        "theta_10": 7,
+        "theta_20": 7,
+        "theta_0": 7
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 8.877,
+        "lgbm_10": 7.601,
+        "lgbm_20": 8.815,
+        "lgbm_0": 9.455,
+        "theta_10": 7.354,
+        "theta_20": 7.342,
+        "theta_0": 7.385
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 7.287,
+        "lgbm_10": 3.998,
+        "lgbm_20": 4.563,
+        "lgbm_0": 4.899,
+        "theta_10": 4.048,
+        "theta_20": 4.084,
+        "theta_0": 4.093
+      }
+    },
+    "2023": {
+      "folds": 77,
+      "origins": 4,
+      "categories_beating_naive_of_11": {
+        "lgbm_10": 4,
+        "lgbm_20": 3,
+        "lgbm_0": 2,
+        "theta_10": 5,
+        "theta_20": 5,
+        "theta_0": 5
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 6.858,
+        "lgbm_10": 7.902,
+        "lgbm_20": 8.588,
+        "lgbm_0": 9.479,
+        "theta_10": 7.308,
+        "theta_20": 7.282,
+        "theta_0": 7.368
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 3.566,
+        "lgbm_10": 4.656,
+        "lgbm_20": 5.709,
+        "lgbm_0": 6.851,
+        "theta_10": 4.185,
+        "theta_20": 4.067,
+        "theta_0": 4.066
+      }
+    }
+  }
+}

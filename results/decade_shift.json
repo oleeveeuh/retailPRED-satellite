@@ -1,0 +1,218 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "7c3de1920fa078fb3a1132e4851a690fbf86561f",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T05:00:34.684639+00:00",
+    "purpose": "descriptive decade-shift diagnostics (no model scoring)"
+  },
+  "eras": {
+    "PRE": [
+      "2010-01-01",
+      "2020-01-01"
+    ],
+    "DISRUPTION": [
+      "2020-02-01",
+      "2021-05-01"
+    ],
+    "SURGE": [
+      "2021-06-01",
+      "2022-12-01"
+    ],
+    "CURRENT": [
+      "2023-01-01",
+      "2026-08-01"
+    ]
+  },
+  "category_table": [
+    {
+      "category": "building_material_and_garden",
+      "label": "building materials",
+      "cagr_PRE": 4.421,
+      "vol_PRE": 2.065,
+      "cagr_DISRUPTION": 21.912,
+      "vol_DISRUPTION": 5.108,
+      "cagr_SURGE": 7.066,
+      "vol_SURGE": 1.377,
+      "cagr_CURRENT": 0.229,
+      "vol_CURRENT": 1.629,
+      "dip_2020_pct": -0.472,
+      "level_vs_pre_trend_pct": 2.589
+    },
+    {
+      "category": "clothing_and_accessories",
+      "label": "clothing",
+      "cagr_PRE": 2.162,
+      "vol_PRE": 1.313,
+      "cagr_DISRUPTION": 118.395,
+      "vol_DISRUPTION": 53.253,
+      "cagr_SURGE": -0.377,
+      "vol_SURGE": 2.247,
+      "cagr_CURRENT": 3.678,
+      "vol_CURRENT": 1.229,
+      "dip_2020_pct": -87.897,
+      "level_vs_pre_trend_pct": 2.653
+    },
+    {
+      "category": "electronics_and_appliances",
+      "label": "electronics",
+      "cagr_PRE": -1.5,
+      "vol_PRE": 1.517,
+      "cagr_DISRUPTION": 44.816,
+      "vol_DISRUPTION": 20.114,
+      "cagr_SURGE": -6.157,
+      "vol_SURGE": 4.417,
+      "cagr_CURRENT": 2.011,
+      "vol_CURRENT": 2.072,
+      "dip_2020_pct": -54.933,
+      "level_vs_pre_trend_pct": 15.65
+    },
+    {
+      "category": "food_and_beverage",
+      "label": "food & bev",
+      "cagr_PRE": 3.154,
+      "vol_PRE": 0.564,
+      "cagr_DISRUPTION": 0.66,
+      "vol_DISRUPTION": 7.104,
+      "cagr_SURGE": 6.696,
+      "vol_SURGE": 0.725,
+      "cagr_CURRENT": 2.006,
+      "vol_CURRENT": 0.519,
+      "dip_2020_pct": 0.234,
+      "level_vs_pre_trend_pct": 6.36
+    },
+    {
+      "category": "furniture_and_home_furnishings",
+      "label": "furniture",
+      "cagr_PRE": 4.333,
+      "vol_PRE": 1.378,
+      "cagr_DISRUPTION": 54.835,
+      "vol_DISRUPTION": 26.409,
+      "cagr_SURGE": 0.298,
+      "vol_SURGE": 1.918,
+      "cagr_CURRENT": -0.978,
+      "vol_CURRENT": 2.05,
+      "dip_2020_pct": -62.246,
+      "level_vs_pre_trend_pct": -22.664
+    },
+    {
+      "category": "gasoline_stations",
+      "label": "gasoline",
+      "cagr_PRE": -0.351,
+      "vol_PRE": 2.715,
+      "cagr_DISRUPTION": 30.588,
+      "vol_DISRUPTION": 9.99,
+      "cagr_SURGE": 20.397,
+      "vol_SURGE": 4.317,
+      "cagr_CURRENT": 2.485,
+      "vol_CURRENT": 2.934,
+      "dip_2020_pct": -37.685,
+      "level_vs_pre_trend_pct": 59.734
+    },
+    {
+      "category": "general_merchandise",
+      "label": "general merchandise",
+      "cagr_PRE": 2.024,
+      "vol_PRE": 0.906,
+      "cagr_DISRUPTION": 9.699,
+      "vol_DISRUPTION": 4.588,
+      "cagr_SURGE": 8.87,
+      "vol_SURGE": 0.924,
+      "cagr_CURRENT": 2.499,
+      "vol_CURRENT": 0.873,
+      "dip_2020_pct": -6.925,
+      "level_vs_pre_trend_pct": 16.485
+    },
+    {
+      "category": "health_and_personal_care",
+      "label": "health & personal",
+      "cagr_PRE": 3.177,
+      "vol_PRE": 0.977,
+      "cagr_DISRUPTION": 8.557,
+      "vol_DISRUPTION": 5.384,
+      "cagr_SURGE": 2.235,
+      "vol_SURGE": 0.88,
+      "cagr_CURRENT": 5.441,
+      "vol_CURRENT": 1.742,
+      "dip_2020_pct": -9.974,
+      "level_vs_pre_trend_pct": 10.995
+    },
+    {
+      "category": "motor_vehicle_and_parts",
+      "label": "motor vehicles",
+      "cagr_PRE": 6.116,
+      "vol_PRE": 1.603,
+      "cagr_DISRUPTION": 43.877,
+      "vol_DISRUPTION": 14.549,
+      "cagr_SURGE": 2.795,
+      "vol_SURGE": 2.807,
+      "cagr_CURRENT": 0.995,
+      "vol_CURRENT": 1.986,
+      "dip_2020_pct": -36.004,
+      "level_vs_pre_trend_pct": -16.129
+    },
+    {
+      "category": "retail_total",
+      "label": "retail total",
+      "cagr_PRE": 3.711,
+      "vol_PRE": 0.697,
+      "cagr_DISRUPTION": 23.282,
+      "vol_DISRUPTION": 6.468,
+      "cagr_SURGE": 6.67,
+      "vol_SURGE": 1.228,
+      "cagr_CURRENT": 2.765,
+      "vol_CURRENT": 0.786,
+      "dip_2020_pct": -17.279,
+      "level_vs_pre_trend_pct": 11.865
+    },
+    {
+      "category": "sporting_goods_and_hobby",
+      "label": "sporting goods",
+      "cagr_PRE": 0.201,
+      "vol_PRE": 1.774,
+      "cagr_DISRUPTION": 46.554,
+      "vol_DISRUPTION": 20.286,
+      "cagr_SURGE": 0.311,
+      "vol_SURGE": 1.822,
+      "cagr_CURRENT": 3.157,
+      "vol_CURRENT": 1.691,
+      "dip_2020_pct": -44.806,
+      "level_vs_pre_trend_pct": 30.72
+    }
+  ],
+  "median_abs_revision_pct_by_era": {
+    "PRE": 1.961,
+    "DISRUPTION": 2.881,
+    "SURGE": 3.689,
+    "CURRENT": 3.169
+  },
+  "naive_mean_category_wape_by_target_year": {
+    "2017": 3.59,
+    "2018": 4.39,
+    "2019": 4.43,
+    "2020": 18.08,
+    "2021": 16.78,
+    "2022": 8.88,
+    "2023": 6.86
+  },
+  "retail_total_note": "all values nominal; SURGE-era growth is largely price inflation"
+}
