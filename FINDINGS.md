@@ -172,3 +172,34 @@ overcome.
   Horizons, min training size, availability lag, actuals, metrics, and the
   LightGBM configuration are unchanged. The holdout was computed exactly once
   (`results/holdout_theta.json`).
+
+## 7. Addendum — category win matrix (user-requested metric, post-hoc)
+
+Headline metric switched from the mean of category WAPEs to the per-category
+win count, with the full matrix visible (`results/category_win_matrix.md`,
+exploration origins only; the spent holdout is not re-read). Results:
+
+- **Full exploration:** naive wins **0 of 11** categories outright; the gate
+  LightGBM wins **1** (general merchandise); theta 5; and **theta+naive
+  (global weight) beats naive in 11 of 11 categories** — including every
+  category where the LightGBM regressed.
+- **Report window:** theta and theta+naive each beat naive in 10 of 11;
+  outright wins: theta 3, theta+naive 3, LightGBM 2, naive 1, simplex 2.
+- **Choose window (crash):** the 3-way simplex blend wins 6 of 11 outright
+  and beats naive in 10 of 11 — the blends are the most consistent methods
+  across regimes, not pure theta.
+
+Two honest consequences. First, the user's instinct is validated: mean
+averaging was masking structure — under the count metric, the exploration
+case against naive is much stronger than the headline suggested, and the
+case against the LightGBM is stronger still (1 outright category win in 33
+category-window cells). Second, it does **not** change the gate verdict: the
+single holdout was computed once, under per-category logic, and theta took
+7 of 11 — the ≥10/11 criterion fails regardless of whether the headline is a
+mean or a count. Re-scoring the holdout under a metric chosen after seeing
+it would be moving the goalposts. The predeclared lesson for any re-gate:
+declare the per-category count (which is already criterion 2's basis) as the
+primary metric *before* the holdout, and note that under that metric the
+candidate selected for the holdout might well have been theta+naive rather
+than pure theta — its exploration profile is the most consistent across
+regimes (9–11 of 11 in every window), and it has never been holdout-scored.

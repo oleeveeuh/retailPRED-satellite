@@ -1,0 +1,420 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "0c173c9c92707b0ac0946bfbffb7ab49b4c0538a",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T04:08:15.118576+00:00",
+    "purpose": "per-category WAPE win matrix (exploration only)"
+  },
+  "windows": {
+    "full_exploration": {
+      "window": "full_exploration",
+      "folds": 176,
+      "per_category_wape": {
+        "building_material_and_garden": {
+          "naive": 0.0688515956525195,
+          "lightgbm": 0.05487175590355873,
+          "theta": 0.052785593844010895,
+          "lgbm+naive (global w)": 0.05947969275344037,
+          "theta+naive (global w)": 0.05793291518595262,
+          "theta+lgbm+naive (simplex)": 0.06641749017297816
+        },
+        "clothing_and_accessories": {
+          "naive": 0.15284860083451438,
+          "lightgbm": 0.1972718493179217,
+          "theta": 0.13498728802425636,
+          "lgbm+naive (global w)": 0.1555986208004408,
+          "theta+naive (global w)": 0.12709612840583004,
+          "theta+lgbm+naive (simplex)": 0.12596029725353558
+        },
+        "electronics_and_appliances": {
+          "naive": 0.14313040682721534,
+          "lightgbm": 0.16920214594079414,
+          "theta": 0.12651475865268752,
+          "lgbm+naive (global w)": 0.14763907564402182,
+          "theta+naive (global w)": 0.12923219688923385,
+          "theta+lgbm+naive (simplex)": 0.12651475865268752
+        },
+        "food_and_beverage": {
+          "naive": 0.04580250784542356,
+          "lightgbm": 0.02416160664009789,
+          "theta": 0.024987398021391643,
+          "lgbm+naive (global w)": 0.028445338692078215,
+          "theta+naive (global w)": 0.03010675843580294,
+          "theta+lgbm+naive (simplex)": 0.020449775682015836
+        },
+        "furniture_and_home_furnishings": {
+          "naive": 0.08699758018210155,
+          "lightgbm": 0.1206299164791396,
+          "theta": 0.08286621980361093,
+          "lgbm+naive (global w)": 0.09342010740567591,
+          "theta+naive (global w)": 0.07722559841171517,
+          "theta+lgbm+naive (simplex)": 0.07760984770624463
+        },
+        "gasoline_stations": {
+          "naive": 0.15774826099372238,
+          "lightgbm": 0.1201439223823702,
+          "theta": 0.0947984147312777,
+          "lgbm+naive (global w)": 0.1281915376054844,
+          "theta+naive (global w)": 0.1148469772812095,
+          "theta+lgbm+naive (simplex)": 0.0947984147312777
+        },
+        "general_merchandise": {
+          "naive": 0.07611704562425006,
+          "lightgbm": 0.038679438144729836,
+          "theta": 0.050477227010052125,
+          "lgbm+naive (global w)": 0.05933666691014216,
+          "theta+naive (global w)": 0.06264950964690051,
+          "theta+lgbm+naive (simplex)": 0.04067010564639289
+        },
+        "health_and_personal_care": {
+          "naive": 0.028975093764156065,
+          "lightgbm": 0.05157641673574355,
+          "theta": 0.03514944383571072,
+          "lgbm+naive (global w)": 0.030720578228350576,
+          "theta+naive (global w)": 0.027722088538879825,
+          "theta+lgbm+naive (simplex)": 0.028975093764156065
+        },
+        "motor_vehicle_and_parts": {
+          "naive": 0.07641894683377856,
+          "lightgbm": 0.07462553851477091,
+          "theta": 0.05268958509262822,
+          "lgbm+naive (global w)": 0.06840746634771736,
+          "theta+naive (global w)": 0.057977390675635405,
+          "theta+lgbm+naive (simplex)": 0.057977390675635405
+        },
+        "retail_total": {
+          "naive": 0.051106906565443665,
+          "lightgbm": 0.04750418596412473,
+          "theta": 0.03327256185699498,
+          "lgbm+naive (global w)": 0.03861570043464877,
+          "theta+naive (global w)": 0.035077233626487674,
+          "theta+lgbm+naive (simplex)": 0.037540730600184855
+        },
+        "sporting_goods_and_hobby": {
+          "naive": 0.13458469167269393,
+          "lightgbm": 0.1516504923330382,
+          "theta": 0.13784946281959085,
+          "lgbm+naive (global w)": 0.1365001876331919,
+          "theta+naive (global w)": 0.1331003775889244,
+          "theta+lgbm+naive (simplex)": 0.13784946281959085
+        }
+      },
+      "per_category_winner": {
+        "building_material_and_garden": "theta",
+        "clothing_and_accessories": "theta+lgbm+naive (simplex)",
+        "electronics_and_appliances": "theta",
+        "food_and_beverage": "theta+lgbm+naive (simplex)",
+        "furniture_and_home_furnishings": "theta+naive (global w)",
+        "gasoline_stations": "theta",
+        "general_merchandise": "lightgbm",
+        "health_and_personal_care": "theta+naive (global w)",
+        "motor_vehicle_and_parts": "theta",
+        "retail_total": "theta",
+        "sporting_goods_and_hobby": "theta+naive (global w)"
+      },
+      "wins_out_of_11": {
+        "naive": 0,
+        "lightgbm": 1,
+        "theta": 5,
+        "lgbm+naive (global w)": 0,
+        "theta+naive (global w)": 3,
+        "theta+lgbm+naive (simplex)": 2
+      },
+      "categories_beating_naive": {
+        "lightgbm": 6,
+        "theta": 9,
+        "lgbm+naive (global w)": 6,
+        "theta+naive (global w)": 11,
+        "theta+lgbm+naive (simplex)": 9
+      },
+      "mean_category_wape_for_reference": {
+        "naive": 0.09296196698143809,
+        "lightgbm": 0.09548338803238997,
+        "theta": 0.07512526851747382,
+        "lgbm+naive (global w)": 0.0860322702231993,
+        "theta+naive (global w)": 0.07754247042605199,
+        "theta+lgbm+naive (simplex)": 0.07406939706406358
+      }
+    },
+    "choose (2017-10..2020-12)": {
+      "window": "choose (2017-10..2020-12)",
+      "folds": 108,
+      "per_category_wape": {
+        "building_material_and_garden": {
+          "naive": 0.05357188729517251,
+          "lightgbm": 0.07015336231344768,
+          "theta": 0.060574812552320424,
+          "lgbm+naive (global w)": 0.05808747860190502,
+          "theta+naive (global w)": 0.05501983154957106,
+          "theta+lgbm+naive (simplex)": 0.05344011135194404
+        },
+        "clothing_and_accessories": {
+          "naive": 0.15324513331550604,
+          "lightgbm": 0.16421552017474086,
+          "theta": 0.150461572614453,
+          "lgbm+naive (global w)": 0.15224363895027798,
+          "theta+naive (global w)": 0.14215736715415717,
+          "theta+lgbm+naive (simplex)": 0.14178628037979774
+        },
+        "electronics_and_appliances": {
+          "naive": 0.16495402407811166,
+          "lightgbm": 0.16783695368895804,
+          "theta": 0.15559436196799378,
+          "lgbm+naive (global w)": 0.1661071959224502,
+          "theta+naive (global w)": 0.16027419302305274,
+          "theta+lgbm+naive (simplex)": 0.15559436196799378
+        },
+        "food_and_beverage": {
+          "naive": 0.04835393949075731,
+          "lightgbm": 0.027056993201005446,
+          "theta": 0.031129366778025882,
+          "lgbm+naive (global w)": 0.0332917383670637,
+          "theta+naive (global w)": 0.03331107499009656,
+          "theta+lgbm+naive (simplex)": 0.024196638547387458
+        },
+        "furniture_and_home_furnishings": {
+          "naive": 0.0799460788200777,
+          "lightgbm": 0.10038327781483632,
+          "theta": 0.08344161310856149,
+          "lgbm+naive (global w)": 0.08326275924831174,
+          "theta+naive (global w)": 0.0777586311873482,
+          "theta+lgbm+naive (simplex)": 0.07763731095123214
+        },
+        "gasoline_stations": {
+          "naive": 0.12762888835578098,
+          "lightgbm": 0.09189598458816862,
+          "theta": 0.08829702386454183,
+          "lgbm+naive (global w)": 0.10793252220697279,
+          "theta+naive (global w)": 0.10081091227791451,
+          "theta+lgbm+naive (simplex)": 0.08829702386454183
+        },
+        "general_merchandise": {
+          "naive": 0.044138697325293776,
+          "lightgbm": 0.026007351765415892,
+          "theta": 0.028455502551874942,
+          "lgbm+naive (global w)": 0.033756385896135416,
+          "theta+naive (global w)": 0.03517435884700183,
+          "theta+lgbm+naive (simplex)": 0.02585746492161336
+        },
+        "health_and_personal_care": {
+          "naive": 0.025680424022575362,
+          "lightgbm": 0.05419329375334964,
+          "theta": 0.04322946176381919,
+          "lgbm+naive (global w)": 0.03555014251468812,
+          "theta+naive (global w)": 0.033458732917120315,
+          "theta+lgbm+naive (simplex)": 0.025680424022575362
+        },
+        "motor_vehicle_and_parts": {
+          "naive": 0.06299077931026544,
+          "lightgbm": 0.08077086800809793,
+          "theta": 0.06386106898787158,
+          "lgbm+naive (global w)": 0.06244652526525962,
+          "theta+naive (global w)": 0.05749049676543087,
+          "theta+lgbm+naive (simplex)": 0.05749049676543087
+        },
+        "retail_total": {
+          "naive": 0.03422014091024301,
+          "lightgbm": 0.0474261900416097,
+          "theta": 0.0400371437526776,
+          "lgbm+naive (global w)": 0.03110639730697582,
+          "theta+naive (global w)": 0.03064614440891435,
+          "theta+lgbm+naive (simplex)": 0.030298140728784093
+        },
+        "sporting_goods_and_hobby": {
+          "naive": 0.12066110053733478,
+          "lightgbm": 0.11722512563261614,
+          "theta": 0.11487582529717591,
+          "lgbm+naive (global w)": 0.11810022700445542,
+          "theta+naive (global w)": 0.1169590757092678,
+          "theta+lgbm+naive (simplex)": 0.11487582529717591
+        }
+      },
+      "per_category_winner": {
+        "building_material_and_garden": "theta+lgbm+naive (simplex)",
+        "clothing_and_accessories": "theta+lgbm+naive (simplex)",
+        "electronics_and_appliances": "theta",
+        "food_and_beverage": "theta+lgbm+naive (simplex)",
+        "furniture_and_home_furnishings": "theta+lgbm+naive (simplex)",
+        "gasoline_stations": "theta",
+        "general_merchandise": "theta+lgbm+naive (simplex)",
+        "health_and_personal_care": "naive",
+        "motor_vehicle_and_parts": "theta+naive (global w)",
+        "retail_total": "theta+lgbm+naive (simplex)",
+        "sporting_goods_and_hobby": "theta"
+      },
+      "wins_out_of_11": {
+        "naive": 1,
+        "lightgbm": 0,
+        "theta": 3,
+        "lgbm+naive (global w)": 0,
+        "theta+naive (global w)": 1,
+        "theta+lgbm+naive (simplex)": 6
+      },
+      "categories_beating_naive": {
+        "lightgbm": 4,
+        "theta": 6,
+        "lgbm+naive (global w)": 7,
+        "theta+naive (global w)": 9,
+        "theta+lgbm+naive (simplex)": 10
+      },
+      "mean_category_wape_for_reference": {
+        "naive": 0.08321737213282897,
+        "lightgbm": 0.08610590190747694,
+        "theta": 0.07817797756721051,
+        "lgbm+naive (global w)": 0.0801713646622269,
+        "theta+naive (global w)": 0.07664189262089777,
+        "theta+lgbm+naive (simplex)": 0.07228673443622514
+      }
+    },
+    "report (2021-01..2022-10)": {
+      "window": "report (2021-01..2022-10)",
+      "folds": 64,
+      "per_category_wape": {
+        "building_material_and_garden": {
+          "naive": 0.08802440993004,
+          "lightgbm": 0.03569655997005207,
+          "theta": 0.043011765694365704,
+          "lgbm+naive (global w)": 0.06122662814891136,
+          "theta+naive (global w)": 0.06158822131019368,
+          "theta+lgbm+naive (simplex)": 0.0827013660249068
+        },
+        "clothing_and_accessories": {
+          "naive": 0.15228968891528874,
+          "lightgbm": 0.24386469416575476,
+          "theta": 0.11317630780563216,
+          "lgbm+naive (global w)": 0.16032746253404204,
+          "theta+naive (global w)": 0.10586733566307199,
+          "theta+lgbm+naive (simplex)": 0.10365359849178062
+        },
+        "electronics_and_appliances": {
+          "naive": 0.10803094983991463,
+          "lightgbm": 0.17139781800431278,
+          "theta": 0.07974532194386513,
+          "lgbm+naive (global w)": 0.11793634644488453,
+          "theta+naive (global w)": 0.07930659585010358,
+          "theta+lgbm+naive (simplex)": 0.07974532194386513
+        },
+        "food_and_beverage": {
+          "naive": 0.0422240478440587,
+          "lightgbm": 0.020100739473365808,
+          "theta": 0.016373101194962946,
+          "lgbm+naive (global w)": 0.021648116662132504,
+          "theta+naive (global w)": 0.025612607615724408,
+          "theta+lgbm+naive (simplex)": 0.015194687261813312
+        },
+        "furniture_and_home_furnishings": {
+          "naive": 0.09681081942690388,
+          "lightgbm": 0.14880620106243422,
+          "theta": 0.08206547229305286,
+          "lgbm+naive (global w)": 0.10755560599577457,
+          "theta+naive (global w)": 0.07648380203615483,
+          "theta+lgbm+naive (simplex)": 0.07757162841369049
+        },
+        "gasoline_stations": {
+          "naive": 0.19492334970090697,
+          "lightgbm": 0.15500917691199603,
+          "theta": 0.10282281102585819,
+          "lgbm+naive (global w)": 0.1531963975543655,
+          "theta+naive (global w)": 0.1321711084266238,
+          "theta+lgbm+naive (simplex)": 0.10282281102585819
+        },
+        "general_merchandise": {
+          "naive": 0.11970661120911968,
+          "lightgbm": 0.05595271114695887,
+          "theta": 0.08049495630575097,
+          "lgbm+naive (global w)": 0.09420505118425536,
+          "theta+naive (global w)": 0.10010078375743532,
+          "theta+lgbm+naive (simplex)": 0.06086116017871724
+        },
+        "health_and_personal_care": {
+          "naive": 0.033790382064805224,
+          "lightgbm": 0.04775174893123377,
+          "theta": 0.023340182559164924,
+          "lgbm+naive (global w)": 0.023661981698406234,
+          "theta+naive (global w)": 0.019337759083669206,
+          "theta+lgbm+naive (simplex)": 0.033790382064805224
+        },
+        "motor_vehicle_and_parts": {
+          "naive": 0.09370352354256815,
+          "lightgbm": 0.06671534385550673,
+          "theta": 0.03830978457254775,
+          "lgbm+naive (global w)": 0.07608031844878797,
+          "theta+naive (global w)": 0.0586041146962612,
+          "theta+lgbm+naive (simplex)": 0.0586041146962612
+        },
+        "retail_total": {
+          "naive": 0.07298227554112115,
+          "lightgbm": 0.04760522304952356,
+          "theta": 0.024509621223145872,
+          "lgbm+naive (global w)": 0.0483433640987362,
+          "theta+naive (global w)": 0.040817332919492924,
+          "theta+lgbm+naive (simplex)": 0.04692288992017298
+        },
+        "sporting_goods_and_hobby": {
+          "naive": 0.15337512550067228,
+          "lightgbm": 0.19810887858552165,
+          "theta": 0.16885329016960757,
+          "lgbm+naive (global w)": 0.1613316581403702,
+          "theta+naive (global w)": 0.15488369928506857,
+          "theta+lgbm+naive (simplex)": 0.16885329016960757
+        }
+      },
+      "per_category_winner": {
+        "building_material_and_garden": "lightgbm",
+        "clothing_and_accessories": "theta+lgbm+naive (simplex)",
+        "electronics_and_appliances": "theta+naive (global w)",
+        "food_and_beverage": "theta+lgbm+naive (simplex)",
+        "furniture_and_home_furnishings": "theta+naive (global w)",
+        "gasoline_stations": "theta",
+        "general_merchandise": "lightgbm",
+        "health_and_personal_care": "theta+naive (global w)",
+        "motor_vehicle_and_parts": "theta",
+        "retail_total": "theta",
+        "sporting_goods_and_hobby": "naive"
+      },
+      "wins_out_of_11": {
+        "naive": 1,
+        "lightgbm": 2,
+        "theta": 3,
+        "lgbm+naive (global w)": 0,
+        "theta+naive (global w)": 3,
+        "theta+lgbm+naive (simplex)": 2
+      },
+      "categories_beating_naive": {
+        "lightgbm": 6,
+        "theta": 10,
+        "lgbm+naive (global w)": 7,
+        "theta+naive (global w)": 10,
+        "theta+lgbm+naive (simplex)": 9
+      },
+      "mean_category_wape_for_reference": {
+        "naive": 0.10507828941049087,
+        "lightgbm": 0.10827355410515094,
+        "theta": 0.07024569225345037,
+        "lgbm+naive (global w)": 0.09322844826460602,
+        "theta+naive (global w)": 0.07770666914943634,
+        "theta+lgbm+naive (simplex)": 0.07552011365377082
+      }
+    }
+  }
+}
