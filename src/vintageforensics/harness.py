@@ -2,10 +2,16 @@
 
 Port of retailPRED ``forecasting/evaluation/vintage.py`` at revision
 f6a769adbfc65faca86aa34cb6160ad4e769427e. Behavior on the default code path is
-identical to the original; the single documented extension is the optional
-``origin_hook`` callback (a no-op when None), which lets investigation
-candidates receive the origin as-of timestamp without altering selection,
-exclusion, or scoring logic.
+identical to the original. Three satellite extensions, all no-ops by default:
+
+- ``origin_hook``: optional callback receiving (model, origin_as_of) before
+  fit, so context-aware candidates can see the as-of timestamp without
+  altering selection, exclusion, or scoring logic.
+- ``select``: the origin-selection function (default observations_as_of);
+  scripts/common.py provides a verified-equivalent fast implementation.
+- ``origin_start``/``origin_end``: restrict the evaluated origin grid. Used to
+  keep holdout origins (>= 2023-01) uncomputed during hypothesis exploration;
+  skipped origins are neither scored nor recorded as exclusions.
 """
 
 from __future__ import annotations
@@ -57,6 +63,8 @@ def vintage_panel_backtest(
     actual_source: str = "latest_revision_vintage",
     origin_hook: OriginHook | None = None,
     select: Selector = observations_as_of,
+    origin_start: pd.Timestamp | None = None,
+    origin_end: pd.Timestamp | None = None,
 ) -> VintageBacktestResult:
     """Evaluate a global model on identical origins using only vintage-known data."""
     if min_train_size < 1 or step < 1:
@@ -82,6 +90,10 @@ def vintage_panel_backtest(
     actual_indexed = actuals.set_index(["series_id", "observation_time"])
     for cutoff_index in range(min_train_size - 1, len(calendar) - max_horizon, step):
         origin_month = calendar[cutoff_index]
+        if origin_start is not None and origin_month < origin_start:
+            continue
+        if origin_end is not None and origin_month >= origin_end:
+            continue
         origin = availability_as_of(origin_month, availability_lag_days)
         try:
             training = select(frame, origin)

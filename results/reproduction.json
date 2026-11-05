@@ -1,0 +1,74 @@
+{
+  "status": "reproduced",
+  "reproduces_failed_gate": true,
+  "checks": {
+    "seasonal_naive": {
+      "fold_rows_mine": 1408,
+      "fold_rows_reference": 1408,
+      "row_match": true,
+      "max_abs_prediction_diff": 0.0,
+      "actual_match": true,
+      "per_series_wape_match": true,
+      "mean_category_wape_mine": 0.08156779423469192,
+      "mean_category_wape_reference": 0.08156779423469192,
+      "excluded_origins_mine": 313
+    },
+    "global_lightgbm": {
+      "fold_rows_mine": 1408,
+      "fold_rows_reference": 1408,
+      "row_match": true,
+      "max_abs_prediction_diff": 5.820766091346741e-11,
+      "actual_match": true,
+      "per_series_wape_match": true,
+      "mean_category_wape_mine": 0.08489333541720596,
+      "mean_category_wape_reference": 0.08489333541720596,
+      "excluded_origins_mine": 313
+    }
+  },
+  "gate_reproduction": {
+    "mean_category_wape_improved": false,
+    "improved_series_count": 4,
+    "series_count": 11,
+    "acceptable_regressions": false,
+    "improvements_pp": {
+      "building_material_and_garden": 1.0534,
+      "clothing_and_accessories": -4.024,
+      "electronics_and_appliances": -2.1036,
+      "food_and_beverage": 1.2088,
+      "furniture_and_home_furnishings": -2.3167,
+      "gasoline_stations": 3.0742,
+      "general_merchandise": 3.4088,
+      "health_and_personal_care": -1.5664,
+      "motor_vehicle_and_parts": -0.2401,
+      "retail_total": -0.6536,
+      "sporting_goods_and_hobby": -1.4987
+    },
+    "passed": false
+  },
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "ae9a32d69721ad44f8fac3cb7fa95e13ebe01780",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T02:39:12.840621+00:00",
+    "purpose": "reproduce failed 2026-11-04 vintage gate"
+  }
+}
