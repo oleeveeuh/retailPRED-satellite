@@ -1,0 +1,361 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "6df4014ac9f0d429e79864c6bc033790e72de945",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T04:25:31.139804+00:00",
+    "purpose": "window-length question: predict 2020 targets"
+  },
+  "design": {
+    "origin_window": "2019-01..2020-06 evaluated grid origins",
+    "target_filter": "target month in 2020 only",
+    "selection_slice": "origins in 2019",
+    "test_slice": "origins in 2020-H1",
+    "windows_years": [
+      5,
+      10,
+      20,
+      0
+    ],
+    "primary_metric": "categories beating naive (of 11)"
+  },
+  "slices": {
+    "selection_2019_origins": {
+      "folds": 121,
+      "origins": 5,
+      "per_category_wape_pp": {
+        "building materials": {
+          "seasonal_naive": 7.406,
+          "lgbm_5": 6.376,
+          "lgbm_10": 6.106,
+          "lgbm_20": 6.698,
+          "lgbm_0": 6.981,
+          "theta_5": 6.65,
+          "theta_10": 6.4,
+          "theta_20": 6.618,
+          "theta_0": 6.531
+        },
+        "clothing": {
+          "seasonal_naive": 52.449,
+          "lgbm_5": 56.372,
+          "lgbm_10": 56.465,
+          "lgbm_20": 56.87,
+          "lgbm_0": 56.928,
+          "theta_5": 53.727,
+          "theta_10": 54.126,
+          "theta_20": 54.138,
+          "theta_0": 54.161
+        },
+        "electronics": {
+          "seasonal_naive": 40.084,
+          "lgbm_5": 41.428,
+          "lgbm_10": 39.329,
+          "lgbm_20": 40.387,
+          "lgbm_0": 40.167,
+          "theta_5": 38.655,
+          "theta_10": 39.197,
+          "theta_20": 39.516,
+          "theta_0": 40.067
+        },
+        "food & bev": {
+          "seasonal_naive": 8.606,
+          "lgbm_5": 7.408,
+          "lgbm_10": 7.427,
+          "lgbm_20": 7.37,
+          "lgbm_0": 7.418,
+          "theta_5": 8.061,
+          "theta_10": 8.09,
+          "theta_20": 8.192,
+          "theta_0": 8.263
+        },
+        "furniture": {
+          "seasonal_naive": 21.08,
+          "lgbm_5": 20.557,
+          "lgbm_10": 20.72,
+          "lgbm_20": 20.357,
+          "lgbm_0": 20.365,
+          "theta_5": 20.386,
+          "theta_10": 20.324,
+          "theta_20": 20.231,
+          "theta_0": 20.201
+        },
+        "gasoline": {
+          "seasonal_naive": 22.717,
+          "lgbm_5": 25.446,
+          "lgbm_10": 22.753,
+          "lgbm_20": 24.82,
+          "lgbm_0": 25.145,
+          "theta_5": 23.35,
+          "theta_10": 22.034,
+          "theta_20": 23.294,
+          "theta_0": 23.397
+        },
+        "general merch": {
+          "seasonal_naive": 6.224,
+          "lgbm_5": 4.648,
+          "lgbm_10": 4.997,
+          "lgbm_20": 4.978,
+          "lgbm_0": 4.762,
+          "theta_5": 5.527,
+          "theta_10": 5.499,
+          "theta_20": 5.366,
+          "theta_0": 5.305
+        },
+        "health & personal": {
+          "seasonal_naive": 4.792,
+          "lgbm_5": 6.644,
+          "lgbm_10": 6.892,
+          "lgbm_20": 7.157,
+          "lgbm_0": 7.175,
+          "theta_5": 5.621,
+          "theta_10": 5.634,
+          "theta_20": 5.571,
+          "theta_0": 5.581
+        },
+        "motor vehicles": {
+          "seasonal_naive": 15.652,
+          "lgbm_5": 15.346,
+          "lgbm_10": 15.795,
+          "lgbm_20": 15.522,
+          "lgbm_0": 15.706,
+          "theta_5": 15.523,
+          "theta_10": 15.523,
+          "theta_20": 15.472,
+          "theta_0": 15.487
+        },
+        "retail total": {
+          "seasonal_naive": 6.441,
+          "lgbm_5": 7.221,
+          "lgbm_10": 7.365,
+          "lgbm_20": 7.136,
+          "lgbm_0": 7.143,
+          "theta_5": 7.074,
+          "theta_10": 7.119,
+          "theta_20": 7.108,
+          "theta_0": 7.112
+        },
+        "sporting goods": {
+          "seasonal_naive": 18.117,
+          "lgbm_5": 17.958,
+          "lgbm_10": 18.951,
+          "lgbm_20": 18.961,
+          "lgbm_0": 19.07,
+          "theta_5": 18.949,
+          "theta_10": 18.945,
+          "theta_20": 18.914,
+          "theta_0": 18.91
+        }
+      },
+      "categories_beating_naive_of_11": {
+        "lgbm_5": 6,
+        "lgbm_10": 5,
+        "lgbm_20": 5,
+        "lgbm_0": 4,
+        "theta_5": 6,
+        "theta_10": 7,
+        "theta_20": 6,
+        "theta_0": 6
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 18.506,
+        "lgbm_5": 19.037,
+        "lgbm_10": 18.8,
+        "lgbm_20": 19.114,
+        "lgbm_0": 19.169,
+        "theta_5": 18.502,
+        "theta_10": 18.445,
+        "theta_20": 18.584,
+        "theta_0": 18.638
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 9.74,
+        "lgbm_5": 10.124,
+        "lgbm_10": 10.158,
+        "lgbm_20": 10.131,
+        "lgbm_0": 10.172,
+        "theta_5": 10.009,
+        "theta_10": 9.976,
+        "theta_20": 10.026,
+        "theta_0": 10.037
+      }
+    },
+    "test_2020_origins": {
+      "folds": 66,
+      "origins": 2,
+      "per_category_wape_pp": {
+        "building materials": {
+          "seasonal_naive": 12.05,
+          "lgbm_5": 4.935,
+          "lgbm_10": 4.483,
+          "lgbm_20": 5.553,
+          "lgbm_0": 4.355,
+          "theta_5": 4.364,
+          "theta_10": 4.395,
+          "theta_20": 4.541,
+          "theta_0": 4.518
+        },
+        "clothing": {
+          "seasonal_naive": 43.973,
+          "lgbm_5": 31.002,
+          "lgbm_10": 23.689,
+          "lgbm_20": 24.965,
+          "lgbm_0": 22.649,
+          "theta_5": 28.695,
+          "theta_10": 28.186,
+          "theta_20": 26.285,
+          "theta_0": 25.774
+        },
+        "electronics": {
+          "seasonal_naive": 44.468,
+          "lgbm_5": 31.644,
+          "lgbm_10": 24.875,
+          "lgbm_20": 22.174,
+          "lgbm_0": 24.347,
+          "theta_5": 21.017,
+          "theta_10": 22.189,
+          "theta_20": 22.593,
+          "theta_0": 22.536
+        },
+        "food & bev": {
+          "seasonal_naive": 8.165,
+          "lgbm_5": 2.242,
+          "lgbm_10": 5.593,
+          "lgbm_20": 5.029,
+          "lgbm_0": 5.055,
+          "theta_5": 2.591,
+          "theta_10": 4.722,
+          "theta_20": 5.781,
+          "theta_0": 5.623
+        },
+        "furniture": {
+          "seasonal_naive": 14.142,
+          "lgbm_5": 14.647,
+          "lgbm_10": 16.226,
+          "lgbm_20": 22.641,
+          "lgbm_0": 18.173,
+          "theta_5": 14.182,
+          "theta_10": 14.335,
+          "theta_20": 16.089,
+          "theta_0": 16.116
+        },
+        "gasoline": {
+          "seasonal_naive": 22.492,
+          "lgbm_5": 14.604,
+          "lgbm_10": 10.819,
+          "lgbm_20": 12.979,
+          "lgbm_0": 6.025,
+          "theta_5": 9.385,
+          "theta_10": 9.796,
+          "theta_20": 9.386,
+          "theta_0": 9.334
+        },
+        "general merch": {
+          "seasonal_naive": 6.687,
+          "lgbm_5": 4.991,
+          "lgbm_10": 3.312,
+          "lgbm_20": 5.143,
+          "lgbm_0": 5.056,
+          "theta_5": 5.54,
+          "theta_10": 5.449,
+          "theta_20": 5.225,
+          "theta_0": 5.181
+        },
+        "health & personal": {
+          "seasonal_naive": 5.064,
+          "lgbm_5": 7.969,
+          "lgbm_10": 10.976,
+          "lgbm_20": 8.1,
+          "lgbm_0": 6.992,
+          "theta_5": 6.541,
+          "theta_10": 6.757,
+          "theta_20": 6.876,
+          "theta_0": 6.852
+        },
+        "motor vehicles": {
+          "seasonal_naive": 11.792,
+          "lgbm_5": 9.953,
+          "lgbm_10": 11.785,
+          "lgbm_20": 15.08,
+          "lgbm_0": 14.202,
+          "theta_5": 16.616,
+          "theta_10": 12.494,
+          "theta_20": 12.055,
+          "theta_0": 12.172
+        },
+        "retail total": {
+          "seasonal_naive": 7.083,
+          "lgbm_5": 5.314,
+          "lgbm_10": 5.626,
+          "lgbm_20": 5.022,
+          "lgbm_0": 5.462,
+          "theta_5": 8.067,
+          "theta_10": 8.145,
+          "theta_20": 5.8,
+          "theta_0": 5.793
+        },
+        "sporting goods": {
+          "seasonal_naive": 15.205,
+          "lgbm_5": 15.774,
+          "lgbm_10": 15.46,
+          "lgbm_20": 15.772,
+          "lgbm_0": 16.757,
+          "theta_5": 19.458,
+          "theta_10": 19.421,
+          "theta_20": 18.846,
+          "theta_0": 18.308
+        }
+      },
+      "categories_beating_naive_of_11": {
+        "lgbm_5": 8,
+        "lgbm_10": 8,
+        "lgbm_20": 7,
+        "lgbm_0": 7,
+        "theta_5": 6,
+        "theta_10": 6,
+        "theta_20": 7,
+        "theta_0": 7
+      },
+      "mean_category_wape_pp": {
+        "seasonal_naive": 17.375,
+        "lgbm_5": 13.007,
+        "lgbm_10": 12.077,
+        "lgbm_20": 12.951,
+        "lgbm_0": 11.734,
+        "theta_5": 12.405,
+        "theta_10": 12.354,
+        "theta_20": 12.134,
+        "theta_0": 12.019
+      },
+      "pooled_wape_pp": {
+        "seasonal_naive": 9.586,
+        "lgbm_5": 6.903,
+        "lgbm_10": 7.217,
+        "lgbm_20": 7.498,
+        "lgbm_0": 7.183,
+        "theta_5": 8.948,
+        "theta_10": 8.676,
+        "theta_20": 7.37,
+        "theta_0": 7.346
+      }
+    }
+  }
+}

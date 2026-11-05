@@ -203,3 +203,37 @@ primary metric *before* the holdout, and note that under that metric the
 candidate selected for the holdout might well have been theta+naive rather
 than pure theta — its exploration profile is the most consistent across
 regimes (9–11 of 11 in every window), and it has never been holdout-scored.
+
+## 8. Addendum — predeclared sub-question: "Can the past N years predict retail trends in 2020?"
+
+Scope (declared before measurement): targets restricted to 2020 months, origins
+2019-01..2020-06 (exploration side; spent holdout untouched). Slices: SELECTION
+= 2019 origins (121 folds), TEST = 2020-H1 origins (66 folds). Grid: training
+windows {5, 10, 20, full} years x {LightGBM, theta}; naive is window-invariant
+(it consumes only the lag-12 value) and appears once. Primary metric: count of
+categories beating naive.
+
+Results (results/window2020.json):
+
+- **From 2019 origins (before the shock): no.** Nothing beats naive on
+  mean-category WAPE (all methods 18.4–19.2% vs naive 18.5%), category counts
+  <= 7/11, and clothing errors exceed 50% for everyone. The 2020 collapse was
+  not predictable from any window length of pre-2020 history at h>=12.
+- **From 2020 origins (in real time, after the shock starts): yes.** LightGBM
+  beats naive in 8/11 categories at +4.4pp mean-category (13.0% vs 17.4%),
+  full-window LightGBM at +5.7pp mean-category (11.7%), theta 6-7/11. Naive
+  holds only furniture, health & personal, and sporting goods. This isolates
+  and confirms the Phase-1 disruption finding on a designated test slice.
+- **Window length is second-order.** The spread across 5/10/20/full is ~1-2pp
+  with inconsistent direction between slices (5y and 10y win the count on
+  TEST at 8/11; full window wins TEST mean-category at 11.7%). No evidence
+  that truncating below the full panel helps or hurts systematically; the
+  5-year protocol floor remains defensible, and no window rescues pre-shock
+  prediction.
+
+Interpretation: the annual re-gate's "naive wins" and Phase 1's "models win
+disruption" were both correct because they answer different questions. The
+past cannot predict a regime break before it starts; once the break is in the
+(vintage-visible) present, adaptive models beat the carried-forward year-ago
+value decisively. Any future challenger evaluation should state which side of
+a regime break its window measures.

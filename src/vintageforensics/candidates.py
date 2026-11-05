@@ -68,6 +68,7 @@ class CandidateLightGBM:
         drop_unrevised: bool = False,
         revision_features: bool = False,
         stl_detrend: bool = False,
+        train_window_months: int = 0,
         vintage_panel: pd.DataFrame | None = None,
     ) -> None:
         if target_mode not in TARGET_MODES:
@@ -82,6 +83,7 @@ class CandidateLightGBM:
         self.drop_unrevised = drop_unrevised
         self.revision_features = revision_features
         self.stl_detrend = stl_detrend
+        self.train_window_months = train_window_months
         self._vintage_panel = vintage_panel
         self._origin_as_of: pd.Timestamp | None = None
         self.params = {
@@ -296,6 +298,12 @@ class CandidateLightGBM:
         if (numeric_values <= 0).any():
             raise ValueError("candidate training requires positive history values")
         panel["value"] = numeric_values.astype(float)
+        if self.train_window_months:
+            last_month = pd.Timestamp(panel["observation_time"].max())
+            cutoff = last_month - pd.offsets.MonthBegin(self.train_window_months - 1)
+            panel = panel.loc[panel["observation_time"] >= cutoff].reset_index(drop=True)
+            if panel.empty:
+                raise ValueError("training window truncation removed every row")
         self._series_codes = {
             series_id: index
             for index, series_id in enumerate(sorted(panel["series_id"].astype(str).unique()))
@@ -398,6 +406,7 @@ class CandidateLightGBM:
             "drop_unrevised": self.drop_unrevised,
             "revision_features": self.revision_features,
             "stl_detrend": self.stl_detrend,
+            "train_window_months": self.train_window_months,
             "features": list(self._active_features),
             "series_ids": sorted(self._series_codes),
         }
@@ -418,10 +427,15 @@ class ThetaMethod:
     name = "theta_method"
     version = "5.0.0"
 
-    def __init__(self, alpha_grid: np.ndarray | None = None) -> None:
+    def __init__(
+        self,
+        alpha_grid: np.ndarray | None = None,
+        train_window_months: int = 0,
+    ) -> None:
         self.alpha_grid = (
             alpha_grid if alpha_grid is not None else np.round(np.arange(0.01, 1.0, 0.01), 2)
         )
+        self.train_window_months = train_window_months
         self._forecast_base: tuple[float, float, float, int] | None = None
         self._series_id: str | None = None
 
@@ -432,6 +446,8 @@ class ThetaMethod:
         ordered = history.sort_values("observation_time")
         if ordered["observation_time"].duplicated().any():
             raise ValueError("history has duplicate timestamps")
+        if self.train_window_months:
+            ordered = ordered.tail(self.train_window_months)
         if "series_id" in ordered.columns:
             series_ids = ordered["series_id"].astype(str).unique()
             if len(series_ids) != 1:
