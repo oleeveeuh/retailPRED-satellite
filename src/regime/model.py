@@ -44,7 +44,7 @@ def design_matrix(table: pd.DataFrame, series_categories: list[str]) -> pd.DataF
     """Feature columns with series identity as a fixed categorical."""
     x = table.loc[:, ["series_id", *NUMERIC_FEATURES]].copy()
     x["series_id"] = pd.Categorical(x["series_id"], categories=series_categories)
-    if x[NUMERIC_FEATURES].isna().any().any():
+    if x[list(NUMERIC_FEATURES)].isna().any().any():
         raise ValueError("design matrix contains NaN features; POLICY.md forbids imputation")
     return x
 
@@ -249,6 +249,13 @@ class FrozenPolicy:
         return (probs >= self.tau).map({True: "theta", False: "naive"}).rename("choice")
 
 
+def restrict_sums(sums: PairSums, keys: pd.MultiIndex) -> PairSums:
+    """Restrict fold material to the given (series, origin) pairs so sweep
+    references measure the same pairs as the policy selection."""
+    shared = sums.sums.index.intersection(keys)
+    return PairSums(sums=sums.sums.loc[shared])
+
+
 def fit_policy(
     kind: str,
     train_table: pd.DataFrame,
@@ -262,26 +269,37 @@ def fit_policy(
     x = design_matrix(train_table, series_categories)
     y = train_table["theta_wins"].astype(bool)
     origins = pd.Series(train_table["forecast_origin"].to_numpy(), index=x.index)
+    train_keys = pd.MultiIndex.from_arrays(
+        [train_table["series_id"].astype(str).to_numpy(),
+         pd.DatetimeIndex(train_table["forecast_origin"])],
+        names=["series_id", "forecast_origin"],
+    )
     scores = oof_scores(kind, x, y, origins)
     iso = fit_isotonic(scores, y.to_numpy())
-    oof_probs = pd.Series(iso.predict(scores), index=x.index)
-    sweep = sweep_tau(oof_probs, naive, theta, blend)
+    # OOF probabilities are pair-keyed so the tau sweep's selections join
+    # against the fold material directly.
+    oof_probs = pd.Series(iso.predict(scores), index=train_keys)
+    naive_tr = restrict_sums(naive, train_keys)
+    theta_tr = restrict_sums(theta, train_keys)
+    blend_tr = restrict_sums(blend, train_keys)
+    sweep = sweep_tau(oof_probs, naive_tr, theta_tr, blend_tr)
     tau = choose_tau(sweep)
     if tau is None:
         raise ValueError("guardrail 1 unsatisfiable at every tau; POLICY_FINDINGS outcome")
     model = fit_model(kind, x, y)
-    key = train_table.set_index(["series_id", "forecast_origin"]).index
     oof_brier = float(np.mean((oof_probs.to_numpy() - y.to_numpy()) ** 2))
     sel = (oof_probs >= tau).map({True: "theta", False: "naive"})
-    sel.index = key
-    choose_wape = policy_pair_sums(sel, naive, theta).mean_category_wape()
+    sel.index = train_keys
+    choose_wape = policy_pair_sums(sel, naive_tr, theta_tr).mean_category_wape()
     return FrozenPolicy(
         kind=kind,
         model=model,
         isotonic=iso,
         tau=tau,
         series_categories=series_categories,
-        train_origins=sorted(pd.unique(train_table["forecast_origin"]).tolist()),
+        train_origins=[
+            pd.Timestamp(o) for o in sorted(pd.unique(train_table["forecast_origin"]))
+        ],
         oof_brier=oof_brier,
         choose_policy_wape=choose_wape,
         sweep=sweep,
