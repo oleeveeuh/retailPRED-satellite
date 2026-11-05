@@ -1,9 +1,23 @@
 #!/usr/bin/env python3
 """Research-overview figures: window-scoped model comparison and the policy's
-per-category REPORT outcome. Reads only frozen results JSONs."""
+per-category REPORT outcome. Reads only frozen results JSONs.
+
+Two render modes:
+
+* default (no --theme): the canonical figures/ renders, unchanged.
+* --theme fieldnotes: the retailPRED site's field-notes palette (validated
+  categorical trio + neutral baseline, CVD-checked on the cream surface),
+  optionally --out DIR and --scale 2 for retina. In this mode the two policy
+  diagnostic figures (tau sweep, reliability) are ALSO regenerated from the
+  frozen policy_train.json / policy_report.json — the canonical copies of
+  those stay owned by scripts/eval_policy.py.
+
+No results file is ever written: this script reads frozen JSONs only.
+"""
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -24,6 +38,29 @@ INK_2 = "#52514e"     # naive baseline
 MUTED = "#898781"
 GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
+
+# The retailPRED field-notes palette. The three model hues are a validated
+# categorical set (dataviz six-checks: CVD >= 13.4, normal >= 16.9, contrast
+# >= 3:1 on the cream surface); naive keeps the documented neutral-baseline
+# role — lightness-separated from every hue and direct-labeled in every
+# figure. Diverging pair: policy-better / worse (validated 23.7 normal).
+FIELDNOTES = {
+    "surface": "#fbf9f4",       # cream card surface the figures sit on
+    "ink": "#25251f",
+    "ink2": "#52514e",
+    "muted": "#77776c",
+    "grid": "#d8d1c4",
+    "edge": "#c9c2b2",
+    "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
+    "model_colors": {
+        "seasonal_naive": "#343330",       # neutral baseline
+        "global_lightgbm": "#a38a1c",      # olive-gold
+        "theta_method": "#a43b36",         # crimson
+        "regime_switch_policy": "#0d5a8a", # steel blue
+    },
+    "positive": "#0d5a8a",
+    "negative": "#a43b36",
+}
 
 plt.rcParams.update({
     "font.family": "sans-serif",
@@ -68,6 +105,36 @@ WINDOW_LABELS = {
     "holdout_2023_2025": "holdout\n2023-01 .. 2025-03\n(frozen single run)",
 }
 
+# Themed renders add a small surface gap between adjacent grouped bars
+# (mark spec); the canonical style keeps its original geometry.
+BAR_GAP = 0.0
+
+# Diverging pair for the per-category delta figure (positive / negative).
+DIVERGING = (BLUE, "#e34948")
+
+
+def apply_theme(style: dict) -> None:
+    """Apply a named style block to matplotlib rcParams + module style maps."""
+    global BAR_GAP, DIVERGING
+    plt.rcParams.update({
+        "figure.facecolor": style["surface"],
+        "axes.facecolor": style["surface"],
+        "axes.edgecolor": style["edge"],
+        "axes.labelcolor": style["ink2"],
+        "xtick.color": style["muted"],
+        "ytick.color": style["muted"],
+        "text.color": style["ink"],
+        "grid.color": style["grid"],
+        "font.sans-serif": style["font_sans"],
+    })
+    colors = style["model_colors"]
+    MODEL_STYLE["seasonal_naive"] = ("naive", colors["seasonal_naive"])
+    MODEL_STYLE["global_lightgbm"] = ("LightGBM", colors["global_lightgbm"])
+    MODEL_STYLE["theta_method"] = ("theta", colors["theta_method"])
+    MODEL_STYLE["regime_switch_policy"] = ("policy", colors["regime_switch_policy"])
+    BAR_GAP = 0.02
+    DIVERGING = (style["positive"], style["negative"])
+
 
 def load(name):
     return json.loads((ROOT / "results" / name).read_text())
@@ -78,7 +145,7 @@ def research_windows(summary) -> None:
     windows = list(WINDOW_LABELS)
     fig, ax = plt.subplots(figsize=(7.6, 4.6))
     n_models = 4
-    width = 0.19
+    width = 0.19 - BAR_GAP
     x = np.arange(len(windows))
     for slot, (model, (label, color)) in enumerate(MODEL_STYLE.items()):
         offsets = x + (slot - (n_models - 1) / 2) * width
@@ -119,7 +186,7 @@ def policy_categories(report) -> None:
     names = [SHORT[s] for s, _ in data]
     values = [v for _, v in data]
     fig, ax = plt.subplots(figsize=(7.2, 4.6))
-    bars = ax.barh(names, values, color=[BLUE if v > 0 else "#e34948" for v in values],
+    bars = ax.barh(names, values, color=[DIVERGING[0] if v > 0 else DIVERGING[1] for v in values],
                    height=0.62, zorder=3)
     ax.axvline(0, color="#c3c2b7", lw=1, zorder=2)
     ax.grid(axis="y", visible=False)
@@ -141,10 +208,133 @@ def policy_categories(report) -> None:
     plt.close(fig)
 
 
+def themed_policy_tau_sweep(train, report, style) -> None:
+    """Tau sweep from the frozen CHOOSE OOF sweep (policy_train.json); the
+    REPORT diamond is the frozen single-pass point from policy_report.json."""
+    sweep = train["tau_sweep_choose_oof"]
+    refs = train["tau_sweep_reference_mean_cat_wape"]
+    tau = float(train["tau"])
+    chosen = next(row for row in sweep if abs(row["tau"] - tau) < 1e-9)
+    report_policy = 100 * report["secondary_mean_category_wape"]["policy"]
+    policy_color = style["model_colors"]["regime_switch_policy"]
+    taus = [row["tau"] for row in sweep]
+    wapes = [100 * row["policy_mean_cat_wape"] for row in sweep]
+
+    fig, ax = plt.subplots(figsize=(7.2, 4.6))
+    ax.plot(taus, wapes, color=policy_color, lw=2,
+            label="switched policy (CHOOSE OOF)", zorder=4)
+    for key, color, name in (
+        ("naive", style["model_colors"]["seasonal_naive"], "naive"),
+        ("theta", style["model_colors"]["theta_method"], "pure theta"),
+        ("blend", style["model_colors"]["global_lightgbm"], "fixed blend 0.5"),
+    ):
+        ax.axhline(100 * refs[key], color=color, lw=1.4, ls=(0, (4, 3)), zorder=2)
+    ax.axvline(tau, color=style["muted"], lw=1, ls=(0, (1, 2)), zorder=1)
+    ax.scatter([tau], [100 * chosen["policy_mean_cat_wape"]], s=64, color=policy_color,
+               edgecolor=style["surface"], linewidth=1.5, zorder=5)
+    ax.scatter([tau], [report_policy], s=72, marker="D", color=style["ink"],
+               edgecolor=style["surface"], linewidth=1.5, zorder=6)
+
+    floor = min(min(wapes), report_policy)
+    ax.set_ylim(floor * 0.90, max(wapes) * 1.02)
+    label_x = 1.01
+    ref_colors = {
+        "naive": style["model_colors"]["seasonal_naive"],
+        "theta": style["model_colors"]["theta_method"],
+        "blend": style["model_colors"]["global_lightgbm"],
+    }
+    for key, name in (("naive", "naive"), ("theta", "pure theta"), ("blend", "fixed blend 0.5")):
+        value = refs[key]
+        ax.annotate(f"{name} {100 * value:.2f}", xy=(label_x, 100 * value),
+                    xycoords=("axes fraction", "data"), fontsize=8.5,
+                    color=ref_colors[key],
+                    va="center", annotation_clip=False)
+    ax.annotate(f"frozen tau = {tau:.2f}", xy=(tau, 100 * chosen["policy_mean_cat_wape"]),
+                xytext=(-12, 16), textcoords="offset points", fontsize=8.5,
+                color=style["muted"], ha="right")
+    ax.annotate("REPORT, evaluated once", xy=(tau, report_policy),
+                xytext=(10, -4), textcoords="offset points", fontsize=8.5,
+                color=style["ink"], va="top")
+    ax.set_xlabel("tau: use theta when P(theta wins) >= tau")
+    ax.set_ylabel("mean-category WAPE (%)")
+    ax.set_title("Policy tau sweep — CHOOSE origins (out-of-fold); diamond = frozen REPORT point",
+                 fontsize=10, color=style["ink2"], loc="left")
+    ax.legend(loc="lower right", fontsize=8.5, frameon=False)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "policy_tau_sweep.png", bbox_inches="tight")
+    plt.close(fig)
+
+
+def themed_policy_reliability(report, style) -> None:
+    """Reliability of P(theta wins) from the frozen calibration deciles in
+    policy_report.json (both windows; never recomputed)."""
+    calibration = report["calibration"]
+    oof = calibration["reliability_choose_oof_deciles_isotonic_in_sample"]
+    rep = calibration["reliability_report_deciles"]
+    brier_oof = calibration["brier_choose_oof"]
+    brier_rep = calibration["brier_report_frozen"]
+    policy_color = style["model_colors"]["regime_switch_policy"]
+    n_oof = sum(row["n"] for row in oof)
+    n_rep = sum(row["n"] for row in rep)
+
+    fig, ax = plt.subplots(figsize=(5.6, 5.2))
+    lim = (0, 1)
+    ax.plot(lim, lim, color=style["muted"], lw=1.2, ls=(0, (4, 3)), zorder=1)
+    ax.annotate("perfect calibration", xy=(0.36, 0.41), fontsize=8.5,
+                color=style["muted"], rotation=38)
+
+    ax.plot([row["mean_p"] for row in oof], [row["realized_rate"] for row in oof],
+            color=policy_color, lw=1.6, zorder=3)
+    ax.scatter([row["mean_p"] for row in oof], [row["realized_rate"] for row in oof],
+               s=52, color=policy_color, edgecolor=style["surface"], linewidth=1.2,
+               zorder=4, label=f"CHOOSE OOF (n={n_oof}, Brier {brier_oof:.3f})")
+    ax.scatter([row["mean_p"] for row in rep], [row["realized_rate"] for row in rep],
+               s=64, marker="D", color=style["ink"], edgecolor=style["surface"],
+               linewidth=1.2, zorder=5,
+               label=f"REPORT frozen (n={n_rep}, Brier {brier_rep:.3f})")
+    for i, row in enumerate(rep):
+        ax.annotate(f"n={row['n']}", (row["mean_p"], row["realized_rate"]),
+                    xytext=(8, 6 if i % 2 == 0 else -10),
+                    textcoords="offset points", fontsize=7.5, color=style["ink2"])
+
+    ax.set_xlim(0, 1.05)
+    ax.set_ylim(0, 1.05)
+    ax.set_xlabel("mean P(theta wins) in decile bin")
+    ax.set_ylabel("realized theta-win rate")
+    ax.set_title("Reliability of P(theta wins) — deciles of scored pairs",
+                 fontsize=10, color=style["ink2"], loc="left")
+    ax.legend(loc="upper left", fontsize=8.5, frameon=False)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "policy_reliability.png", bbox_inches="tight")
+    plt.close(fig)
+
+
 def main() -> None:
-    FIGURES.mkdir(exist_ok=True)
-    research_windows(load("mrts_window_summary.json"))
-    policy_categories(load("policy_report.json"))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--theme", choices=["fieldnotes"], default=None,
+                        help="render with a named site palette (default: canonical style)")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="output directory (default: the satellite figures/)")
+    parser.add_argument("--scale", type=float, default=1.0,
+                        help="render scale (2 = retina)")
+    args = parser.parse_args()
+
+    global FIGURES
+    if args.out is not None:
+        FIGURES = args.out
+    FIGURES.mkdir(parents=True, exist_ok=True)
+    if args.scale != 1.0:
+        plt.rcParams["figure.dpi"] = 150 * args.scale
+
+    if args.theme == "fieldnotes":
+        apply_theme(FIELDNOTES)
+        research_windows(load("mrts_window_summary.json"))
+        policy_categories(load("policy_report.json"))
+        themed_policy_tau_sweep(load("policy_train.json"), load("policy_report.json"), FIELDNOTES)
+        themed_policy_reliability(load("policy_report.json"), FIELDNOTES)
+    else:
+        research_windows(load("mrts_window_summary.json"))
+        policy_categories(load("policy_report.json"))
     print("figures written:", sorted(p.name for p in FIGURES.glob("*.png")))
 
 
