@@ -1,0 +1,457 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "71c0e5c1df29fdf1a42ca65f71df0b26a099b8eb",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T02:58:37.213183+00:00",
+    "purpose": "H1 preliminary-noise hypothesis test"
+  },
+  "hypothesis": "H1",
+  "protocol": {
+    "sweep": [
+      "h1_drop_unrevised",
+      "h1_trim_1",
+      "h1_trim_2",
+      "h1_trim_3",
+      "h1_trim_6",
+      "h1_trim_12",
+      "h1_trim_24"
+    ],
+    "choose_window": "forecast_origin < 2021-01-01",
+    "report_window": "2021-01-01 <= forecast_origin < 2023-01-01",
+    "selection_rule": "lowest choose-window mean-category WAPE; ties within 0.05pp resolve toward the least-perturbing variant"
+  },
+  "sweep_choose_window": {
+    "h1_drop_unrevised": {
+      "choose_mean_category_wape": 0.08805113396646448,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_1": {
+      "choose_mean_category_wape": 0.08805113396646448,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_2": {
+      "choose_mean_category_wape": 0.0909820203875718,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_3": {
+      "choose_mean_category_wape": 0.08827496522718493,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_6": {
+      "choose_mean_category_wape": 0.0877306277556127,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_12": {
+      "choose_mean_category_wape": 0.08877676654905683,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    },
+    "h1_trim_24": {
+      "choose_mean_category_wape": 0.08836579563491279,
+      "choose_naive_mean_category_wape": 0.08321737213282897,
+      "folds": 660,
+      "origins": 15,
+      "excluded": 274
+    }
+  },
+  "chosen": "h1_drop_unrevised",
+  "windows": {
+    "choose": {
+      "candidate": {
+        "fold_rows": 660,
+        "aggregate_wape": 0.05773232442049619,
+        "mean_category_wape": 0.08805113396646448,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.06977954246078444
+          },
+          "clothing_and_accessories": {
+            "wape": 0.16843216482466558
+          },
+          "electronics_and_appliances": {
+            "wape": 0.16747223510242915
+          },
+          "food_and_beverage": {
+            "wape": 0.027586932824653618
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.10637476707855639
+          },
+          "gasoline_stations": {
+            "wape": 0.0997679979991201
+          },
+          "general_merchandise": {
+            "wape": 0.025777275696836535
+          },
+          "health_and_personal_care": {
+            "wape": 0.05319805790910123
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.08321092366928257
+          },
+          "retail_total": {
+            "wape": 0.047716178020106574
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.119246398045573
+          }
+        }
+      },
+      "naive": {
+        "fold_rows": 660,
+        "aggregate_wape": 0.05003432029761731,
+        "mean_category_wape": 0.08321737213282897,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.05357188729517251
+          },
+          "clothing_and_accessories": {
+            "wape": 0.15324513331550604
+          },
+          "electronics_and_appliances": {
+            "wape": 0.16495402407811166
+          },
+          "food_and_beverage": {
+            "wape": 0.04835393949075731
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.0799460788200777
+          },
+          "gasoline_stations": {
+            "wape": 0.12762888835578098
+          },
+          "general_merchandise": {
+            "wape": 0.044138697325293776
+          },
+          "health_and_personal_care": {
+            "wape": 0.025680424022575362
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.06299077931026544
+          },
+          "retail_total": {
+            "wape": 0.03422014091024301
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.12066110053733478
+          }
+        }
+      },
+      "comparison": {
+        "mean_category_wape_delta_pp": -0.48337618336355137,
+        "improved_series_count": 4,
+        "series_count": 11,
+        "improvements_pp": {
+          "building_material_and_garden": -1.6208,
+          "clothing_and_accessories": -1.5187,
+          "electronics_and_appliances": -0.2518,
+          "food_and_beverage": 2.0767,
+          "furniture_and_home_furnishings": -2.6429,
+          "gasoline_stations": 2.7861,
+          "general_merchandise": 1.8361,
+          "health_and_personal_care": -2.7518,
+          "motor_vehicle_and_parts": -2.022,
+          "retail_total": -1.3496,
+          "sporting_goods_and_hobby": 0.1415
+        },
+        "regressions": [
+          "building_material_and_garden",
+          "clothing_and_accessories",
+          "electronics_and_appliances",
+          "furniture_and_home_furnishings",
+          "health_and_personal_care",
+          "motor_vehicle_and_parts",
+          "retail_total"
+        ]
+      },
+      "candidate_by_horizon_wape": {
+        "1": 0.038439245118232795,
+        "3": 0.04599983391802189,
+        "6": 0.05978003213667918,
+        "12": 0.08562611739612885
+      },
+      "naive_by_horizon_wape": {
+        "1": 0.04145707460599771,
+        "3": 0.03674939615991126,
+        "6": 0.04721640339378068,
+        "12": 0.0738861227679365
+      }
+    },
+    "report": {
+      "candidate": {
+        "fold_rows": 396,
+        "aggregate_wape": 0.06553818964068191,
+        "mean_category_wape": 0.10915451926917488,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.038397229822330646
+          },
+          "clothing_and_accessories": {
+            "wape": 0.23892119813235524
+          },
+          "electronics_and_appliances": {
+            "wape": 0.17428881467048848
+          },
+          "food_and_beverage": {
+            "wape": 0.01852585281582123
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.14860337186740386
+          },
+          "gasoline_stations": {
+            "wape": 0.1499933145564849
+          },
+          "general_merchandise": {
+            "wape": 0.055386861307543556
+          },
+          "health_and_personal_care": {
+            "wape": 0.04869565146032344
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.07304431501741596
+          },
+          "retail_total": {
+            "wape": 0.05438563234533534
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.2004574699654211
+          }
+        }
+      },
+      "naive": {
+        "fold_rows": 396,
+        "aggregate_wape": 0.08551679493321507,
+        "mean_category_wape": 0.10507828941049087,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.08802440993004
+          },
+          "clothing_and_accessories": {
+            "wape": 0.15228968891528874
+          },
+          "electronics_and_appliances": {
+            "wape": 0.10803094983991463
+          },
+          "food_and_beverage": {
+            "wape": 0.0422240478440587
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.09681081942690388
+          },
+          "gasoline_stations": {
+            "wape": 0.19492334970090697
+          },
+          "general_merchandise": {
+            "wape": 0.11970661120911968
+          },
+          "health_and_personal_care": {
+            "wape": 0.033790382064805224
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.09370352354256815
+          },
+          "retail_total": {
+            "wape": 0.07298227554112115
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.15337512550067228
+          }
+        }
+      },
+      "comparison": {
+        "mean_category_wape_delta_pp": -0.40762298586840134,
+        "improved_series_count": 6,
+        "series_count": 11,
+        "improvements_pp": {
+          "building_material_and_garden": 4.9627,
+          "clothing_and_accessories": -8.6632,
+          "electronics_and_appliances": -6.6258,
+          "food_and_beverage": 2.3698,
+          "furniture_and_home_furnishings": -5.1793,
+          "gasoline_stations": 4.493,
+          "general_merchandise": 6.432,
+          "health_and_personal_care": -1.4905,
+          "motor_vehicle_and_parts": 2.0659,
+          "retail_total": 1.8597,
+          "sporting_goods_and_hobby": -4.7082
+        },
+        "regressions": [
+          "clothing_and_accessories",
+          "electronics_and_appliances",
+          "furniture_and_home_furnishings",
+          "health_and_personal_care",
+          "sporting_goods_and_hobby"
+        ]
+      },
+      "candidate_by_horizon_wape": {
+        "1": 0.0546585962869972,
+        "3": 0.06519805124978036,
+        "6": 0.06258025335799776,
+        "12": 0.0791846285451852
+      },
+      "naive_by_horizon_wape": {
+        "1": 0.11460147349165231,
+        "3": 0.10950600332246238,
+        "6": 0.06982387926898005,
+        "12": 0.049617838763853686
+      }
+    },
+    "full_exploration": {
+      "candidate": {
+        "fold_rows": 1056,
+        "aggregate_wape": 0.06110603979728666,
+        "mean_category_wape": 0.09696394338985231,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.05586147353513282
+          },
+          "clothing_and_accessories": {
+            "wape": 0.19768681454980286
+          },
+          "electronics_and_appliances": {
+            "wape": 0.170085629151231
+          },
+          "food_and_beverage": {
+            "wape": 0.02381545893769069
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.12403143142502115
+          },
+          "gasoline_stations": {
+            "wape": 0.12224763443593666
+          },
+          "general_merchandise": {
+            "wape": 0.03830727147126819
+          },
+          "health_and_personal_care": {
+            "wape": 0.05136895568516329
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.07876589840255059
+          },
+          "retail_total": {
+            "wape": 0.05062173297239974
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.1538110767221785
+          }
+        }
+      },
+      "naive": {
+        "fold_rows": 1056,
+        "aggregate_wape": 0.06536993869583578,
+        "mean_category_wape": 0.09296196698143809,
+        "by_series": {
+          "building_material_and_garden": {
+            "wape": 0.0688515956525195
+          },
+          "clothing_and_accessories": {
+            "wape": 0.15284860083451438
+          },
+          "electronics_and_appliances": {
+            "wape": 0.14313040682721534
+          },
+          "food_and_beverage": {
+            "wape": 0.04580250784542356
+          },
+          "furniture_and_home_furnishings": {
+            "wape": 0.08699758018210155
+          },
+          "gasoline_stations": {
+            "wape": 0.15774826099372238
+          },
+          "general_merchandise": {
+            "wape": 0.07611704562425006
+          },
+          "health_and_personal_care": {
+            "wape": 0.028975093764156065
+          },
+          "motor_vehicle_and_parts": {
+            "wape": 0.07641894683377856
+          },
+          "retail_total": {
+            "wape": 0.051106906565443665
+          },
+          "sporting_goods_and_hobby": {
+            "wape": 0.13458469167269393
+          }
+        }
+      },
+      "comparison": {
+        "mean_category_wape_delta_pp": -0.40019764084142234,
+        "improved_series_count": 5,
+        "series_count": 11,
+        "improvements_pp": {
+          "building_material_and_garden": 1.299,
+          "clothing_and_accessories": -4.4838,
+          "electronics_and_appliances": -2.6955,
+          "food_and_beverage": 2.1987,
+          "furniture_and_home_furnishings": -3.7034,
+          "gasoline_stations": 3.5501,
+          "general_merchandise": 3.781,
+          "health_and_personal_care": -2.2394,
+          "motor_vehicle_and_parts": -0.2347,
+          "retail_total": 0.0485,
+          "sporting_goods_and_hobby": -1.9226
+        },
+        "regressions": [
+          "clothing_and_accessories",
+          "electronics_and_appliances",
+          "furniture_and_home_furnishings",
+          "health_and_personal_care",
+          "motor_vehicle_and_parts",
+          "sporting_goods_and_hobby"
+        ]
+      },
+      "candidate_by_horizon_wape": {
+        "1": 0.045425109071450136,
+        "3": 0.054313359756064494,
+        "6": 0.06099520970966221,
+        "12": 0.08284914692276513
+      },
+      "naive_by_horizon_wape": {
+        "1": 0.07296122136490726,
+        "3": 0.06825565130234022,
+        "6": 0.057027091726597874,
+        "12": 0.06342389739147393
+      }
+    }
+  }
+}

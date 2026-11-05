@@ -18,6 +18,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,3 +157,61 @@ def assign_regime(target_times: pd.Series) -> pd.Series:
         & (target <= REGIME_BOUNDARIES["disruption_end"])
     ] = "disruption"
     return labels
+
+
+# Inner exploration split for any candidate-side selection (H1 trim, H3
+# weights): choose on origins < CHOOSE_END, report on the rest. Declared in
+# PROTOCOL.md before any candidate ran.
+CHOOSE_END = pd.Timestamp("2021-01-01")
+
+
+def wape(y: pd.Series, yhat: pd.Series) -> float:
+    return float(np.abs(y - yhat).sum() / np.abs(y).sum())
+
+
+def evaluate_folds(folds: pd.DataFrame) -> dict:
+    """Gate-style evaluation of one model's folds."""
+    per_series = {
+        str(series_id): {"wape": wape(group["actual"], group["prediction"])}
+        for series_id, group in folds.groupby("series_id", sort=True)
+    }
+    return {
+        "fold_rows": int(len(folds)),
+        "aggregate_wape": wape(folds["actual"], folds["prediction"]),
+        "mean_category_wape": float(
+            pd.Series({key: value["wape"] for key, value in per_series.items()}).mean()
+        ),
+        "by_series": per_series,
+    }
+
+
+def evaluate_by_horizon(folds: pd.DataFrame) -> dict:
+    return {
+        str(int(horizon)): wape(group["actual"], group["prediction"])
+        for horizon, group in folds.groupby("horizon", sort=True)
+    }
+
+
+def compare_to_naive(candidate: dict, naive: dict) -> dict:
+    """Category/horizon deltas vs the naive baseline, gate-style bookkeeping."""
+    improvements = {
+        series: naive["by_series"][series]["wape"] - candidate["by_series"][series]["wape"]
+        for series in sorted(naive["by_series"])
+    }
+    return {
+        "mean_category_wape_delta_pp": 100 * (
+            naive["mean_category_wape"] - candidate["mean_category_wape"]
+        ),
+        "improved_series_count": sum(1 for delta in improvements.values() if delta > 0),
+        "series_count": len(improvements),
+        "improvements_pp": {s: round(100 * d, 4) for s, d in improvements.items()},
+        "regressions": sorted(s for s, d in improvements.items() if d <= 0),
+    }
+
+
+def naive_reference_for(origins, model_name: str = "seasonal_naive") -> pd.DataFrame:
+    """Frozen gate naive folds restricted to the given forecast origins."""
+    folds = pd.read_csv(REFERENCE_FOLDS, parse_dates=["forecast_origin", "target_time"])
+    folds = folds[folds["model_name"] == model_name]
+    origins = pd.DatetimeIndex(sorted(pd.Timestamp(o) for o in origins))
+    return folds[folds["forecast_origin"].isin(origins)].copy()
