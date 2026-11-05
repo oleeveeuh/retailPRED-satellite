@@ -1,0 +1,190 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "1e762634bd2b82f00701cbac63a58694d7514d76",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T03:40:57.749459+00:00",
+    "purpose": "metric-robustness diagnostics (exploration only)"
+  },
+  "windows": {
+    "full_exploration": {
+      "window": "full_exploration",
+      "folds": 1056,
+      "models": {
+        "lightgbm": {
+          "wape_improved": 6,
+          "mape_improved": 5,
+          "mae_improved": 6,
+          "win_rate": 0.457,
+          "wape": 0.0587,
+          "mape": 0.119,
+          "smape": 0.0982,
+          "rel_mae": 1.0242,
+          "naive_wape": 0.0654,
+          "naive_mape": 0.1181
+        },
+        "theta": {
+          "wape_improved": 9,
+          "mape_improved": 9,
+          "mae_improved": 9,
+          "win_rate": 0.525,
+          "wape": 0.0449,
+          "mape": 0.0987,
+          "smape": 0.0773,
+          "rel_mae": 0.8067,
+          "naive_wape": 0.0654,
+          "naive_mape": 0.1181
+        }
+      }
+    },
+    "choose": {
+      "window": "choose",
+      "folds": 660,
+      "models": {
+        "lightgbm": {
+          "wape_improved": 4,
+          "mape_improved": 6,
+          "mae_improved": 4,
+          "win_rate": 0.42,
+          "wape": 0.0567,
+          "mape": 0.1254,
+          "smape": 0.0901,
+          "rel_mae": 1.1157,
+          "naive_wape": 0.05,
+          "naive_mape": 0.1259
+        },
+        "theta": {
+          "wape_improved": 6,
+          "mape_improved": 6,
+          "mae_improved": 6,
+          "win_rate": 0.486,
+          "wape": 0.0495,
+          "mape": 0.1157,
+          "smape": 0.0827,
+          "rel_mae": 0.9908,
+          "naive_wape": 0.05,
+          "naive_mape": 0.1259
+        }
+      }
+    },
+    "report": {
+      "window": "report",
+      "folds": 396,
+      "models": {
+        "lightgbm": {
+          "wape_improved": 6,
+          "mape_improved": 6,
+          "mae_improved": 6,
+          "win_rate": 0.52,
+          "wape": 0.0614,
+          "mape": 0.1083,
+          "smape": 0.1118,
+          "rel_mae": 0.9944,
+          "naive_wape": 0.0855,
+          "naive_mape": 0.1052
+        },
+        "theta": {
+          "wape_improved": 10,
+          "mape_improved": 10,
+          "mae_improved": 10,
+          "win_rate": 0.588,
+          "wape": 0.0387,
+          "mape": 0.0703,
+          "smape": 0.0682,
+          "rel_mae": 0.6311,
+          "naive_wape": 0.0855,
+          "naive_mape": 0.1052
+        }
+      }
+    }
+  },
+  "by_horizon_full_exploration": {
+    "1": {
+      "naive": {
+        "wape": 0.073,
+        "mape": 0.1259,
+        "rel_mae": 1.0
+      },
+      "lightgbm": {
+        "wape": 0.0439,
+        "mape": 0.0941,
+        "rel_mae": 0.7551
+      },
+      "theta": {
+        "wape": 0.0337,
+        "mape": 0.078,
+        "rel_mae": 0.6267
+      }
+    },
+    "3": {
+      "naive": {
+        "wape": 0.0683,
+        "mape": 0.091,
+        "rel_mae": 1.0
+      },
+      "lightgbm": {
+        "wape": 0.0513,
+        "mape": 0.0858,
+        "rel_mae": 0.9232
+      },
+      "theta": {
+        "wape": 0.037,
+        "mape": 0.0649,
+        "rel_mae": 0.691
+      }
+    },
+    "6": {
+      "naive": {
+        "wape": 0.057,
+        "mape": 0.1179,
+        "rel_mae": 1.0
+      },
+      "lightgbm": {
+        "wape": 0.0579,
+        "mape": 0.1306,
+        "rel_mae": 1.1809
+      },
+      "theta": {
+        "wape": 0.0459,
+        "mape": 0.1126,
+        "rel_mae": 0.9307
+      }
+    },
+    "12": {
+      "naive": {
+        "wape": 0.0634,
+        "mape": 0.1378,
+        "rel_mae": 1.0
+      },
+      "lightgbm": {
+        "wape": 0.081,
+        "mape": 0.1655,
+        "rel_mae": 1.2934
+      },
+      "theta": {
+        "wape": 0.0622,
+        "mape": 0.1392,
+        "rel_mae": 0.9991
+      }
+    }
+  }
+}
