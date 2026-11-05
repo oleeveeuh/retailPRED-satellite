@@ -1,0 +1,141 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "b291f076c1515a8e6b6400054e28aff98a2f03b4",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-05T04:02:13.215293+00:00",
+    "purpose": "H2 feature-importance diagnostic"
+  },
+  "origin_months": [
+    "2021-01-01",
+    "2021-03-01",
+    "2022-01-01"
+  ],
+  "features": [
+    {
+      "feature": "lag_1_ratio",
+      "mean_gain_share": 0.6989021188522878,
+      "revision_feature": false
+    },
+    {
+      "feature": "rolling_mean_3_ratio",
+      "mean_gain_share": 0.06364396430618398,
+      "revision_feature": false
+    },
+    {
+      "feature": "months_since_release",
+      "mean_gain_share": 0.03255257183878433,
+      "revision_feature": true
+    },
+    {
+      "feature": "rolling_mean_12_ratio",
+      "mean_gain_share": 0.024062606997010336,
+      "revision_feature": false
+    },
+    {
+      "feature": "rolling_mean_6_ratio",
+      "mean_gain_share": 0.02056787418413829,
+      "revision_feature": false
+    },
+    {
+      "feature": "lag_2_ratio",
+      "mean_gain_share": 0.018523402135032178,
+      "revision_feature": false
+    },
+    {
+      "feature": "diff_1_ratio",
+      "mean_gain_share": 0.0156735100798146,
+      "revision_feature": false
+    },
+    {
+      "feature": "rolling_std_3_ratio",
+      "mean_gain_share": 0.014042372014497618,
+      "revision_feature": false
+    },
+    {
+      "feature": "lag_3_ratio",
+      "mean_gain_share": 0.013707807591751317,
+      "revision_feature": false
+    },
+    {
+      "feature": "lag_6_ratio",
+      "mean_gain_share": 0.012725664325284223,
+      "revision_feature": false
+    },
+    {
+      "feature": "rev_magnitude_so_far",
+      "mean_gain_share": 0.01254632011987387,
+      "revision_feature": true
+    },
+    {
+      "feature": "rolling_std_6_ratio",
+      "mean_gain_share": 0.01175022433295267,
+      "revision_feature": false
+    },
+    {
+      "feature": "series_code",
+      "mean_gain_share": 0.011577748010447093,
+      "revision_feature": false
+    },
+    {
+      "feature": "rolling_std_12_ratio",
+      "mean_gain_share": 0.011288274365632211,
+      "revision_feature": false
+    },
+    {
+      "feature": "rev_magnitude_so_far_abs",
+      "mean_gain_share": 0.008024598676086151,
+      "revision_feature": true
+    },
+    {
+      "feature": "rev_publications",
+      "mean_gain_share": 0.00793645613159708,
+      "revision_feature": true
+    },
+    {
+      "feature": "moy_rev_profile",
+      "mean_gain_share": 0.007633277114372391,
+      "revision_feature": true
+    },
+    {
+      "feature": "pct_change_1",
+      "mean_gain_share": 0.006562126929743964,
+      "revision_feature": false
+    },
+    {
+      "feature": "month_sin",
+      "mean_gain_share": 0.0042789551551047226,
+      "revision_feature": false
+    },
+    {
+      "feature": "month_cos",
+      "mean_gain_share": 0.0040001268394052195,
+      "revision_feature": false
+    },
+    {
+      "feature": "vintage_age_days",
+      "mean_gain_share": 0.0,
+      "revision_feature": true
+    }
+  ],
+  "revision_features_total_gain_share": 0.06869322388071382
+}
