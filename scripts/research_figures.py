@@ -39,16 +39,15 @@ MUTED = "#898781"
 GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
 
-# The retailPRED field-notes palette — muted pastels on cream, per owner
-# direction (sage green + muted red theme anchors, two soft complements,
-# no dark blue, no gray): fuji pale periwinkle (naive), muted red (theta,
-# site accent), sage (policy, site accent), yamabuki muted apricot
-# (LightGBM). Owner-approved tradeoff: all-muted palettes cannot clear the
-# strict categorical gates (muted = low chroma by definition; worst
-# adjacent pair sage<->apricot protan 9.2 / normal 13.6) — identity is
-# carried by the direct value labels, legends, and tooltips every figure
-# provides, plus lightness spread and bar order naive | theta | policy |
-# LightGBM. Diverging pair: sage = policy-better, muted red = worse.
+# The retailPRED field-notes palette — owner-chosen deep tones on cream:
+# sumi-green #1E342E (naive), muted red #a43b36 (theta), sage #89927a
+# (policy), sakura rose #d4708c (LightGBM). Grouped-bar order is
+# naive | policy | theta | LightGBM so the two deep tones are separated by
+# the sage and the rose; adjacency on cream validates with CVD 31.9 /
+# normal 33.7 (worst adjacent pair rose<->wine). The two deep tones sit
+# outside the strict lightness band by design — identity is carried by the
+# direct value labels, legends, and the lightness ordering. Diverging
+# pair: sage = policy-better, muted red = worse.
 FIELDNOTES = {
     "surface": "#fbf9f4",       # cream card surface the figures sit on
     "ink": "#25251f",
@@ -58,10 +57,10 @@ FIELDNOTES = {
     "edge": "#c9c2b2",
     "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
     "model_colors": {
-        "seasonal_naive": "#9db4d0",       # fuji pale periwinkle (neutral baseline)
-        "theta_method": "#a43b36",         # muted red (site accent)
+        "seasonal_naive": "#1E342E",       # sumi-green (owner pick, neutral baseline)
+        "theta_method": "#482728",         # muted wine (owner pick)
         "regime_switch_policy": "#89927a", # sage (site accent)
-        "global_lightgbm": "#d9a05e",      # yamabuki muted apricot
+        "global_lightgbm": "#d4708c",      # sakura rose (owner pick)
     },
     "positive": "#2b579b",
     "negative": "#a43b36",
@@ -100,8 +99,8 @@ SHORT = {
 
 MODEL_STYLE = {
     "seasonal_naive": ("naive", INK_2),
-    "theta_method": ("theta", ORANGE),
     "regime_switch_policy": ("policy", BLUE),
+    "theta_method": ("theta", ORANGE),
     "global_lightgbm": ("LightGBM", AQUA),
 }
 WINDOW_LABELS = {
