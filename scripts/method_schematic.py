@@ -19,11 +19,11 @@ from matplotlib.patches import FancyBboxPatch, Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# The site's mono voice (EXAMPLE PROJECT / eyebrows) is IBM Plex Mono; the
-# TTFs ship here (OFL) so the figure renders it even without a system copy.
-for name in ("IBMPlexMono-Regular.ttf", "IBMPlexMono-Medium.ttf", "IBMPlexMono-Bold.ttf"):
-    font_manager.fontManager.addfont(str(Path(__file__).resolve().parent / "fonts" / name))
-MONO = "IBM Plex Mono"
+# The site's text voice is Source Sans 3 (a variable TTF, OFL, vendored here
+# so the figure matches the webfont even without a system install).
+font_manager.fontManager.addfont(
+    str(Path(__file__).resolve().parent / "fonts" / "SourceSans3[wght].ttf"))
+plt.rcParams["font.sans-serif"] = ["Source Sans 3", "DejaVu Sans"]
 
 SURFACE = "#e4e4d7"  # the gallery card-art light green
 INK = "#25251f"
@@ -68,7 +68,7 @@ def main() -> None:
         Path(__file__).resolve().parents[1] / "figures" / "method_schematic.png")
     out.parent.mkdir(parents=True, exist_ok=True)
 
-    fig = plt.figure(figsize=(6.42, 3.20))  # 2x the .project-art box (320.7 x 160): zero-crop cover
+    fig = plt.figure(figsize=(6.42, 3.60))  # 2x the .project-art box (320.7 x 160): zero-crop cover
     gs = fig.add_gridspec(2, 1, height_ratios=(2.3, 1.15), hspace=0.5,
                           left=0.085, right=0.985, top=0.80, bottom=0.09)
 
@@ -117,8 +117,8 @@ def main() -> None:
               fontsize=10.5, frameon=False, ncols=2, handlelength=1.4,
               columnspacing=1.0, handletextpad=0.5)
     ax.set_title("vintage-safe backtesting",
-                 fontsize=12, color=INK2, loc="left", pad=46,
-                 fontfamily=MONO, fontweight="medium")
+                 fontsize=16, color=INK2, loc="left", pad=58,
+                 fontfamily="Source Sans 3")
 
     # ---- band 2: the learned switch ---------------------------------------
     ax2 = fig.add_subplot(gs[1])
@@ -126,28 +126,29 @@ def main() -> None:
     ax2.set_ylim(0, 1)
     ax2.axis("off")
 
-    def chip(x, y, w, h, text, fc, ec, tc="#fbf9f4", fs=11, weight="bold"):
+    def chip(x, y, w, h, text, fc, ec, tc="#fbf9f4", fs=11.5, weight="bold"):
         ax2.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.012",
                                      facecolor=fc, edgecolor=ec, linewidth=1.4, zorder=3))
         ax2.text(x + w / 2, y + h / 2, text, ha="center", va="center",
                  fontsize=fs, color=tc, zorder=4, fontweight=weight)
 
-    def arrow(x0, y0, x1, y1):
+    def arrow(x0, y0, x1, y1, rad=0.0):
         ax2.annotate("", xy=(x1, y1), xytext=(x0, y0),
-                     arrowprops=dict(arrowstyle="->", color=INK2, lw=1.8))
+                     arrowprops=dict(arrowstyle="->", color=INK2, lw=1.8,
+                                     connectionstyle=f"arc3,rad={rad}"))
 
     ax2.text(0.5, 0.94, "the learned switch — menu fixed to {naive, theta}",
              fontsize=12.5, color=INK2, ha="center")
-    chip(0.02, 0.30, 0.11, 0.34, "naive", SUMI, SUMI, fs=12.5)
-    chip(0.16, 0.30, 0.11, 0.34, "theta", WINE, WINE, fs=12.5)
-    chip(0.35, 0.20, 0.34, 0.52, "policy classifier\nP(theta wins) ≥ τ = 0.50",
-         SAGE, SAGE, "#fbf9f4", fs=10.5)
-    chip(0.73, 0.26, 0.25, 0.42, "one pick per\ncategory × origin",
-         "#fbf9f4", ROSE, INK, fs=10.5)
-    arrow(0.13, 0.40, 0.37, 0.40)
-    arrow(0.27, 0.55, 0.37, 0.55)
-    arrow(0.68, 0.47, 0.73, 0.47)
-    ax2.text(0.5, 0.02, "one refit per origin, only the visible past — all features point-in-time",
+    chip(0.02, 0.28, 0.12, 0.36, "naive", SUMI, SUMI, fs=12)
+    chip(0.16, 0.28, 0.12, 0.36, "theta", WINE, WINE, fs=12)
+    chip(0.36, 0.16, 0.34, 0.56, "policy classifier\nP(theta wins) ≥ τ = 0.50",
+         SAGE, SAGE, "#fbf9f4", fs=11.5)
+    chip(0.76, 0.22, 0.23, 0.5, "one pick per\ncategory × origin",
+         "#fbf9f4", ROSE, INK, fs=11)
+    arrow(0.14, 0.62, 0.36, 0.62, rad=-0.35)  # arcs over theta
+    arrow(0.28, 0.42, 0.36, 0.44)
+    arrow(0.70, 0.5, 0.76, 0.5)
+    ax2.text(0.5, -0.06, "one refit per origin, only the visible past — all features point-in-time",
              fontsize=10, color=MUTED, ha="center")
 
     fig.savefig(out, facecolor=SURFACE, bbox_inches="tight", pad_inches=0.12)
