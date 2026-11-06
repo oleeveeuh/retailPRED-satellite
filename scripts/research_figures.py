@@ -40,14 +40,12 @@ GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
 
 # The retailPRED field-notes palette — serene Japanese colors on cream:
-# nezumi soft gray (naive), koiai deep indigo (LightGBM), shu crimson
-# (theta, the site accent), rikyu sage (policy, the site secondary accent).
-# Adjacency CVD validated on the cream surface (worst adjacent pair
-# sage<->crimson: deutan 14.3, normal 20.9); sage's low chroma is the
-# documented relief case — every figure carries a legend and direct value
-# labels, and grouped bars are position-stable. naive keeps the neutral
-# baseline role (soft gray, lightness-separated from every hue). Diverging
-# pair: sage = policy-better, crimson = worse.
+# nezumi soft gray (naive), shu crimson (theta, the site accent), koiai
+# deep indigo (policy), sakura rose (LightGBM). Grouped-bar order is
+# naive | theta | policy | LightGBM so the rose never sits beside the
+# crimson; adjacency CVD validated on cream (worst adjacent pair
+# indigo<->rose: protan 16.3, normal 24.2 — all six-check gates pass).
+# Diverging pair: indigo = policy-better, crimson = worse.
 FIELDNOTES = {
     "surface": "#fbf9f4",       # cream card surface the figures sit on
     "ink": "#25251f",
@@ -58,11 +56,11 @@ FIELDNOTES = {
     "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
     "model_colors": {
         "seasonal_naive": "#6b6b66",       # nezumi soft gray (neutral baseline)
-        "global_lightgbm": "#1f4e8c",      # koiai deep indigo
         "theta_method": "#a43b36",         # shu crimson (site accent)
-        "regime_switch_policy": "#89927a", # rikyu sage (site secondary accent)
+        "regime_switch_policy": "#2b579b", # koiai indigo (site secondary)
+        "global_lightgbm": "#d4708c",      # sakura rose (user-requested pink)
     },
-    "positive": "#89927a",
+    "positive": "#2b579b",
     "negative": "#a43b36",
 }
 
@@ -99,9 +97,9 @@ SHORT = {
 
 MODEL_STYLE = {
     "seasonal_naive": ("naive", INK_2),
-    "global_lightgbm": ("LightGBM", AQUA),
     "theta_method": ("theta", ORANGE),
     "regime_switch_policy": ("policy", BLUE),
+    "global_lightgbm": ("LightGBM", AQUA),
 }
 WINDOW_LABELS = {
     "exploration_2017_2022": "exploration\n2017-10 .. 2022-10",
