@@ -39,13 +39,16 @@ MUTED = "#898781"
 GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
 
-# The retailPRED field-notes palette — serene Japanese colors on cream:
-# nezumi soft gray (naive), shu crimson (theta, the site accent), koiai
-# deep indigo (policy), sakura rose (LightGBM). Grouped-bar order is
-# naive | theta | policy | LightGBM so the rose never sits beside the
-# crimson; adjacency CVD validated on cream (worst adjacent pair
-# indigo<->rose: protan 16.3, normal 24.2 — all six-check gates pass).
-# Diverging pair: indigo = policy-better, crimson = worse.
+# The retailPRED field-notes palette — muted pastels on cream, per owner
+# direction (sage green + muted red theme anchors, two soft complements,
+# no dark blue, no gray): fuji pale periwinkle (naive), muted red (theta,
+# site accent), sage (policy, site accent), yamabuki muted apricot
+# (LightGBM). Owner-approved tradeoff: all-muted palettes cannot clear the
+# strict categorical gates (muted = low chroma by definition; worst
+# adjacent pair sage<->apricot protan 9.2 / normal 13.6) — identity is
+# carried by the direct value labels, legends, and tooltips every figure
+# provides, plus lightness spread and bar order naive | theta | policy |
+# LightGBM. Diverging pair: sage = policy-better, muted red = worse.
 FIELDNOTES = {
     "surface": "#fbf9f4",       # cream card surface the figures sit on
     "ink": "#25251f",
@@ -55,10 +58,10 @@ FIELDNOTES = {
     "edge": "#c9c2b2",
     "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
     "model_colors": {
-        "seasonal_naive": "#6b6b66",       # nezumi soft gray (neutral baseline)
-        "theta_method": "#a43b36",         # shu crimson (site accent)
-        "regime_switch_policy": "#2b579b", # koiai indigo (site secondary)
-        "global_lightgbm": "#d4708c",      # sakura rose (user-requested pink)
+        "seasonal_naive": "#9db4d0",       # fuji pale periwinkle (neutral baseline)
+        "theta_method": "#a43b36",         # muted red (site accent)
+        "regime_switch_policy": "#89927a", # sage (site accent)
+        "global_lightgbm": "#d9a05e",      # yamabuki muted apricot
     },
     "positive": "#2b579b",
     "negative": "#a43b36",
