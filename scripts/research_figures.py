@@ -39,11 +39,13 @@ MUTED = "#898781"
 GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
 
-# The retailPRED field-notes palette. The three model hues are a validated
-# categorical set (dataviz six-checks: CVD >= 13.4, normal >= 16.9, contrast
-# >= 3:1 on the cream surface); naive keeps the documented neutral-baseline
-# role — lightness-separated from every hue and direct-labeled in every
-# figure. Diverging pair: policy-better / worse (validated 23.7 normal).
+# The retailPRED field-notes palette — the site's own accents (sage, crimson,
+# ink on cream). Adjacency CVD validated on the cream surface (worst adjacent
+# pair sage<->crimson: deutan 14.3, normal 20.4); sage's low chroma is the
+# documented relief case — every figure carries a legend and direct value
+# labels, and grouped bars are position-stable so sage never sits beside the
+# gold. naive keeps the neutral-baseline role (lightness-separated from every
+# hue). Diverging pair: sage = policy-better, crimson = worse.
 FIELDNOTES = {
     "surface": "#fbf9f4",       # cream card surface the figures sit on
     "ink": "#25251f",
@@ -54,11 +56,11 @@ FIELDNOTES = {
     "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
     "model_colors": {
         "seasonal_naive": "#343330",       # neutral baseline
-        "global_lightgbm": "#a38a1c",      # olive-gold
-        "theta_method": "#a43b36",         # crimson
-        "regime_switch_policy": "#0d5a8a", # steel blue
+        "global_lightgbm": "#a38a1c",      # olive-gold (validated vs both)
+        "theta_method": "#a43b36",         # crimson (site accent)
+        "regime_switch_policy": "#89927a", # sage (site secondary accent)
     },
-    "positive": "#0d5a8a",
+    "positive": "#89927a",
     "negative": "#a43b36",
 }
 
@@ -112,10 +114,14 @@ BAR_GAP = 0.0
 # Diverging pair for the per-category delta figure (positive / negative).
 DIVERGING = (BLUE, "#e34948")
 
+# Themed sage bars are too low-chroma for white inside-labels; themed mode
+# draws value labels outside the bar ends in ink instead.
+LABEL_OUTSIDE = False
+
 
 def apply_theme(style: dict) -> None:
     """Apply a named style block to matplotlib rcParams + module style maps."""
-    global BAR_GAP, DIVERGING
+    global BAR_GAP, DIVERGING, LABEL_OUTSIDE
     plt.rcParams.update({
         "figure.facecolor": style["surface"],
         "axes.facecolor": style["surface"],
@@ -134,6 +140,7 @@ def apply_theme(style: dict) -> None:
     MODEL_STYLE["regime_switch_policy"] = ("policy", colors["regime_switch_policy"])
     BAR_GAP = 0.02
     DIVERGING = (style["positive"], style["negative"])
+    LABEL_OUTSIDE = True
 
 
 def load(name):
@@ -193,16 +200,22 @@ def policy_categories(report) -> None:
     ax.set_xlabel("WAPE delta (pp), naive − policy on the report window; "
                   "positive = policy better")
     for bar, value in zip(bars, values):
-        inside = abs(value) > 1.6
-        ax.text(value - 0.12 if inside and value > 0 else value + 0.12,
-                bar.get_y() + bar.get_height() / 2, f"{value:+.2f}",
-                va="center", ha="right" if inside and value > 0 else "left",
-                fontsize=8.5, color="#ffffff" if inside else INK_2)
+        if LABEL_OUTSIDE:
+            ax.text(value + (0.12 if value >= 0 else -0.12),
+                    bar.get_y() + bar.get_height() / 2, f"{value:+.2f}",
+                    va="center", ha="left" if value >= 0 else "right",
+                    fontsize=8.5, color=INK_2)
+        else:
+            inside = abs(value) > 1.6
+            ax.text(value - 0.12 if inside and value > 0 else value + 0.12,
+                    bar.get_y() + bar.get_height() / 2, f"{value:+.2f}",
+                    va="center", ha="right" if inside and value > 0 else "left",
+                    fontsize=8.5, color="#ffffff" if inside else INK_2)
     ax.margins(x=0.14)
     improved = primary["count"]
-    ax.text(0.99, 0.965, f"{improved} of 11 categories improved — "
+    ax.text(0.99, 1.02, f"{improved} of 11 categories improved — "
             "single frozen evaluation", transform=ax.transAxes,
-            ha="right", va="top", fontsize=8, color=MUTED)
+            ha="right", va="bottom", fontsize=8, color=MUTED)
     fig.tight_layout()
     fig.savefig(FIGURES / "policy_categories_report.png", bbox_inches="tight")
     plt.close(fig)
@@ -226,7 +239,7 @@ def themed_policy_tau_sweep(train, report, style) -> None:
     for key, color, name in (
         ("naive", style["model_colors"]["seasonal_naive"], "naive"),
         ("theta", style["model_colors"]["theta_method"], "pure theta"),
-        ("blend", style["model_colors"]["global_lightgbm"], "fixed blend 0.5"),
+        ("blend", style["muted"], "fixed blend 0.5"),
     ):
         ax.axhline(100 * refs[key], color=color, lw=1.4, ls=(0, (4, 3)), zorder=2)
     ax.axvline(tau, color=style["muted"], lw=1, ls=(0, (1, 2)), zorder=1)
@@ -241,7 +254,7 @@ def themed_policy_tau_sweep(train, report, style) -> None:
     ref_colors = {
         "naive": style["model_colors"]["seasonal_naive"],
         "theta": style["model_colors"]["theta_method"],
-        "blend": style["model_colors"]["global_lightgbm"],
+        "blend": style["muted"],
     }
     for key, name in (("naive", "naive"), ("theta", "pure theta"), ("blend", "fixed blend 0.5")):
         value = refs[key]
