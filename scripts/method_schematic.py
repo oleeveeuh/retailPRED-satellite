@@ -152,10 +152,10 @@ def main() -> None:
          SAGE, SAGE, "#fbf9f4", fs=11.5)
     chip(0.76, 0.22, 0.23, 0.5, "one pick per\ncategory × origin",
          "#fbf9f4", ROSE, INK, fs=11)
-    arrow(0.14, 0.62, 0.36, 0.62, rad=-0.35)  # arcs over theta
+    arrow(0.14, 0.62, 0.36, 0.62, rad=-0.12)  # gentle arc over theta, well below the subtitle
     arrow(0.28, 0.42, 0.36, 0.44)
     arrow(0.70, 0.5, 0.76, 0.5)
-    ax2.text(0.5, -0.06, "one refit per origin, only the visible past — all features point-in-time",
+    ax2.text(0.5, -0.12, "one refit per origin, only the visible past — all features point-in-time",
              fontsize=10, color=MUTED, ha="center", fontfamily="IBM Plex Mono")
 
     # The gallery card box (.project-art, 320.7 x 160) shows previews with
