@@ -39,13 +39,15 @@ MUTED = "#898781"
 GRID = "#e1e0d9"
 SURFACE = "#fcfcfb"
 
-# The retailPRED field-notes palette — the site's own accents (sage, crimson,
-# ink on cream). Adjacency CVD validated on the cream surface (worst adjacent
-# pair sage<->crimson: deutan 14.3, normal 20.4); sage's low chroma is the
+# The retailPRED field-notes palette — serene Japanese colors on cream:
+# nezumi soft gray (naive), koiai deep indigo (LightGBM), shu crimson
+# (theta, the site accent), rikyu sage (policy, the site secondary accent).
+# Adjacency CVD validated on the cream surface (worst adjacent pair
+# sage<->crimson: deutan 14.3, normal 20.9); sage's low chroma is the
 # documented relief case — every figure carries a legend and direct value
-# labels, and grouped bars are position-stable so sage never sits beside the
-# gold. naive keeps the neutral-baseline role (lightness-separated from every
-# hue). Diverging pair: sage = policy-better, crimson = worse.
+# labels, and grouped bars are position-stable. naive keeps the neutral
+# baseline role (soft gray, lightness-separated from every hue). Diverging
+# pair: sage = policy-better, crimson = worse.
 FIELDNOTES = {
     "surface": "#fbf9f4",       # cream card surface the figures sit on
     "ink": "#25251f",
@@ -55,10 +57,10 @@ FIELDNOTES = {
     "edge": "#c9c2b2",
     "font_sans": ["Source Sans 3", "IBM Plex Sans", "DejaVu Sans"],
     "model_colors": {
-        "seasonal_naive": "#343330",       # neutral baseline
-        "global_lightgbm": "#a38a1c",      # olive-gold (validated vs both)
-        "theta_method": "#a43b36",         # crimson (site accent)
-        "regime_switch_policy": "#89927a", # sage (site secondary accent)
+        "seasonal_naive": "#6b6b66",       # nezumi soft gray (neutral baseline)
+        "global_lightgbm": "#1f4e8c",      # koiai deep indigo
+        "theta_method": "#a43b36",         # shu crimson (site accent)
+        "regime_switch_policy": "#89927a", # rikyu sage (site secondary accent)
     },
     "positive": "#89927a",
     "negative": "#a43b36",
@@ -239,7 +241,7 @@ def themed_policy_tau_sweep(train, report, style) -> None:
     for key, color, name in (
         ("naive", style["model_colors"]["seasonal_naive"], "naive"),
         ("theta", style["model_colors"]["theta_method"], "pure theta"),
-        ("blend", style["muted"], "fixed blend 0.5"),
+        ("blend", "#b86a62", "fixed blend 0.5"),  # diluted crimson: half theta
     ):
         ax.axhline(100 * refs[key], color=color, lw=1.4, ls=(0, (4, 3)), zorder=2)
     ax.axvline(tau, color=style["muted"], lw=1, ls=(0, (1, 2)), zorder=1)
@@ -254,7 +256,7 @@ def themed_policy_tau_sweep(train, report, style) -> None:
     ref_colors = {
         "naive": style["model_colors"]["seasonal_naive"],
         "theta": style["model_colors"]["theta_method"],
-        "blend": style["muted"],
+        "blend": "#b86a62",
     }
     for key, name in (("naive", "naive"), ("theta", "pure theta"), ("blend", "fixed blend 0.5")):
         value = refs[key]
