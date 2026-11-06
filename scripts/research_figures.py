@@ -62,7 +62,9 @@ FIELDNOTES = {
         "regime_switch_policy": "#89927a", # sage (site accent)
         "global_lightgbm": "#d4708c",      # sakura rose (owner pick)
     },
-    "positive": "#2b579b",
+    "positive": "#89927a",     # sage — the site accent; caption and dict
+                               # comment both promise sage positives
+                               # (#2b579b here was a koiai-indigo leftover)
     "negative": "#a43b36",
 }
 
@@ -268,8 +270,8 @@ def themed_policy_tau_sweep(train, report, style) -> None:
                 xytext=(-12, 16), textcoords="offset points", fontsize=8.5,
                 color=style["muted"], ha="right")
     ax.annotate("REPORT, evaluated once", xy=(tau, report_policy),
-                xytext=(10, -4), textcoords="offset points", fontsize=8.5,
-                color=style["ink"], va="top")
+                xytext=(-10, -4), textcoords="offset points", fontsize=8.5,
+                color=style["ink"], va="top", ha="right")
     ax.set_xlabel("tau: use theta when P(theta wins) >= tau")
     ax.set_ylabel("mean-category WAPE (%)")
     ax.set_title("Policy tau sweep — CHOOSE origins (out-of-fold); diamond = frozen REPORT point",

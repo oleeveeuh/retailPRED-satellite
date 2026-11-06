@@ -7,22 +7,28 @@ Fieldnotes theme."""
 
 from __future__ import annotations
 
+import io
 import sys
 from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
+import matplotlib.colors
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.lines import Line2D
 from matplotlib.patches import FancyBboxPatch, Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# The placeholder diagrams (artSVG) label in generic sans-serif — which on
-# macOS renders as Helvetica/Helvetica Neue, already system-installed. That
-# IS the placeholder text style the previews should match; no webfonts.
-plt.rcParams["font.sans-serif"] = ["Helvetica Neue", "Helvetica", "Arial",
+# The site's loaded fonts (index.html): Source Sans 3 is the body voice,
+# IBM Plex Mono the label/caption voice. Both are installed locally, so
+# matplotlib resolves them instead of silently falling back to DejaVu Sans
+# (its macOS fallback for the old Helvetica Neue stack — .ttc, unloadable).
+plt.rcParams["font.sans-serif"] = ["Source Sans 3", "Helvetica Neue", "Arial",
                                    "DejaVu Sans"]
+plt.rcParams["font.monospace"] = ["IBM Plex Mono", "Courier New",
+                                  "DejaVu Sans Mono"]
 
 SURFACE = "#e4e4d7"  # the gallery card-art light green
 INK = "#25251f"
@@ -67,7 +73,8 @@ def main() -> None:
         Path(__file__).resolve().parents[1] / "figures" / "method_schematic.png")
     out.parent.mkdir(parents=True, exist_ok=True)
 
-    fig = plt.figure(figsize=(6.42, 3.60))  # 2x the .project-art box (320.7 x 160): zero-crop cover
+    fig = plt.figure(figsize=(6.42, 3.60))  # card-first layout; the canvas is
+    # padded to the exact .project-art aspect at save time (see below)
     gs = fig.add_gridspec(2, 1, height_ratios=(2.3, 1.15), hspace=0.5,
                           left=0.085, right=0.985, top=0.80, bottom=0.09)
 
@@ -116,8 +123,7 @@ def main() -> None:
               fontsize=10.5, frameon=False, ncols=2, handlelength=1.4,
               columnspacing=1.0, handletextpad=0.5)
     ax.set_title("vintage-safe backtesting",
-                 fontsize=16, color=INK2, loc="left", pad=58,
-                 fontfamily="Helvetica Neue")
+                 fontsize=16, color=INK2, loc="left", pad=58)
 
     # ---- band 2: the learned switch ---------------------------------------
     ax2 = fig.add_subplot(gs[1])
@@ -148,10 +154,34 @@ def main() -> None:
     arrow(0.28, 0.42, 0.36, 0.44)
     arrow(0.70, 0.5, 0.76, 0.5)
     ax2.text(0.5, -0.06, "one refit per origin, only the visible past — all features point-in-time",
-             fontsize=10, color=MUTED, ha="center")
+             fontsize=10, color=MUTED, ha="center", fontfamily="IBM Plex Mono")
 
-    fig.savefig(out, facecolor=SURFACE, bbox_inches="tight", pad_inches=0.12)
-    print(f"written: {out}")
+    # The gallery card box (.project-art, 320.7 x 160) shows previews with
+    # object-fit: cover, so the tight render is padded to the box's exact
+    # aspect — otherwise the centered crop amputates the title and the
+    # caption line. The wings are the same #e4e4d7 as the card background,
+    # making the padding invisible.
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", facecolor=SURFACE, bbox_inches="tight",
+                pad_inches=0.12)
+    buf.seek(0)
+    img = plt.imread(buf)
+    h, w = img.shape[:2]
+    target = 320.7 / 160
+    wing = matplotlib.colors.to_rgba(SURFACE)
+    if w < h * target:  # too tall: widen symmetrically
+        pad = int(round(h * target)) - w
+        wings = np.full((h, 1, 4), wing)
+        img = np.concatenate([wings.repeat(pad // 2, 1), img,
+                              wings.repeat(pad - pad // 2, 1)], axis=1)
+    elif h < w / target:  # too wide: pad top and bottom
+        pad = int(round(w / target)) - h
+        wings = np.full((1, w, 4), wing)
+        img = np.concatenate([wings.repeat(pad // 2, 0), img,
+                              wings.repeat(pad - pad // 2, 0)], axis=0)
+    plt.imsave(out, img)
+    print(f"written: {out} ({img.shape[1]}x{img.shape[0]}, "
+          f"aspect {img.shape[1] / img.shape[0]:.3f})")
 
 
 if __name__ == "__main__":
