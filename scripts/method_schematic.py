@@ -122,8 +122,10 @@ def main() -> None:
     ax.legend(handles=handles, loc="lower left", bbox_to_anchor=(-0.02, 1.0),
               fontsize=10.5, frameon=False, ncols=2, handlelength=1.4,
               columnspacing=1.0, handletextpad=0.5)
-    ax.set_title("vintage-safe backtesting",
-                 fontsize=16, color=INK2, loc="left", pad=58)
+    # All-caps with manual tracking (matplotlib has no letter-spacing) to
+    # echo the site's letter-spaced mono eyebrows — "EXAMPLE PROJECT".
+    ax.set_title(" ".join("VINTAGE-SAFE") + "  " + " ".join("BACKTESTING"),
+                 fontsize=14, color=INK2, loc="left", pad=58)
 
     # ---- band 2: the learned switch ---------------------------------------
     ax2 = fig.add_subplot(gs[1])
@@ -163,7 +165,7 @@ def main() -> None:
     # making the padding invisible.
     buf = io.BytesIO()
     fig.savefig(buf, format="png", facecolor=SURFACE, bbox_inches="tight",
-                pad_inches=0.12)
+                pad_inches=0.2)  # the card's cover crop eats ~12px per end
     buf.seek(0)
     img = plt.imread(buf)
     h, w = img.shape[:2]
