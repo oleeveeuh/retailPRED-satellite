@@ -13,17 +13,16 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib import font_manager
 from matplotlib.lines import Line2D
 from matplotlib.patches import FancyBboxPatch, Patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-# The site's text voice is Source Sans 3 (a variable TTF, OFL, vendored here
-# so the figure matches the webfont even without a system install).
-font_manager.fontManager.addfont(
-    str(Path(__file__).resolve().parent / "fonts" / "SourceSans3[wght].ttf"))
-plt.rcParams["font.sans-serif"] = ["Source Sans 3", "DejaVu Sans"]
+# The placeholder diagrams (artSVG) label in generic sans-serif — which on
+# macOS renders as Helvetica/Helvetica Neue, already system-installed. That
+# IS the placeholder text style the previews should match; no webfonts.
+plt.rcParams["font.sans-serif"] = ["Helvetica Neue", "Helvetica", "Arial",
+                                   "DejaVu Sans"]
 
 SURFACE = "#e4e4d7"  # the gallery card-art light green
 INK = "#25251f"
@@ -118,7 +117,7 @@ def main() -> None:
               columnspacing=1.0, handletextpad=0.5)
     ax.set_title("vintage-safe backtesting",
                  fontsize=16, color=INK2, loc="left", pad=58,
-                 fontfamily="Source Sans 3")
+                 fontfamily="Helvetica Neue")
 
     # ---- band 2: the learned switch ---------------------------------------
     ax2 = fig.add_subplot(gs[1])
