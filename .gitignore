@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# AI-session prompts stay local — not recruiter-facing
+PROMPT_*.md
