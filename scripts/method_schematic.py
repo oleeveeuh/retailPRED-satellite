@@ -37,7 +37,9 @@ MUTED = "#6e6d66"
 SAGE = "#89927a"
 SAGE_LIGHT = "#dfe1d5"
 WINE = "#482728"
-ROSE = "#d4708c"
+CRIMSON = "#a43b36"  # the site's accent red — same shade the placeholder
+                     # card art (artSVG) draws its accents with, so the
+                     # gallery row reads as one system
 SUMI = "#1E342E"
 
 plt.rcParams.update({
@@ -91,7 +93,7 @@ def main() -> None:
         origin = m(year, month)
         ax.barh(i, origin - X0, left=X0, height=0.66, color=SAGE_LIGHT,
                 edgecolor=SAGE, linewidth=1.1, zorder=3)
-        ax.barh(i, 12, left=origin, height=0.4, color=ROSE, alpha=0.6, zorder=3)
+        ax.barh(i, 12, left=origin, height=0.4, color=CRIMSON, alpha=0.6, zorder=3)
         ax.plot([origin, origin], [i - 0.33, i + 0.33], color=WINE, lw=2.0, zorder=4)
     for j, (year, month) in enumerate(HOLDOUT_ORIGINS):
         i = n_expl + j
@@ -99,7 +101,7 @@ def main() -> None:
         ax.barh(i, origin - X0, left=X0, height=0.66, facecolor="none",
                 edgecolor=MUTED, linewidth=1.0, linestyle=(0, (3, 2)), zorder=3)
         ax.barh(i, 12, left=origin, height=0.4, facecolor="none",
-                edgecolor=ROSE, linewidth=1.0, linestyle=(0, (3, 2)), zorder=3)
+                edgecolor=CRIMSON, linewidth=1.0, linestyle=(0, (3, 2)), zorder=3)
         ax.plot([origin, origin], [i - 0.33, i + 0.33], color=MUTED, lw=1.6, zorder=4)
     ax.axhline(n_expl - 0.5, color=MUTED, lw=1.0, linestyle=(0, (1, 2)), zorder=1)
 
@@ -114,7 +116,7 @@ def main() -> None:
     handles = [
         Patch(facecolor=SAGE_LIGHT, edgecolor=SAGE, linewidth=1.1,
               label="training: vintages published ≤ origin (+45d)"),
-        Patch(facecolor=ROSE, alpha=0.6, label="forecast fan: h = 1/3/6/12"),
+        Patch(facecolor=CRIMSON, alpha=0.6, label="forecast fan: h = 1/3/6/12"),
         Line2D([0], [0], color=WINE, lw=2.0, label="origin"),
         Line2D([0], [0], color=MUTED, lw=1.2, linestyle=(0, (3, 2)),
                label="holdout: scored once"),
@@ -151,7 +153,7 @@ def main() -> None:
     chip(0.36, 0.16, 0.34, 0.56, "policy classifier\nP(theta wins) ≥ τ = 0.50",
          SAGE, SAGE, "#fbf9f4", fs=11.5)
     chip(0.76, 0.22, 0.23, 0.5, "one pick per\ncategory × origin",
-         "#fbf9f4", ROSE, INK, fs=11)
+         CRIMSON, CRIMSON, "#fbf9f4", fs=11)
     arrow(0.14, 0.62, 0.36, 0.62, rad=-0.12)  # gentle arc over theta, well below the subtitle
     arrow(0.28, 0.42, 0.36, 0.44)
     arrow(0.70, 0.5, 0.76, 0.5)
