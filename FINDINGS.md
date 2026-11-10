@@ -107,15 +107,72 @@ Against the gate criteria: criterion 1 (mean improves) passes; criterion 2
 (≥10/11 categories) **fails at 7/11**; criterion 3 (regressions within 2pp)
 passes with clothing −1.73pp the worst. **The gate does not pass.**
 
-The honest reading: theta's exploration dominance was regime-specific. The
-2021–22 recovery rewarded trend tracking at short horizons; the calm 2023–25
-holdout offers no trend to track and naive's short-horizon errors shrink to
-2.7% — theta holds ~3.5%, winning only on small volatile categories while
-losing `retail_total` (−1.79pp) and clothing (−1.73pp). Theta still ranks
-best of the three models on the holdout — it is a better *general* real-time
-forecaster than the gate LightGBM — but the margin over naive (+0.17pp) is
-within the noise such a small window can support, and the predeclared
-category criterion fails decisively.
+### Scorecard (2026-11-10 — reporting-only reaggregation; verdict unchanged)
+
+The holdout headline was frozen with aggregate WAPE only. To measure the
+uncertainty it never had, theta's holdout fold rows were recovered
+deterministically (`scripts/holdout_theta_recovery.py`, predeclared and
+committed before execution: the re-derivation reproduced **all 34 frozen
+aggregates at diff 0.0** — `results/holdout_theta_recovery.json`), and a
+predeclared scorecard (`scripts/holdout_scorecard.py`, six verification
+gates reproducing the frozen record before release) added MASE, relMAE,
+signed bias, category-by-horizon, origin-block bootstrap CIs, and
+first-release re-scoring. Full tables: `results/holdout_scorecard.md`.
+All deltas below are paired (positive = challenger better).
+
+| Model (holdout, 8 origins) | pooled WAPE | mean-cat WAPE | relMAE | MASE | bias | h=1 | h=3 | h=6 | h=12 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| seasonal naive | 2.65% | 5.15% | 1.000 | 1.296 | +0.63pp | 5.26 | 5.46 | 5.15 | 4.76 |
+| theta | 3.43% | 4.98% | 1.027 | 1.257 | +2.52pp | 4.90 | 5.00 | 5.09 | 4.94 |
+| LightGBM (previously observed) | 4.48% | 5.64% | 1.262 | 1.435 | +3.80pp | 5.00 | 5.43 | 5.71 | 6.41 |
+
+Origin-block bootstrap (whole origins, multiplicity, B=2000, seed 42; the
+holdout has 8 blocks, so these CIs are coarse by construction):
+
+- **theta vs naive, mean-category: +0.17pp, CI −0.17..+0.54 — covers zero.**
+  The holdout cannot distinguish theta from naive on the predeclared metric;
+  the earlier "within the noise" hedge is now a measured interval.
+- **theta vs LightGBM: +0.65pp, CI +0.46..+0.88 — wholly positive.** The only
+  holdout ranking this window actually resolves is theta over the gate
+  LightGBM.
+- **Pooled WAPE flips the sign and is itself resolved: theta −0.77pp vs
+  naive, CI −1.24..−0.36.** Mean-category says theta ≥ naive (barely);
+  pooled says naive > theta. The aggregation choice is the conclusion —
+  which is exactly why the scorecard reports both.
+- MASE orders the models as mean-category WAPE does (theta 1.257 < naive
+  1.296 < LightGBM 1.435); all sit above 1 — in this calm window nothing
+  beats the seasonal-naive benchmark systematically. relMAE inverts theta's
+  edge (1.027, slightly worse than naive on raw MAE): theta's mean-category
+  win is level-weighted, not a raw-error win.
+- Signed bias (invisible to WAPE): every method over-forecasts the holdout
+  (naive +0.63pp, theta +2.52pp, LightGBM +3.80pp), and LightGBM's error
+  grows monotonically with horizon (mean-category 5.00% at h=1 → 6.41% at
+  h=12) — the recursion drift Phase 1 identified, now visible per horizon.
+  On the full gate window the LightGBM is statistically indistinguishable
+  from naive under block bootstrap (mean-category −0.33pp, CI
+  −0.75..+0.14; pooled −0.04pp, CI −0.92..+0.90) — the gate refusal was
+  about category breadth, not aggregate superiority.
+- **First-release re-scoring (new, descriptive — not a predeclared
+  question):** the same stored predictions scored against each target
+  month's first published vintage value give theta a wholly positive holdout
+  margin (+1.19pp vs naive, CI +0.83..+1.57; 10/11 categories; LightGBM
+  +0.71pp, CI +0.30..+1.18). Against what was operationally evaluable at
+  the time, both challengers beat naive; against the eventual revised
+  record, the edge is gone. The holdout verdict is revision-dependent. The
+  gate's predeclared actual source (latest_revision_vintage) governs,
+  criterion 2 still fails at 7/11 under final vintages, and this first
+  release count is **not** a promotion path — it is the same goalpost the
+  investigation refuses to move, now on the actuals axis.
+
+The honest reading, now measured: theta's exploration dominance was real
+(origin-block CI +0.61..+3.25 — the window resolves it) and regime-specific;
+on the holdout it holds the lowest mean-category WAPE of the three models,
+separating cleanly from the LightGBM but not from naive, while pooled WAPE
+resolves in naive's favor outright. The defensible claim is "lowest
+measured mean-category WAPE among the three evaluated models,
+indistinguishable from naive on the frozen holdout" — not "best real-time
+forecaster." The predeclared category criterion fails decisively at 7/11
+and the serving decision stays fail-closed.
 
 ## 4. Why the naive is hard to beat here (mechanism)
 
