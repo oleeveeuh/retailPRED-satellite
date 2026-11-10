@@ -28,11 +28,26 @@ VAL_SIZE = 12
 TORCH_THREADS = 4
 
 _negative_events: int = 0
+_torch_configured: bool = False
 
 
 def nhits_negative_events() -> int:
     """How many predictions were negative process-wide (recorded, not altered)."""
     return _negative_events
+
+
+def _configure_torch() -> None:
+    """Set the predeclared thread counts once per process — interop threads
+    cannot be re-set after parallel work starts, and the harness constructs
+    a fresh model per origin."""
+    global _torch_configured
+    if _torch_configured:
+        return
+    import torch
+
+    torch.set_num_threads(TORCH_THREADS)
+    torch.set_num_interop_threads(1)
+    _torch_configured = True
 
 
 def _nhits_kwargs() -> dict[str, Any]:
@@ -98,11 +113,10 @@ class NhitsTrained:
         if prepared.duplicated(["unique_id", "ds"]).any():
             raise ValueError("nhits training requires unique series/month keys")
 
-        import torch
+        import torch  # noqa: F401 — ensures the torch runtime is present
         from neuralforecast import NeuralForecast
 
-        torch.set_num_threads(TORCH_THREADS)
-        torch.set_num_interop_threads(1)
+        _configure_torch()
         self._nf = NeuralForecast(models=[NhitsTrained._model()], freq="MS")
         self._nf.fit(df=prepared, val_size=VAL_SIZE)
         self._last_month = pd.Timestamp(prepared["ds"].max())
