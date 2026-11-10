@@ -178,8 +178,9 @@ def research_windows(summary) -> None:
     ax.set_title("MRTS mean-category WAPE by evaluation window — lower is better",
                  fontsize=10, color=INK_2, loc="left")
     ax.legend(loc="upper left", fontsize=8.5, frameon=False, ncols=2)
-    ax.text(0.99, 0.965, "policy evaluated on the report window only\n"
-            "(single frozen pass); holdout never re-derived",
+    ax.text(0.99, 0.965, "policy: report window only (single frozen pass)\n"
+            "holdout: frozen single run; LightGBM slice previously\n"
+            "observed in the gate run (gate reference folds)",
             transform=ax.transAxes, ha="right", va="top", fontsize=8, color=MUTED)
     fig.tight_layout()
     fig.savefig(FIGURES / "research_windows.png", bbox_inches="tight")

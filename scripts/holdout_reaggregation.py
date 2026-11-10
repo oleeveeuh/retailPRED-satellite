@@ -61,7 +61,7 @@ def _sha256(path: Path) -> str:
 
 def main() -> None:
     holdout_run = json.loads(HOLDOUT_RUN.read_text())
-    origins = holdout_run["provenance"]["holdout_origins"]
+    origins = holdout_run["holdout_origins"]
     folds = pd.read_csv(FOLDS)
     sub = folds[folds["forecast_origin"].isin(origins)]
     if sub.groupby("model_name").size().to_dict() != {

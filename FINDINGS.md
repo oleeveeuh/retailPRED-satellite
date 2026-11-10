@@ -85,11 +85,23 @@ The selection rule was predeclared before the holdout existed: highest
 report-window mean-category WAPE delta vs naive → **theta method**. The
 single holdout run (identical protocol, 2023-01..2025-03 origins):
 
-| Model | Holdout mean-category WAPE | Δ vs naive |
-|---|---:|---:|
-| seasonal naive | 5.15% | — |
-| **theta method** | **4.98%** | **+0.17pp (7/11 improved)** |
-| global LightGBM (frozen gate slice) | 5.64% | −0.49pp |
+| Model | Holdout mean-category WAPE | Δ vs naive | Categories improved | Source |
+|---|---:|---:|---:|---|
+| seasonal naive | 5.15% | — | — | frozen single run |
+| **theta method** | **4.98%** | **+0.17pp** | **7/11** | frozen single run |
+| global LightGBM (gate slice) | 5.64% | −0.48pp | 5/11 | gate reference folds (previously observed) |
+
+Note (2026-11-10, predeclared before recalculation —
+`scripts/holdout_reaggregation.py`, `results/holdout_three_model.json`): the
+LightGBM line re-aggregates the stored gate-reference folds on the holdout
+origins — no refit, no new prediction, promotion rule unchanged, and the
+result stays labeled as previously observed, not an untouched holdout result.
+It exists to answer the deployment question ("which of the three should we
+choose?") beside the predeclared theta-vs-naive verdict above; nothing here
+feeds back into any model or rule. The earlier −0.49pp came from subtracting
+rounded percentages; the exact delta is −0.48pp. The verification gate
+reproduces the frozen run's naive numbers exactly and the recorded 5.64%
+slice; any discrepancy would have stopped this table.
 
 Against the gate criteria: criterion 1 (mean improves) passes; criterion 2
 (≥10/11 categories) **fails at 7/11**; criterion 3 (regressions within 2pp)
@@ -116,7 +128,7 @@ category criterion fails decisively.
 2. **Seasonally adjusted monthly national aggregates are close to their own
    seasonal naive in calm regimes.** With volatility low and the level nearly
    a trendless drift, the 12-month-old value is a strong predictor; every
-   learned/variance-carrying method pays a premium (LightGBM −0.49pp, theta
+   learned/variance-carrying method pays a premium (LightGBM −0.48pp, theta
    ±0.2pp on the holdout).
 3. **The only real edges are regime-conditional.** Both challengers beat
    naive during disruption (LightGBM +2.64pp, theta via trend at h≤3) and

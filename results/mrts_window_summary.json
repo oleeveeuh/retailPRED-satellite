@@ -2,7 +2,7 @@
   "provenance": {
     "data_path": "data/alfred_mrts_vintages.csv",
     "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
-    "satellite_code_revision": "2af78010b78e77ee4b6ff4a614936bba9e0481b9",
+    "satellite_code_revision": "13ebf137cac190ff083d06bee1646a532a585020",
     "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
     "protocol": {
       "horizons": [
@@ -22,15 +22,16 @@
       "pandas": "2.2.3",
       "numpy": "2.1.3"
     },
-    "generated_at": "2026-11-05T20:53:22.987054+00:00",
-    "purpose": "window-scoped MRTS research summary for the platform evidence layer; no holdout fold recomputed \u2014 holdout numbers copied from the frozen run",
+    "generated_at": "2026-11-10T08:58:40.449236+00:00",
+    "purpose": "window-scoped MRTS research summary for the platform evidence layer; no holdout fold recomputed \u2014 naive/theta copied from the frozen run, holdout LightGBM re-aggregated from stored gate-reference folds under the predeclared reporting-only protocol",
     "source_artifacts": [
       "results/category_win_matrix.json",
       "results/holdout_theta.json",
+      "results/holdout_three_model.json",
       "results/policy_report.json"
     ],
     "satellite_repository": "https://github.com/oleeveeuh/retailPRED-satellite",
-    "row_count": 9
+    "row_count": 10
   },
   "rows": [
     {
@@ -136,6 +137,19 @@
       "categories_total": 11,
       "beats_naive_in_window": true,
       "source_artifact": "results/holdout_theta.json (frozen single run)"
+    },
+    {
+      "evaluation_window": "holdout_2023_2025",
+      "model_name": "global_lightgbm",
+      "origin_count": 8,
+      "evaluation_start": "2023-01-01",
+      "evaluation_end": "2025-03-01",
+      "metric_name": "mean_category_wape",
+      "metric_value": 0.056352,
+      "categories_beating_naive": 5,
+      "categories_total": 11,
+      "beats_naive_in_window": false,
+      "source_artifact": "results/holdout_three_model.json (gate reference folds; previously observed)"
     },
     {
       "evaluation_window": "report_2021_2022",

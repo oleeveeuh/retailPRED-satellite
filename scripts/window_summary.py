@@ -6,8 +6,12 @@ freeze into evidence — nothing is recomputed here:
 
 - exploration / report numbers come from ``results/category_win_matrix.json``
   (itself derived from the frozen fold CSVs, exploration origins only);
-- holdout numbers are copied verbatim from ``results/holdout_theta.json``
-  (the single predeclared holdout run — holdout folds are NOT re-read);
+- holdout naive / theta numbers are copied verbatim from
+  ``results/holdout_theta.json`` (the single predeclared holdout run —
+  holdout folds are NOT re-read);
+- the holdout LightGBM row comes from ``results/holdout_three_model.json``
+  (reporting-only reaggregation of the stored gate-reference folds,
+  predeclared 2026-11-10; previously observed, not an untouched result);
 - policy numbers come from ``results/policy_report.json`` (the single frozen
   REPORT pass).
 """
@@ -96,6 +100,14 @@ def main() -> None:
         holdout["comparison"]["mean_category_wape_delta_pp"] > 0,
         int(holdout["comparison"]["improved_series_count"]),
         "results/holdout_theta.json (frozen single run)")
+    three_model = _load_json("results/holdout_three_model.json")
+    lgbm_row = next(r for r in three_model["rows"]
+                    if r["model_name"] == "global_lightgbm")
+    add("holdout_2023_2025", "global_lightgbm",
+        lgbm_row["mean_category_wape"],
+        lgbm_row["mean_category_wape"] < holdout["naive"]["mean_category_wape"],
+        int(lgbm_row["categories_beating_naive"]),
+        "results/holdout_three_model.json (gate reference folds; previously observed)")
 
     # Policy: the single frozen REPORT pass only.
     sec = policy["secondary_mean_category_wape"]
@@ -108,11 +120,14 @@ def main() -> None:
         "provenance": common.provenance({
             "purpose": (
                 "window-scoped MRTS research summary for the platform evidence layer; "
-                "no holdout fold recomputed — holdout numbers copied from the frozen run"
+                "no holdout fold recomputed — naive/theta copied from the frozen run, "
+                "holdout LightGBM re-aggregated from stored gate-reference folds under "
+                "the predeclared reporting-only protocol"
             ),
             "source_artifacts": [
                 "results/category_win_matrix.json",
                 "results/holdout_theta.json",
+                "results/holdout_three_model.json",
                 "results/policy_report.json",
             ],
             "satellite_repository": "https://github.com/oleeveeuh/retailPRED-satellite",
