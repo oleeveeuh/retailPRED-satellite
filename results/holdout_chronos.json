@@ -1,0 +1,386 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "850c4b445f77c23607eb61718db63845bda31aa4",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm (metadata only)": "4.5.0",
+      "chronos-forecasting": "2.3.2",
+      "torch": "2.15.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "purpose": "H6 chronos_2_zero_shot holdout \u2014 POST-HOC, descriptive only (predeclared in CHRONOS_PREDECLARATION.md reading rules 2-3)"
+  },
+  "candidate": {
+    "fold_rows": 352,
+    "aggregate_wape": 0.035907040179071766,
+    "mean_category_wape": 0.05003861180567096,
+    "by_series": {
+      "building_material_and_garden": {
+        "wape": 0.04447464169003167
+      },
+      "clothing_and_accessories": {
+        "wape": 0.0918765054415811
+      },
+      "electronics_and_appliances": {
+        "wape": 0.06413433474207415
+      },
+      "food_and_beverage": {
+        "wape": 0.02065983377480449
+      },
+      "furniture_and_home_furnishings": {
+        "wape": 0.0749485366732813
+      },
+      "gasoline_stations": {
+        "wape": 0.044793896410204655
+      },
+      "general_merchandise": {
+        "wape": 0.019671979160013783
+      },
+      "health_and_personal_care": {
+        "wape": 0.033208382235175055
+      },
+      "motor_vehicle_and_parts": {
+        "wape": 0.03051941151777829
+      },
+      "retail_total": {
+        "wape": 0.036061657924306906
+      },
+      "sporting_goods_and_hobby": {
+        "wape": 0.09007555029312914
+      }
+    }
+  },
+  "candidate_metadata": {
+    "name": "chronos_2_zero_shot",
+    "version": "1.0.0",
+    "strategy": "zero_shot_foundation_model",
+    "frozen_configuration": {
+      "model_id": "amazon/chronos-2",
+      "weights_snapshot": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+      "prediction_length": 12,
+      "quantile_levels": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "point_output": "package predictions column, clipped at zero",
+      "batch_size": 32,
+      "cross_learning": false,
+      "freq": "MS",
+      "context_length": "full as-of panel rows per series",
+      "device": "cpu",
+      "torch_dtype": "float32",
+      "search": "none (predeclared)"
+    },
+    "package_versions": {
+      "chronos-forecasting": "2.3.2"
+    },
+    "predeclaration": "CHRONOS_PREDECLARATION.md"
+  },
+  "status": "post_hoc_descriptive",
+  "status_note": "holdout already examined by the theta investigation; never used for selection or tuning; no confidence intervals by predeclaration",
+  "clip_events": 0,
+  "holdout_origins": [
+    "2023-01-01",
+    "2023-07-01",
+    "2023-10-01",
+    "2024-01-01",
+    "2024-03-01",
+    "2024-12-01",
+    "2025-01-01",
+    "2025-03-01"
+  ],
+  "folds": 352,
+  "naive": {
+    "fold_rows": 352,
+    "aggregate_wape": 0.026547277613989763,
+    "mean_category_wape": 0.05150953844147496,
+    "by_series": {
+      "building_material_and_garden": {
+        "wape": 0.03610491765629037
+      },
+      "clothing_and_accessories": {
+        "wape": 0.07293904885845162
+      },
+      "electronics_and_appliances": {
+        "wape": 0.07734804197774335
+      },
+      "food_and_beverage": {
+        "wape": 0.012765742395404393
+      },
+      "furniture_and_home_furnishings": {
+        "wape": 0.08613696227359863
+      },
+      "gasoline_stations": {
+        "wape": 0.06272502210845861
+      },
+      "general_merchandise": {
+        "wape": 0.042034702529119804
+      },
+      "health_and_personal_care": {
+        "wape": 0.03558767465751391
+      },
+      "motor_vehicle_and_parts": {
+        "wape": 0.030053542063942968
+      },
+      "retail_total": {
+        "wape": 0.01676343884132113
+      },
+      "sporting_goods_and_hobby": {
+        "wape": 0.09414582949437977
+      }
+    }
+  },
+  "theta": {
+    "fold_rows": 352,
+    "aggregate_wape": 0.0342643716077441,
+    "mean_category_wape": 0.04980253038431428,
+    "by_series": {
+      "building_material_and_garden": {
+        "wape": 0.03533883176384071
+      },
+      "clothing_and_accessories": {
+        "wape": 0.09022091659384995
+      },
+      "electronics_and_appliances": {
+        "wape": 0.07451758256357127
+      },
+      "food_and_beverage": {
+        "wape": 0.013674282206216703
+      },
+      "furniture_and_home_furnishings": {
+        "wape": 0.07596227227492627
+      },
+      "gasoline_stations": {
+        "wape": 0.043387216910715155
+      },
+      "general_merchandise": {
+        "wape": 0.02378058737321291
+      },
+      "health_and_personal_care": {
+        "wape": 0.02988995524840029
+      },
+      "motor_vehicle_and_parts": {
+        "wape": 0.029259923167917562
+      },
+      "retail_total": {
+        "wape": 0.0346412021334324
+      },
+      "sporting_goods_and_hobby": {
+        "wape": 0.0971550639913738
+      }
+    }
+  },
+  "comparison": {
+    "vs_naive": {
+      "mean_category_wape_delta_pp": 0.1470926635804004,
+      "improved_series_count": 6,
+      "series_count": 11,
+      "improvements_pp": {
+        "building_material_and_garden": -0.837,
+        "clothing_and_accessories": -1.8937,
+        "electronics_and_appliances": 1.3214,
+        "food_and_beverage": -0.7894,
+        "furniture_and_home_furnishings": 1.1188,
+        "gasoline_stations": 1.7931,
+        "general_merchandise": 2.2363,
+        "health_and_personal_care": 0.2379,
+        "motor_vehicle_and_parts": -0.0466,
+        "retail_total": -1.9298,
+        "sporting_goods_and_hobby": 0.407
+      },
+      "regressions": [
+        "building_material_and_garden",
+        "clothing_and_accessories",
+        "food_and_beverage",
+        "motor_vehicle_and_parts",
+        "retail_total"
+      ]
+    },
+    "vs_theta": {
+      "mean_category_wape_delta_pp": -0.02360814213566778,
+      "improved_series_count": 4,
+      "series_count": 11,
+      "improvements_pp": {
+        "building_material_and_garden": -0.9136,
+        "clothing_and_accessories": -0.1656,
+        "electronics_and_appliances": 1.0383,
+        "food_and_beverage": -0.6986,
+        "furniture_and_home_furnishings": 0.1014,
+        "gasoline_stations": -0.1407,
+        "general_merchandise": 0.4109,
+        "health_and_personal_care": -0.3318,
+        "motor_vehicle_and_parts": -0.1259,
+        "retail_total": -0.142,
+        "sporting_goods_and_hobby": 0.708
+      },
+      "regressions": [
+        "building_material_and_garden",
+        "clothing_and_accessories",
+        "food_and_beverage",
+        "gasoline_stations",
+        "health_and_personal_care",
+        "motor_vehicle_and_parts",
+        "retail_total"
+      ]
+    }
+  },
+  "by_horizon": {
+    "chronos": {
+      "1": 0.034635602042499755,
+      "3": 0.036160487663609686,
+      "6": 0.036749830313223514,
+      "12": 0.03607661836799181
+    },
+    "naive": {
+      "1": 0.026634783816165634,
+      "3": 0.02744031257715431,
+      "6": 0.026480682490201586,
+      "12": 0.025651810854797282
+    },
+    "theta": {
+      "1": 0.03529007163295143,
+      "3": 0.036280126153468865,
+      "6": 0.035592858517173205,
+      "12": 0.029975525151912104
+    }
+  },
+  "excluded_origins": [
+    {
+      "forecast_origin": "2023-02-01",
+      "origin_as_of": "2023-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-01-01, not the origin month 2023-02-01"
+    },
+    {
+      "forecast_origin": "2023-03-01",
+      "origin_as_of": "2023-05-15T00:00:00+00:00",
+      "reason": "most recent training month is 2023-02-01, not the origin month 2023-03-01"
+    },
+    {
+      "forecast_origin": "2023-04-01",
+      "origin_as_of": "2023-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-03-01, not the origin month 2023-04-01"
+    },
+    {
+      "forecast_origin": "2023-05-01",
+      "origin_as_of": "2023-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2023-04-01, not the origin month 2023-05-01"
+    },
+    {
+      "forecast_origin": "2023-06-01",
+      "origin_as_of": "2023-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-05-01, not the origin month 2023-06-01"
+    },
+    {
+      "forecast_origin": "2023-08-01",
+      "origin_as_of": "2023-10-15T00:00:00+00:00",
+      "reason": "most recent training month is 2023-07-01, not the origin month 2023-08-01"
+    },
+    {
+      "forecast_origin": "2023-09-01",
+      "origin_as_of": "2023-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-08-01, not the origin month 2023-09-01"
+    },
+    {
+      "forecast_origin": "2023-11-01",
+      "origin_as_of": "2024-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-10-01, not the origin month 2023-11-01"
+    },
+    {
+      "forecast_origin": "2023-12-01",
+      "origin_as_of": "2024-02-14T00:00:00+00:00",
+      "reason": "most recent training month is 2023-11-01, not the origin month 2023-12-01"
+    },
+    {
+      "forecast_origin": "2024-02-01",
+      "origin_as_of": "2024-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-01-01, not the origin month 2024-02-01"
+    },
+    {
+      "forecast_origin": "2024-04-01",
+      "origin_as_of": "2024-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-03-01, not the origin month 2024-04-01"
+    },
+    {
+      "forecast_origin": "2024-05-01",
+      "origin_as_of": "2024-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2024-04-01, not the origin month 2024-05-01"
+    },
+    {
+      "forecast_origin": "2024-06-01",
+      "origin_as_of": "2024-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-05-01, not the origin month 2024-06-01"
+    },
+    {
+      "forecast_origin": "2024-07-01",
+      "origin_as_of": "2024-09-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-06-01, not the origin month 2024-07-01"
+    },
+    {
+      "forecast_origin": "2024-08-01",
+      "origin_as_of": "2024-10-15T00:00:00+00:00",
+      "reason": "most recent training month is 2024-07-01, not the origin month 2024-08-01"
+    },
+    {
+      "forecast_origin": "2024-09-01",
+      "origin_as_of": "2024-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-08-01, not the origin month 2024-09-01"
+    },
+    {
+      "forecast_origin": "2024-10-01",
+      "origin_as_of": "2024-12-15T00:00:00+00:00",
+      "reason": "most recent training month is 2024-09-01, not the origin month 2024-10-01"
+    },
+    {
+      "forecast_origin": "2024-11-01",
+      "origin_as_of": "2025-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2024-10-01, not the origin month 2024-11-01"
+    },
+    {
+      "forecast_origin": "2025-02-01",
+      "origin_as_of": "2025-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2025-01-01, not the origin month 2025-02-01"
+    },
+    {
+      "forecast_origin": "2025-04-01",
+      "origin_as_of": "2025-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2025-03-01, not the origin month 2025-04-01"
+    },
+    {
+      "forecast_origin": "2025-05-01",
+      "origin_as_of": "2025-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2025-04-01, not the origin month 2025-05-01"
+    },
+    {
+      "forecast_origin": "2025-06-01",
+      "origin_as_of": "2025-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2025-05-01, not the origin month 2025-06-01"
+    },
+    {
+      "forecast_origin": "2025-07-01",
+      "origin_as_of": "2025-09-14T00:00:00+00:00",
+      "reason": "most recent training month is 2025-06-01, not the origin month 2025-07-01"
+    },
+    {
+      "forecast_origin": "2025-08-01",
+      "origin_as_of": "2025-10-15T00:00:00+00:00",
+      "reason": "most recent training month is 2025-07-01, not the origin month 2025-08-01"
+    }
+  ]
+}
