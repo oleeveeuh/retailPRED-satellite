@@ -454,3 +454,44 @@ Provenance: rungs and scorecard under `results/h7_*`; both data SHA-256s
 e079e303e42fa89c775c15dec665d084be27c138cab59e3f70cd89cfbae456a9) recorded
 in every result payload; code committed before execution throughout; C4
 held — no criterion, threshold, or window moved after any run.
+
+## 12. Addendum — H8: NHITS under the same vintage protocol (owner-directed, 2026-11-10)
+
+The last untested modern alternative ran under the H6 pattern:
+`NHITS_PREDECLARATION.md` frozen the configuration (the M5 feasibility
+gate's invocation byte-for-byte except dataset-determined fields: h=12,
+input_size=48, val_size=12, freq="MS") before any code ran; NHITS — which
+has no zero-shot mode — trained fresh at every origin on exactly the as-of
+panel the harness passes, hyperparameters fixed, no search, no clipping
+(zero negative predictions). LightGBM was never imported into the training
+process (H6's OpenMP isolation). Full numbers: `NHITS_MRTS.md`.
+
+| Window | naive | theta | chronos_2_zero_shot | nhits_trained | gate LightGBM |
+|---|---:|---:|---:|---:|---:|
+| exploration (24 origins) | 9.30% | 7.51% | 7.75% | 8.91% | 9.55% |
+| holdout (8 origins — post-hoc, descriptive only) | 5.15% | 4.98% | 5.00% | 6.90% | 5.64% (gate slice) |
+
+- NHITS beats naive (+0.39pp, 6/11) and the gate LightGBM (+0.64pp, 8/11)
+  on exploration, and trails theta (−1.40pp, 1/11) — Chronos's shape, one
+  step further back. Short horizons are competitive (h=1 6.08 vs theta
+  5.80); by h=12 it reaches 12.64, effectively the recursive gate model's
+  position (12.89).
+- The holdout run is the predeclared single post-hoc evaluation; no CIs
+  (rule 3), no selection or promotion input. NHITS loses to naive on the
+  calm window (−1.75pp, 2/11) and to theta (−1.92pp, 1/11) — the largest
+  calm-regime premium of the three challengers, below even the gate
+  LightGBM, degrading monotonically with horizon.
+- **What this run buys the record: the same evaluation methods now cover
+  all three model families.** Identical origin grid, availability rule,
+  training selection, actuals, horizons, and metrics evaluated classical
+  theta, foundation Chronos-2 (H6), neural NHITS (H8), the learned gate
+  LightGBM, and seasonal naive. Theta ranks first on both windows against
+  every modern alternative; Chronos second on both. The exploration
+  ordering inverts below theta on the calm holdout, exactly as the §4
+  regime analysis predicts — the modern methods' edges are regime-
+  conditional, theta's is not.
+- Un-tested NHITS variants (other hyperparameters, longer training,
+  covariates, per-series adaptation) remain untested by design — the H7
+  resolved negative already bounds what configuration search could buy
+  here. Theta's selection stands; promotion exists only on future origins
+  under `REGATE_DESIGN.md`.
