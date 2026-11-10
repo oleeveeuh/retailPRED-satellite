@@ -1,0 +1,87 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "6f24996fccce0daccb1786b114c048ed4c37592f",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-10T10:01:52.133821+00:00",
+    "purpose": "artifact recovery of theta holdout fold rows (reporting only)"
+  },
+  "predeclared_statement": "Deterministic recovery of theta holdout fold rows, predeclared 2026-11-10 and committed before execution: identical library path and protocol to the frozen single run; theta and naive aggregates must reproduce results/holdout_theta.json exactly (1e-9 / 1e-12) or the script stops; no model, selection, or rule changes; promotion verdict unchanged; recovered rows feed the reporting-only scorecard, nothing else.",
+  "frozen_run": "results/holdout_theta.json",
+  "frozen_run_sha256_of_input_data": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+  "recovered_rows": 352,
+  "recovered_origins": [
+    "2023-01-01",
+    "2023-07-01",
+    "2023-10-01",
+    "2024-01-01",
+    "2024-03-01",
+    "2024-12-01",
+    "2025-01-01",
+    "2025-03-01"
+  ],
+  "recovered_folds_sha256": "52989e1df926c7e086402ca051ab32e289ff3b28e318dc479c34bfefa2cf128d",
+  "verification": {
+    "all_gates_passed": true,
+    "theta_tolerance": 1e-09,
+    "naive_tolerance": 1e-12,
+    "max_theta_diff": 0.0,
+    "max_naive_diff": 0.0,
+    "diffs": {
+      "theta.aggregate_wape": 0.0,
+      "naive.aggregate_wape": 0.0,
+      "theta.mean_category_wape": 0.0,
+      "naive.mean_category_wape": 0.0,
+      "theta.by_series.building_material_and_garden": 0.0,
+      "theta.by_series.clothing_and_accessories": 0.0,
+      "theta.by_series.electronics_and_appliances": 0.0,
+      "theta.by_series.food_and_beverage": 0.0,
+      "theta.by_series.furniture_and_home_furnishings": 0.0,
+      "theta.by_series.gasoline_stations": 0.0,
+      "theta.by_series.general_merchandise": 0.0,
+      "theta.by_series.health_and_personal_care": 0.0,
+      "theta.by_series.motor_vehicle_and_parts": 0.0,
+      "theta.by_series.retail_total": 0.0,
+      "theta.by_series.sporting_goods_and_hobby": 0.0,
+      "naive.by_series.building_material_and_garden": 0.0,
+      "naive.by_series.clothing_and_accessories": 0.0,
+      "naive.by_series.electronics_and_appliances": 0.0,
+      "naive.by_series.food_and_beverage": 0.0,
+      "naive.by_series.furniture_and_home_furnishings": 0.0,
+      "naive.by_series.gasoline_stations": 0.0,
+      "naive.by_series.general_merchandise": 0.0,
+      "naive.by_series.health_and_personal_care": 0.0,
+      "naive.by_series.motor_vehicle_and_parts": 0.0,
+      "naive.by_series.retail_total": 0.0,
+      "naive.by_series.sporting_goods_and_hobby": 0.0,
+      "theta.by_horizon.1": 0.0,
+      "theta.by_horizon.3": 0.0,
+      "theta.by_horizon.6": 0.0,
+      "theta.by_horizon.12": 0.0,
+      "naive.by_horizon.1": 0.0,
+      "naive.by_horizon.3": 0.0,
+      "naive.by_horizon.6": 0.0,
+      "naive.by_horizon.12": 0.0
+    }
+  },
+  "scope_note": "Recovered rows exist so the reporting-only scorecard (MASE, signed bias, category-by-horizon, origin-block CIs, first-release re-scoring) can be computed on the holdout. The promotion verdict remains holdout_theta.json's; nothing here feeds back into any model, selection, or rule."
+}
