@@ -65,6 +65,9 @@ def build_candidate(name: str, panel: pd.DataFrame):
         )
     if name == "h5_theta":
         return lambda: PerSeriesPanelAdapter(ThetaMethod)
+    # h6_chronos is deliberately absent: lightgbm and torch segfault when
+    # imported into one process (OpenMP conflict), which is why the M5
+    # benchmark also isolated Chronos. Use scripts/run_h6_chronos.py.
     raise SystemExit(f"unknown candidate: {name}")
 
 

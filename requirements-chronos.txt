@@ -1,0 +1,5 @@
+# H6 Chronos benchmark only (CHRONOS_PREDECLARATION.md). Install on top of
+# requirements.txt with: .venv/bin/pip install -r requirements-chronos.txt
+# Pins match the retailPRED M5 foundation environment exactly (python 3.11.17).
+chronos-forecasting==2.3.2
+torch==2.15.0

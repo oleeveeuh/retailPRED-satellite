@@ -42,6 +42,7 @@ in `results/`.
 | H4 transformations | log-level; YoY-diff; STL-detrended | −19.07 / −0.88 / −1.06pp | 2/8/5 of 11 | refuted (log-ratio target is load-bearing) |
 | H5 literature method | **theta method** (A&N 2000); MIDAS + DFM sketched | **+3.48pp** | **10/11** | winner → holdout |
 | H3 extension | theta+naive, theta+LightGBM+naive | +2.74..+2.96pp | 9–10/11 | dilutes theta |
+| H6 foundation model (owner-directed 2026-11-10) | zero-shot Chronos-2, frozen M5-benchmark config (`CHRONOS_PREDECLARATION.md`) | benchmark on exploration: +1.54pp vs naive, −0.24pp vs theta | 9/11 vs naive, 3/11 vs theta | 2nd place both windows; holdout scored once post-hoc, descriptive only (`CHRONOS_MRTS.md`) |
 
 ## 3. Holdout result (chosen candidate, run once)
 

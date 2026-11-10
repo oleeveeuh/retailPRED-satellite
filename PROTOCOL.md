@@ -47,3 +47,8 @@ The evaluation contract is the one predeclared in
      features and parameters otherwise fixed.
    - H5 adds literature-backed per-series forecasters as additional
      benchmarks on identical origins.
+   - H6 (owner-directed 2026-11-10, frozen in `CHRONOS_PREDECLARATION.md`
+     before any run): adds zero-shot Chronos-2 as an additional benchmark on
+     identical origins. Benchmark only — no candidate re-selection, no
+     promotion claim; holdout origins are scored exactly once, after the
+     exploration run, and labeled post-hoc/descriptive.

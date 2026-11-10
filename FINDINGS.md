@@ -350,3 +350,37 @@ remain ~60% larger than the 2010s (median 1.96% -> 3.17% in the settled era)
 *volatility* regime reverted. Naive predictability by target year: 4.4% (2019)
 -> 18.1% (2020) -> 16.8% (2021) -> 8.9% (2022) -> 6.9% (2023 spillover): a
 4x collapse with only partial recovery.
+
+## 10. Addendum — H6: Chronos-2 zero-shot foundation-model benchmark (owner-directed, 2026-11-10)
+
+The study had no foundation-model alternative on MRTS: Chronos-2 was tested
+and rejected on M5 only, and the M5 failure (bottom-level underforecasting
+accumulating under aggregation across 30,490 sparse daily series) does not
+transfer to 11 directly-forecast national monthly series. Per the frozen
+predeclaration (`CHRONOS_PREDECLARATION.md`, written before any run), zero-shot
+Chronos-2 — identical invocation to the M5 benchmark except the
+dataset-determined fields (monthly frequency, 12-month horizon, full as-of
+context, cross-learning off, no search of any kind) — ran on identical origins.
+
+Full numbers: `CHRONOS_MRTS.md`. Summary (mean-category WAPE):
+
+| Window | naive | theta | chronos_2_zero_shot | gate LightGBM |
+|---|---:|---:|---:|---:|
+| exploration (24 origins) | 9.30% | 7.51% | 7.75% | 9.55% |
+| holdout (8 origins — **post-hoc, descriptive only**) | 5.15% | 4.98% | 5.00% | 5.64% (gate slice) |
+
+- Chronos beats naive on both windows (+1.54pp exploration / +0.15pp holdout)
+  and gate LightGBM (+1.80pp exploration), and trails theta on both
+  (−0.24pp exploration, winning 3/11 categories; −0.02pp holdout, 4/11).
+- The holdout run is the predeclared single post-hoc evaluation: no selection,
+  tuning, or preference input; no confidence intervals (rule 3). The naive
+  basis reproduces the frozen `holdout_theta.json` record exactly.
+- **Theta remains the selected candidate** — the selection rule predates this
+  benchmark. No promotion claim is made for any model; future origins under
+  `REGATE_DESIGN.md` are the only promotion path. Cross-learning and
+  fine-tuned Chronos variants remain untested.
+
+What this addendum buys the study: the honest claim is no longer "Chronos was
+eliminated on M5" (a cross-dataset assertion no MRTS holdout ever tested) but
+"the MRTS study compared a modern zero-shot foundation-model alternative under
+the same vintage protocol, and it finished second to theta on both windows."
