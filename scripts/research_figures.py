@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Research-overview figures: window-scoped model comparison and the policy's
-per-category REPORT outcome. Reads only frozen results JSONs.
+"""Research-overview figures: window-scoped model comparison, the
+identical-protocol family benchmark, per-horizon small multiples, the H7
+feature ladder, and the policy's per-category REPORT outcome. Reads only
+frozen results JSONs and fold CSVs (stop-on-mismatch verification against
+the published aggregates before drawing).
 
 Two render modes:
 
@@ -18,8 +21,10 @@ No results file is ever written: this script reads frozen JSONs only.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 import matplotlib
@@ -33,6 +38,8 @@ from common import FIGURES, ROOT  # noqa: E402
 BLUE = "#2a78d6"      # slot 1: regime-switch policy
 ORANGE = "#eb6834"    # slot 2: theta method
 AQUA = "#1baf7a"      # slot 3: global LightGBM
+PURPLE = "#7d5ba6"    # slot 4: Chronos-2 zero-shot
+BROWN = "#8c6d46"     # slot 5: NHITS trained
 INK = "#0b0b0b"
 INK_2 = "#52514e"     # naive baseline
 MUTED = "#898781"
@@ -61,6 +68,13 @@ FIELDNOTES = {
         "theta_method": "#482728",         # muted wine (owner pick)
         "regime_switch_policy": "#89927a", # sage (site accent)
         "global_lightgbm": "#d4708c",      # sakura rose (owner pick)
+        # Two added slots for the H6/H8 family benchmarks. CVD-validated on
+        # cream against the four above (scripts/validate_palette.js, worst
+        # adjacent pair 15.3 protan / 16.0 normal); the two deep owner tones
+        # stay outside the strict lightness band by the suite's documented
+        # convention — direct value labels and the legend carry identity.
+        "nhits_trained": "#1f7a68",        # pine
+        "chronos_2_zero_shot": "#2f5aa8",  # indigo
     },
     "positive": "#89927a",     # sage — the site accent; caption and dict
                                # comment both promise sage positives
@@ -105,6 +119,24 @@ MODEL_STYLE = {
     "theta_method": ("theta", ORANGE),
     "global_lightgbm": ("LightGBM", AQUA),
 }
+# The identical-protocol family benchmark (H6 Chronos, H8 NHITS beside the
+# frozen naive / theta / gate-LightGBM records). Display order puts the
+# neutral baseline first and the frontier last; adjacency is CVD-validated
+# in the themed palette (see FIELDNOTES comment).
+FAMILY_ORDER = [
+    ("seasonal_naive", "naive"),
+    ("nhits_trained", "NHITS (trained)"),
+    ("chronos_2_zero_shot", "Chronos-2 (zero-shot)"),
+    ("global_lightgbm", "LightGBM (gate)"),
+    ("theta_method", "theta"),
+]
+FAMILY_COLORS = {
+    "seasonal_naive": INK_2,
+    "nhits_trained": BROWN,
+    "chronos_2_zero_shot": PURPLE,
+    "global_lightgbm": AQUA,
+    "theta_method": ORANGE,
+}
 WINDOW_LABELS = {
     "exploration_2017_2022": "exploration\n2017-10 .. 2022-10",
     "report_2021_2022": "report\n2021-01 .. 2022-10",
@@ -142,6 +174,13 @@ def apply_theme(style: dict) -> None:
     MODEL_STYLE["global_lightgbm"] = ("LightGBM", colors["global_lightgbm"])
     MODEL_STYLE["theta_method"] = ("theta", colors["theta_method"])
     MODEL_STYLE["regime_switch_policy"] = ("policy", colors["regime_switch_policy"])
+    FAMILY_COLORS.update({
+        "seasonal_naive": colors["seasonal_naive"],
+        "nhits_trained": colors["nhits_trained"],
+        "chronos_2_zero_shot": colors["chronos_2_zero_shot"],
+        "global_lightgbm": colors["global_lightgbm"],
+        "theta_method": colors["theta_method"],
+    })
     BAR_GAP = 0.02
     DIVERGING = (style["positive"], style["negative"])
     LABEL_OUTSIDE = True
@@ -184,6 +223,221 @@ def research_windows(summary) -> None:
             transform=ax.transAxes, ha="right", va="top", fontsize=8, color=MUTED)
     fig.tight_layout()
     fig.savefig(FIGURES / "research_windows.png", bbox_inches="tight")
+    plt.close(fig)
+
+
+def _mean_cat_by_horizon(path, model_names, max_origin="2022-10-01"):
+    """Mean-category WAPE (%) per horizon from a frozen fold CSV (stdlib csv
+    only). WAPE per (series, horizon) = sum|pred-actual| / sum|actual|, then
+    the equal mean across the 11 categories — the protocol metric."""
+    num = defaultdict(float)
+    den = defaultdict(float)
+    with open(path, newline="") as f:
+        for row in csv.DictReader(f):
+            if row["model_name"] not in model_names:
+                continue
+            if max_origin and row["forecast_origin"] > max_origin:
+                continue
+            actual = float(row["actual"])
+            key = (row["series_id"], int(row["horizon"]))
+            num[key] += abs(float(row["prediction"]) - actual)
+            den[key] += abs(actual)
+    per_horizon = defaultdict(list)
+    for (series, horizon), numerator in num.items():
+        per_horizon[horizon].append(100 * numerator / den[(series, horizon)])
+    return {h: sum(v) / len(v) for h, v in sorted(per_horizon.items())}
+
+
+def _verify_published(computed, published, label):
+    """Stop-on-mismatch gate: every computed series must reproduce the
+    published two-decimal aggregates before any figure is drawn."""
+    for horizon, expected in zip((1, 3, 6, 12), published):
+        got = computed.get(horizon)
+        if got is None or abs(got - expected) > 0.005:
+            sys.exit(f"verification gate failed: {label} h={horizon} "
+                     f"computed {got:.4f} vs published {expected}")
+
+
+def model_families(summary) -> None:
+    """The identical-protocol family table (FINDINGS §12): theta, Chronos-2,
+    NHITS, gate LightGBM, seasonal naive on the same origin grid. The holdout
+    column is the single post-hoc descriptive pass — annotated as such."""
+    rows = summary["rows"]
+    chronos_x = load("cand_h6_chronos.json")
+    nhits_x = load("cand_h8_nhits.json")
+    chronos_h = load("holdout_chronos.json")
+    nhits_h = load("holdout_nhits.json")
+
+    def row_value(window, model):
+        r = next(r for r in rows if r["evaluation_window"] == window
+                 and r["model_name"] == model)
+        return 100 * r["metric_value"]
+
+    exploration = {
+        "seasonal_naive": row_value("exploration_2017_2022", "seasonal_naive"),
+        "global_lightgbm": row_value("exploration_2017_2022", "global_lightgbm"),
+        "theta_method": row_value("exploration_2017_2022", "theta_method"),
+        "chronos_2_zero_shot": 100 * chronos_x["windows"]["full"]["candidate"]["mean_category_wape"],
+        "nhits_trained": 100 * nhits_x["windows"]["full"]["candidate"]["mean_category_wape"],
+    }
+    holdout = {
+        "seasonal_naive": row_value("holdout_2023_2025", "seasonal_naive"),
+        "global_lightgbm": row_value("holdout_2023_2025", "global_lightgbm"),
+        "theta_method": row_value("holdout_2023_2025", "theta_method"),
+        "chronos_2_zero_shot": 100 * chronos_h["candidate"]["mean_category_wape"],
+        "nhits_trained": 100 * nhits_h["candidate"]["mean_category_wape"],
+    }
+
+    fig, ax = plt.subplots(figsize=(7.6, 4.6))
+    windows = ["exploration_2017_2022", "holdout_2023_2025"]
+    data = {"exploration_2017_2022": exploration, "holdout_2023_2025": holdout}
+    n_models = len(FAMILY_ORDER)
+    width = 0.15 - BAR_GAP
+    x = np.arange(len(windows))
+    for slot, (model, label) in enumerate(FAMILY_ORDER):
+        offsets = x + (slot - (n_models - 1) / 2) * width
+        values = [data[w][model] for w in windows]
+        bars = ax.bar(offsets, values, width=width, color=FAMILY_COLORS[model],
+                      label=label, zorder=3)
+        for bar, value in zip(bars, values):
+            ax.text(bar.get_x() + bar.get_width() / 2, value, f"{value:.1f}",
+                    ha="center", va="bottom", fontsize=8, color=INK_2)
+    ax.set_xticks(x, ["exploration\n2017-10 .. 2022-10\n(24 origins)",
+                      "holdout\n2023-01 .. 2025-03\n(single post-hoc pass)"],
+                  fontsize=8.5)
+    ax.set_ylabel("mean-category WAPE (%)")
+    ax.set_ylim(0, 11.4)
+    ax.set_title("One vintage protocol, five model families — lower is better",
+                 fontsize=10, color=INK_2, loc="left", pad=24)
+    ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.005, 1.0, 0.06),
+              ncols=5, fontsize=8, frameon=False,
+              handlelength=1.1, handletextpad=0.45, columnspacing=0.9)
+    ax.text(0.99, 0.985, "holdout: post-hoc, descriptive only —\n"
+            "no selection or promotion input; LightGBM slice\n"
+            "previously observed in the gate run",
+            transform=ax.transAxes, ha="right", va="top", fontsize=8, color=MUTED)
+    fig.tight_layout()
+    fig.savefig(FIGURES / "model_families.png", bbox_inches="tight")
+    plt.close(fig)
+
+
+def horizon_families() -> None:
+    """Exploration-window mean-category WAPE by horizon, one panel per model
+    with the seasonal naive as the dotted neutral reference — small multiples
+    so six series never have to fight over one legend."""
+    gate_folds = ROOT / "reference" / "vintage_backtest_folds.csv"
+    naive_h = _mean_cat_by_horizon(gate_folds, {"seasonal_naive"})
+    gate_h = _mean_cat_by_horizon(gate_folds, {"global_lightgbm"})
+    theta_h = _mean_cat_by_horizon(ROOT / "results" / "folds_h5_theta.csv",
+                                   {"theta_method"})
+    chronos_h = _mean_cat_by_horizon(ROOT / "results" / "folds_h6_chronos.csv",
+                                     {"chronos_2_zero_shot"})
+    nhits_h = _mean_cat_by_horizon(ROOT / "results" / "folds_h8_nhits.csv",
+                                   {"nhits_trained"})
+    direct_h = {int(k): 100 * v["mean_category"] for k, v in
+                load("h7_scorecard.json")["windows"]["full_exploration"]["final_vintage"]["stats"]["candidate"]["by_horizon"].items()}
+
+    # Verification gates: reproduce the published two-decimal tables
+    # (CHRONOS_MRTS.md / NHITS_MRTS.md / h7_scorecard.md) before drawing.
+    _verify_published(naive_h, (9.52, 9.09, 8.45, 10.14), "seasonal naive")
+    _verify_published(gate_h, (7.17, 8.49, 9.63, 12.89), "gate LightGBM")
+    _verify_published(theta_h, (5.80, 6.23, 7.81, 10.20), "theta")
+    _verify_published(chronos_h, (5.88, 6.64, 8.10, 10.37), "Chronos-2")
+    _verify_published(nhits_h, (6.08, 7.30, 9.60, 12.64), "NHITS")
+    _verify_published(direct_h, (7.11, 8.48, 8.99, 11.47), "direct LightGBM + growth")
+
+    panels = [
+        ("naive (baseline)", naive_h, None, "-"),
+        ("theta", theta_h, FAMILY_COLORS["theta_method"], "-"),
+        ("Chronos-2 (zero-shot)", chronos_h, FAMILY_COLORS["chronos_2_zero_shot"], "-"),
+        ("NHITS (trained)", nhits_h, FAMILY_COLORS["nhits_trained"], "-"),
+        ("LightGBM (gate, recursive)", gate_h, FAMILY_COLORS["global_lightgbm"], (0, (5, 3))),
+        ("LightGBM (direct + growth)", direct_h, FAMILY_COLORS["global_lightgbm"], "-"),
+    ]
+    horizons = [1, 3, 6, 12]
+    fig, axes = plt.subplots(2, 3, figsize=(9.6, 5.4), sharex=True, sharey=True)
+    for idx, (ax, (title, values, color, dash)) in enumerate(zip(axes.flat, panels)):
+        if idx != 0:  # every panel overlays the dotted naive reference
+            ax.plot(horizons, [naive_h[h] for h in horizons], color=MUTED,
+                    lw=1.4, ls=(0, (2, 2)), zorder=2)
+        ax.plot(horizons, [values[h] for h in horizons], color=color or INK_2,
+                lw=2.2, ls=dash, marker="o", ms=5,
+                markerfacecolor=color or INK_2, zorder=3)
+        ax.set_title(title, fontsize=9.5, color=INK_2, loc="left")
+        end = values[12]
+        ax.annotate(f"{end:.1f}", (12, end), xytext=(6, 2),
+                    textcoords="offset points", fontsize=8.5, color=INK_2)
+    for ax in axes[:, 0]:
+        ax.set_ylabel("mean-category WAPE (%)")
+    for ax in axes[1, :]:
+        ax.set_xlabel("horizon (months ahead)")
+        ax.set_xticks(horizons)
+    axes[0, 0].set_ylim(4.5, 14.2)
+    fig.suptitle("Exploration origins, final-vintage actuals — dotted line = seasonal naive",
+                 x=0.02, ha="left", fontsize=10, color=INK_2)
+    fig.tight_layout(rect=(0, 0, 1, 0.955))
+    fig.savefig(FIGURES / "horizon_families.png", bbox_inches="tight")
+    plt.close(fig)
+
+
+def feature_ladder() -> None:
+    """The H7 choose-window ladder: incremental mean-category WAPE delta per
+    rung, origin stability, and the frozen verdict. Reads the frozen rung
+    JSONs only."""
+    rungs = [
+        ("direct_base", "base (anchor)"),
+        ("direct_growth", "+ growth"),
+        ("direct_trend", "+ trend"),
+        ("direct_cross", "+ cross-category"),
+        ("direct_revision", "+ revision"),
+        ("direct_external", "+ external macro"),
+        ("removal_growth", "− growth (removal check)"),
+    ]
+    labels, deltas, stability, verdicts = [], [], [], []
+    for rung, label in rungs:
+        data = load(f"h7_rung_{rung}.json")
+        advancement = data.get("advancement") or {}
+        labels.append(label)
+        deltas.append(advancement.get("mean_category_delta_pp", 0.0))
+        improved = advancement.get("improved_origins")
+        stability.append("—" if improved is None
+                         else f"{improved}/{advancement.get('n_choose_origins', 15)}")
+        note = data.get("verdict_note", "")
+        if rung == "removal_growth":
+            note = "CONFIRMS GROWTH"
+        elif rung == "direct_base":
+            note = "ANCHOR"
+        verdicts.append(note)
+
+    fig, ax = plt.subplots(figsize=(7.6, 4.2))
+    y = np.arange(len(labels))[::-1]
+    neutral = "#c9c2b2"
+    colors = [neutral if v == "ANCHOR" else
+              (DIVERGING[0] if d > 0 else DIVERGING[1])
+              for d, v in zip(deltas, verdicts)]
+    ax.barh(y, deltas, height=0.58, color=colors, zorder=3)
+    ax.axvline(0, color="#c3c2b7", lw=1, zorder=2)
+    ax.grid(axis="y", visible=False)
+    ax.set_yticks(y, labels, fontsize=9)
+    ax.set_xlabel("choose-window mean-category WAPE delta vs previous best (pp); "
+                  "positive = better")
+    for yi, delta, stable, verdict in zip(y, deltas, stability, verdicts):
+        ax.text(delta + (0.008 if delta >= 0 else -0.008), yi,
+                f"{delta:+.2f}" if verdict != "ANCHOR" else "0.00",
+                va="center", ha="left" if delta >= 0 else "right",
+                fontsize=8.5, color=INK_2)
+        ax.text(0.28, yi, f"{stable} origins improved   {verdict}",
+                va="center", ha="left", fontsize=8.5,
+                color=INK_2 if verdict in ("ADVANCE", "CONFIRMS GROWTH") else MUTED,
+                fontweight="bold" if verdict == "ADVANCE" else "normal")
+    ax.set_xlim(-0.22, 0.62)
+    ax.margins(y=0.08)
+    ax.set_title("Feature-group ladder (direct per-horizon LightGBM) — choose "
+                 "window only; the report window was scored once, after the "
+                 "ladder concluded",
+                 fontsize=10, color=INK_2, loc="left")
+    fig.tight_layout()
+    fig.savefig(FIGURES / "feature_ladder.png", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -350,9 +604,15 @@ def main() -> None:
         policy_categories(load("policy_report.json"))
         themed_policy_tau_sweep(load("policy_train.json"), load("policy_report.json"), FIELDNOTES)
         themed_policy_reliability(load("policy_report.json"), FIELDNOTES)
+        model_families(load("mrts_window_summary.json"))
+        horizon_families()
+        feature_ladder()
     else:
         research_windows(load("mrts_window_summary.json"))
         policy_categories(load("policy_report.json"))
+        model_families(load("mrts_window_summary.json"))
+        horizon_families()
+        feature_ladder()
     print("figures written:", sorted(p.name for p in FIGURES.glob("*.png")))
 
 

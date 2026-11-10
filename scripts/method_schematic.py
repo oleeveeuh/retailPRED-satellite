@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Method schematic: what vintage-safe backtesting did, and where the
-classifier sits. Card-first layout — wide aspect and large type so it
+promotion gate sits. Card-first layout — wide aspect and large type so it
 stays legible at gallery-thumbnail size and in the dialog. Illustrative
 diagram: origin grid and protocol values are real; no metrics are drawn.
 Fieldnotes theme."""
@@ -146,17 +146,17 @@ def main() -> None:
                      arrowprops=dict(arrowstyle="->", color=INK2, lw=1.8,
                                      connectionstyle=f"arc3,rad={rad}"))
 
-    ax2.text(0.5, 0.94, "the learned switch — menu fixed to {naive, theta}",
+    ax2.text(0.5, 0.94, "five model families, one predeclared promotion gate",
              fontsize=12.5, color=INK2, ha="center")
-    chip(0.02, 0.28, 0.12, 0.36, "naive", SUMI, SUMI, fs=12)
-    chip(0.16, 0.28, 0.12, 0.36, "theta", WINE, WINE, fs=12)
-    chip(0.36, 0.16, 0.34, 0.56, "policy classifier\nP(theta wins) ≥ τ = 0.50",
-         SAGE, SAGE, "#fbf9f4", fs=11.5)
-    chip(0.76, 0.22, 0.23, 0.5, "one pick per\ncategory × origin",
-         CRIMSON, CRIMSON, "#fbf9f4", fs=11)
-    arrow(0.14, 0.62, 0.36, 0.62, rad=-0.12)  # gentle arc over theta, well below the subtitle
-    arrow(0.28, 0.42, 0.36, 0.44)
-    arrow(0.70, 0.5, 0.76, 0.5)
+    chip(0.0, 0.10, 0.30, 0.70,
+         "candidates\nnaive · theta · Chronos-2\nNHITS · LightGBM",
+         SUMI, SUMI, fs=8.5)
+    chip(0.345, 0.10, 0.33, 0.70, "promotion gate\ncriteria fixed before\nmeasurement",
+         SAGE, SAGE, "#fbf9f4", fs=8.5)
+    chip(0.72, 0.10, 0.275, 0.70, "promote or refuse\nfail-closed",
+         CRIMSON, CRIMSON, "#fbf9f4", fs=8.5)
+    arrow(0.30, 0.45, 0.345, 0.45)
+    arrow(0.675, 0.45, 0.72, 0.45)
     ax2.text(0.5, -0.12, "one refit per origin, only the visible past — all features point-in-time",
              fontsize=10, color=MUTED, ha="center", fontfamily="IBM Plex Mono")
 
