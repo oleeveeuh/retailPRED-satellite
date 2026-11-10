@@ -384,3 +384,73 @@ What this addendum buys the study: the honest claim is no longer "Chronos was
 eliminated on M5" (a cross-dataset assertion no MRTS holdout ever tested) but
 "the MRTS study compared a modern zero-shot foundation-model alternative under
 the same vintage protocol, and it finished second to theta on both windows."
+
+## 11. Addendum — H7: the predeclared feature-group ladder vs theta (owner-directed, 2026-11-10)
+
+The question left open by §5 — can anything on this archive beat theta, not
+merely naive — was put to a controlled, predeclared feature experiment
+(`H7_FEATURE_LADDER.md`, committed before any run; owner froze the win rule
+as the REGATE v2 mirror and directed that vintage-safe external data be
+included). Design: direct per-horizon models (no recursion — the h=12
+failure mode §1 identified), six exact feature groups, addition and removal
+ablations on the choose window only, per-origin inner-CV regularization for
+the elastic-net arm, gate LightGBM hyperparameters untouched, and the
+report window computed exactly once, after the ladder concluded. Full
+tables: `results/h7_scorecard.md` (verification gates: direct-base h=1
+reproduced the gate point model at max delta 0.0 across all 264 exploration
+h=1 folds; naive/theta reproduced the frozen Phase-2 record at 1e-9).
+
+**Ladder outcome (choose window, frozen rule):** +growth advanced (+0.16pp,
+13/15 origins); +trend, +cross, +revision, +external all refuted —
+revision's +0.05pp failed origin stability (8/15), external added exactly
+nothing (+0.00pp, 4/15). Removal confirmed growth in both directions.
+The elastic net class (inner-CV regularization, same features) finished
+behind the LightGBM (8.65% vs 8.39%). Final configuration: **direct
+LightGBM base+growth** — and it **loses to theta with the interval
+resolving the loss** on every window under final-vintage actuals: full
+exploration −1.50pp vs theta (CI −2.45..−0.73), report −2.82pp (CI
+−4.69..−1.17). Against naive it is unresolved (+0.28pp, CI −0.46..+1.14).
+The REGATE v2 mirror fails all three criteria on every window. **Answer:
+no tested approach beats theta; the negative is resolved, not underpowered.**
+
+Mechanism conclusions:
+
+- **Feature enrichment is not the route.** Longer lags and momentum help
+  the tree slightly; trend, cross-category, revision, and origin-constant
+  external-macro context add no stable information on final vintages. This
+  extends the H1/H2/H4 pattern: every axis of extra input (row filtering,
+  reliability metadata, transforms, cross-series, macro state) leaves the
+  learned stack behind theta. The as-of MRTS panel is informationally
+  close to sufficient for what theta already extracts — robust level plus
+  trend.
+- **Recursion was a real but secondary pathology.** Direct h=1 equals the
+  gate point model exactly (max delta 0.0 over the full grid), and going
+  direct buys −0.64pp at h=6 and −1.42pp at h=12 over the recursive gate
+  run (9.63→8.99, 12.89→11.47) — yet the direct model still trails theta
+  at every horizon (h=12: 11.47 vs 10.20). The deficit is the model class,
+  not just the rollout.
+- **The first-release edge is theta's too.** On first-release actuals the
+  learned model beats naive with a wholly positive interval (+2.23pp,
+  10/11 categories) — and loses to theta anyway (−1.28pp, CI −2.32..−0.44).
+  Theta's frontier position holds on both actual axes, so the §3 finding
+  (holdout verdict is revision-dependent) does not rescue a challenger.
+- **Small-volatile-category harm persists** (report window: sporting goods
+  +8.22pp vs naive, clothing +6.76pp vs theta) — the Phase-1 category
+  profile is structural to learned global models here, not an artifact of
+  recursion or features.
+
+Scope of the negative, stated honestly: this closes feature-group
+enrichment as designed — origin-constant external context (the H2
+precedent), monthly vintage-only inputs, and the tested model classes. It
+does not test per-training-row historical external alignment or
+higher-frequency nowcast-grade inputs (§5.3's MIDAS route), which remain
+the identified open directions, alongside simply accumulating re-gate
+origins. For the ≈2027 re-gate, theta stays the third benchmark
+(REGATE_DESIGN §3 C3), and any future challenger now knows the frontier it
+must clear is defended by evidence, not by default.
+
+Provenance: rungs and scorecard under `results/h7_*`; both data SHA-256s
+(MRTS panel and `data/alfred_external_vintages.csv`,
+e079e303e42fa89c775c15dec665d084be27c138cab59e3f70cd89cfbae456a9) recorded
+in every result payload; code committed before execution throughout; C4
+held — no criterion, threshold, or window moved after any run.
