@@ -438,7 +438,7 @@ def main() -> None:
                     f"(worst {c2['worst_category']} {c2['worst_category_regression_pp']:+.2f}pp, "
                     f"{CRITICAL_CATEGORY} {c2['critical_category_regression_pp']:+.2f}pp) | "
                     f"C3 {'PASS' if c3['pass'] else 'FAIL'} "
-                    f"(CI ..{c3['ci_hi_pp']:+.2f}, worst vs theta {c3['worst_category']} "
+                    f"(CI ..{c3['ci_hi_pp']:+.2f}, worst vs theta {c3['worst_category_vs_theta']} "
                     f"{c3['worst_category_regression_pp']:+.2f}pp) → "
                     f"**{'ALL PASS (selection verdict only — not a promotion)' if mirror['all_pass'] else 'FAIL'}**",
                 ]
