@@ -215,6 +215,10 @@ Re-open only with more data, specified:**
    are the only identified route to a non-regime-conditional real-time edge;
    they require new data sources outside the current archive.
 
+   The full predeclared design for that re-gate — criteria, metric suite,
+   uncertainty protocol, and the goalpost rule — is drafted in
+   [REGATE_DESIGN.md](REGATE_DESIGN.md), informed by the §3 scorecard.
+
 For retailPRED's owner: nothing in this repo changes the platform's documents
 or decisions; the failed gate's verdict stands, now with a measured
 explanation and a decomposed account of what any future challenger must
