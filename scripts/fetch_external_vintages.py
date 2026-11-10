@@ -79,7 +79,8 @@ class VintageClient:
             "api_key": self.api_key,
             "file_type": "json",
         })
-        return [date.fromisoformat(item["date"]) for item in payload.get("vintage_dates", [])]
+        # the endpoint returns plain ISO date strings (matches the retailPRED client)
+        return [date.fromisoformat(str(value)) for value in payload.get("vintage_dates", [])]
 
     def fetch_monthly_vintage(self, fred_id: str, vintage_date: date) -> dict:
         return self._get(FRED_OBSERVATIONS_URL, {
