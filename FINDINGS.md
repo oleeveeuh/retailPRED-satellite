@@ -244,7 +244,12 @@ overcome.
   split), and the choose/report inner split for candidate-side selection.
   Horizons, min training size, availability lag, actuals, metrics, and the
   LightGBM configuration are unchanged. The holdout was computed exactly once
-  (`results/holdout_theta.json`).
+  (`results/holdout_theta.json`). The 2026-11-10 fold-row recovery
+  (`scripts/holdout_theta_recovery.py`) is a deterministic re-derivation of
+  that run's predictions for reporting metrics, not a second evaluation or
+  re-run of `holdout.py`; it reproduced all 34 frozen aggregates at diff 0.0
+  (`results/holdout_theta_recovery.json`), and the scorecard it enables
+  changed no verdict.
 
 ## 7. Addendum — category win matrix (user-requested metric, post-hoc)
 
