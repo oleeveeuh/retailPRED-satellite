@@ -79,8 +79,9 @@ def load_external_panel() -> pd.DataFrame:
     digest = hashlib.sha256(EXTERNAL_PANEL_PATH.read_bytes()).hexdigest()
     if digest != recorded:
         raise SystemExit(f"external panel hash mismatch: {digest} != {recorded}")
-    frame = pd.read_csv(EXTERNAL_PANEL_PATH, parse_dates=["observation_time", "vintage_time"])
-    frame["vintage_time"] = frame["vintage_time"].dt.tz_localize("UTC")
+    frame = pd.read_csv(EXTERNAL_PANEL_PATH)
+    frame["observation_time"] = pd.to_datetime(frame["observation_time"])
+    frame["vintage_time"] = pd.to_datetime(frame["vintage_time"], utc=True)
     return frame
 
 
@@ -166,7 +167,7 @@ def main() -> None:
     verdict_note = "ladder anchor; no compare-to target"
     advancement = None
     if args.compare_to:
-        compare_folds = pd.read_csv(RESULTS / f"folds_{args.compare_to}.csv",
+        compare_folds = pd.read_csv(RESULTS / f"h7_folds_{args.compare_to}.csv",
                                     parse_dates=["forecast_origin", "target_time"])
         compare_choose = compare_folds.loc[pd.to_datetime(compare_folds["forecast_origin"]) < CHOOSE_END]
         if set(pd.DatetimeIndex(sorted(compare_choose["forecast_origin"].unique()))) != set(origins[origins < CHOOSE_END]):
