@@ -369,11 +369,15 @@ def main() -> None:
 
     naive_all = gate[gate["model_name"] == "seasonal_naive"].copy()
     lgbm_all = gate[gate["model_name"] == "global_lightgbm"].copy()
-    exploration = naive_all["forecast_origin"] < HOLDOUT_MIN_ORIGIN
-    naive_exp = naive_all[exploration].copy()
-    naive_hold = naive_all[~exploration].copy()
-    lgbm_exp = lgbm_all[exploration].copy()
-    lgbm_hold = lgbm_all[~exploration].copy()
+
+    def split_exploration(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+        mask = frame["forecast_origin"] < HOLDOUT_MIN_ORIGIN
+        return frame[mask].copy(), frame[~mask].copy()
+
+    naive_exp, naive_hold = split_exploration(naive_all)
+    lgbm_exp, lgbm_hold = split_exploration(lgbm_all)
+    if not (theta_exp["forecast_origin"] < HOLDOUT_MIN_ORIGIN).all():
+        _stop("theta exploration folds contain holdout origins.")
 
     frozen_origins = [pd.Timestamp(o) for o in frozen["holdout_origins"]]
     if sorted(theta_hold["forecast_origin"].unique()) != sorted(frozen_origins):
