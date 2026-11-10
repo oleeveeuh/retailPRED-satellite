@@ -95,7 +95,7 @@ class NhitsTrained:
         prepared = frame.rename(
             columns={"series_id": "unique_id", "observation_time": "ds", "value": "y"}
         ).sort_values(["unique_id", "ds"], ignore_index=True)
-        if prepared.groupby("unique_id")["ds"].duplicated().any():
+        if prepared.duplicated(["unique_id", "ds"]).any():
             raise ValueError("nhits training requires unique series/month keys")
 
         import torch
@@ -126,8 +126,9 @@ class NhitsTrained:
         forecast = forecast.rename(columns={"unique_id": "series_id"})
         forecast["ds"] = pd.to_datetime(forecast["ds"])
         forecast["horizon"] = forecast.groupby("series_id", sort=False).cumcount() + 1
-        expected_months = pd.Period(self._last_month, freq="M") + 1
-        if (forecast["ds"].dt.to_period("M") != expected_months).any():
+        ds_number = forecast["ds"].dt.year * 12 + forecast["ds"].dt.month
+        last_number = self._last_month.year * 12 + self._last_month.month
+        if not ((ds_number - last_number) == forecast["horizon"]).all():
             raise RuntimeError("NHITS forecast timestamps do not follow the context edge")
         _negative_events += int((forecast["nhits"] < 0).sum())
         return forecast.loc[:, ["series_id", "ds", "horizon", "nhits"]].rename(
