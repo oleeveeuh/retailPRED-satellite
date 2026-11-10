@@ -82,9 +82,15 @@ bottom region, 0.30–0.52 — the choice is robust within CHOOSE) and
 1. **The platform's theta result is strengthened, not weakened.** A
    trained switch with honest causal features — including the high-value
    lagged-performance feature the forensics pointed to — cannot out-pick
-   plain theta on the volatile-phase window, and theta already carries the
-   calm-phase holdout win (+0.17pp, 7/11). Theta remains the best measured
-   real-time forecaster in this archive.
+   plain theta on the volatile-phase window, and theta holds the lowest
+   holdout mean-category WAPE of the three evaluated models (+0.17pp vs
+   naive at 7/11). The defensible claim is "lowest measured mean-category
+   WAPE among the three evaluated models on every evaluated window," not
+   "best real-time forecaster": the scorecard's origin-block CI cannot
+   separate theta from naive on the holdout (+0.17pp, CI −0.17..+0.54),
+   pooled WAPE there resolves in naive's favor, and the only holdout
+   ranking the window resolves is theta over the gate LightGBM (FINDINGS
+   §3 scorecard).
 2. **The switch hypothesis is half-confirmed, on the half that matters
    less.** It dominates every fixed choice on regime-mixed CHOOSE origins
    (the "capture both extremes" thesis works in-sample-of-regime), but a
