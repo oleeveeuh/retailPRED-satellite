@@ -1,0 +1,1783 @@
+{
+  "provenance": {
+    "data_path": "data/alfred_mrts_vintages.csv",
+    "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+    "satellite_code_revision": "b5c4cb3fc6e2fc045ca222e822659c1ee86f2fe0",
+    "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+    "protocol": {
+      "horizons": [
+        1,
+        3,
+        6,
+        12
+      ],
+      "min_train_size": 60,
+      "availability_lag_days": 45,
+      "step": 1,
+      "actual_source": "latest_revision_vintage"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "lightgbm": "4.5.0",
+      "pandas": "2.2.3",
+      "numpy": "2.1.3"
+    },
+    "generated_at": "2026-11-10T19:05:42.898059+00:00",
+    "purpose": "H7 ladder rung direct_growth (lgbm: base,growth)"
+  },
+  "rung": "direct_growth",
+  "model": "lgbm",
+  "groups": [
+    "base",
+    "growth"
+  ],
+  "candidate_metadata": {
+    "name": "direct_lightgbm",
+    "version": "h7_lgbm_base_growth",
+    "parameters": {
+      "n_estimators": 250,
+      "learning_rate": 0.03,
+      "num_leaves": 15,
+      "min_child_samples": 10,
+      "random_state": 42,
+      "n_jobs": 1,
+      "verbosity": -1,
+      "deterministic": true,
+      "force_col_wise": true
+    },
+    "groups": [
+      "base",
+      "growth"
+    ],
+    "features": [
+      "series_code",
+      "lag_1_ratio",
+      "lag_2_ratio",
+      "lag_3_ratio",
+      "lag_6_ratio",
+      "rolling_mean_3_ratio",
+      "rolling_std_3_ratio",
+      "rolling_mean_6_ratio",
+      "rolling_std_6_ratio",
+      "rolling_mean_12_ratio",
+      "rolling_std_12_ratio",
+      "diff_1_ratio",
+      "pct_change_1",
+      "month_sin",
+      "month_cos",
+      "lag_13_ratio",
+      "lag_24_ratio",
+      "pct_change_3",
+      "pct_change_12",
+      "yoy_momentum"
+    ],
+    "series_ids": []
+  },
+  "origin_window": {
+    "start": "2017-10-01",
+    "end": "2022-10-01",
+    "n_origins": 24
+  },
+  "excluded_origins": [
+    {
+      "forecast_origin": "1996-12-01",
+      "origin_as_of": "1997-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-01-01",
+      "origin_as_of": "1997-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-02-01",
+      "origin_as_of": "1997-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-03-01",
+      "origin_as_of": "1997-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-04-01",
+      "origin_as_of": "1997-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-05-01",
+      "origin_as_of": "1997-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-06-01",
+      "origin_as_of": "1997-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-07-01",
+      "origin_as_of": "1997-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-08-01",
+      "origin_as_of": "1997-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-09-01",
+      "origin_as_of": "1997-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-10-01",
+      "origin_as_of": "1997-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-11-01",
+      "origin_as_of": "1998-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1997-12-01",
+      "origin_as_of": "1998-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-01-01",
+      "origin_as_of": "1998-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-02-01",
+      "origin_as_of": "1998-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-03-01",
+      "origin_as_of": "1998-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-04-01",
+      "origin_as_of": "1998-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-05-01",
+      "origin_as_of": "1998-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-06-01",
+      "origin_as_of": "1998-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-07-01",
+      "origin_as_of": "1998-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-08-01",
+      "origin_as_of": "1998-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-09-01",
+      "origin_as_of": "1998-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-10-01",
+      "origin_as_of": "1998-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-11-01",
+      "origin_as_of": "1999-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1998-12-01",
+      "origin_as_of": "1999-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-01-01",
+      "origin_as_of": "1999-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-02-01",
+      "origin_as_of": "1999-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-03-01",
+      "origin_as_of": "1999-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-04-01",
+      "origin_as_of": "1999-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-05-01",
+      "origin_as_of": "1999-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-06-01",
+      "origin_as_of": "1999-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-07-01",
+      "origin_as_of": "1999-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-08-01",
+      "origin_as_of": "1999-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-09-01",
+      "origin_as_of": "1999-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-10-01",
+      "origin_as_of": "1999-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-11-01",
+      "origin_as_of": "2000-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "1999-12-01",
+      "origin_as_of": "2000-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-01-01",
+      "origin_as_of": "2000-03-16T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-02-01",
+      "origin_as_of": "2000-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-03-01",
+      "origin_as_of": "2000-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-04-01",
+      "origin_as_of": "2000-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-05-01",
+      "origin_as_of": "2000-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-06-01",
+      "origin_as_of": "2000-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-07-01",
+      "origin_as_of": "2000-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-08-01",
+      "origin_as_of": "2000-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-09-01",
+      "origin_as_of": "2000-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-10-01",
+      "origin_as_of": "2000-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-11-01",
+      "origin_as_of": "2001-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2000-12-01",
+      "origin_as_of": "2001-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-01-01",
+      "origin_as_of": "2001-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-02-01",
+      "origin_as_of": "2001-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-03-01",
+      "origin_as_of": "2001-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-04-01",
+      "origin_as_of": "2001-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-05-01",
+      "origin_as_of": "2001-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-06-01",
+      "origin_as_of": "2001-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-07-01",
+      "origin_as_of": "2001-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-08-01",
+      "origin_as_of": "2001-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-09-01",
+      "origin_as_of": "2001-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-10-01",
+      "origin_as_of": "2001-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-11-01",
+      "origin_as_of": "2002-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2001-12-01",
+      "origin_as_of": "2002-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-01-01",
+      "origin_as_of": "2002-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-02-01",
+      "origin_as_of": "2002-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-03-01",
+      "origin_as_of": "2002-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-04-01",
+      "origin_as_of": "2002-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-05-01",
+      "origin_as_of": "2002-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-06-01",
+      "origin_as_of": "2002-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-07-01",
+      "origin_as_of": "2002-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-08-01",
+      "origin_as_of": "2002-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-09-01",
+      "origin_as_of": "2002-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-10-01",
+      "origin_as_of": "2002-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-11-01",
+      "origin_as_of": "2003-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2002-12-01",
+      "origin_as_of": "2003-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-01-01",
+      "origin_as_of": "2003-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-02-01",
+      "origin_as_of": "2003-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-03-01",
+      "origin_as_of": "2003-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-04-01",
+      "origin_as_of": "2003-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-05-01",
+      "origin_as_of": "2003-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-06-01",
+      "origin_as_of": "2003-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-07-01",
+      "origin_as_of": "2003-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-08-01",
+      "origin_as_of": "2003-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-09-01",
+      "origin_as_of": "2003-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-10-01",
+      "origin_as_of": "2003-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-11-01",
+      "origin_as_of": "2004-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2003-12-01",
+      "origin_as_of": "2004-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-01-01",
+      "origin_as_of": "2004-03-16T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-02-01",
+      "origin_as_of": "2004-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-03-01",
+      "origin_as_of": "2004-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-04-01",
+      "origin_as_of": "2004-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-05-01",
+      "origin_as_of": "2004-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-06-01",
+      "origin_as_of": "2004-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-07-01",
+      "origin_as_of": "2004-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-08-01",
+      "origin_as_of": "2004-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-09-01",
+      "origin_as_of": "2004-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-10-01",
+      "origin_as_of": "2004-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-11-01",
+      "origin_as_of": "2005-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2004-12-01",
+      "origin_as_of": "2005-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-01-01",
+      "origin_as_of": "2005-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-02-01",
+      "origin_as_of": "2005-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-03-01",
+      "origin_as_of": "2005-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-04-01",
+      "origin_as_of": "2005-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-05-01",
+      "origin_as_of": "2005-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-06-01",
+      "origin_as_of": "2005-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-07-01",
+      "origin_as_of": "2005-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-08-01",
+      "origin_as_of": "2005-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-09-01",
+      "origin_as_of": "2005-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-10-01",
+      "origin_as_of": "2005-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-11-01",
+      "origin_as_of": "2006-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2005-12-01",
+      "origin_as_of": "2006-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-01-01",
+      "origin_as_of": "2006-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-02-01",
+      "origin_as_of": "2006-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-03-01",
+      "origin_as_of": "2006-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-04-01",
+      "origin_as_of": "2006-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-05-01",
+      "origin_as_of": "2006-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-06-01",
+      "origin_as_of": "2006-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-07-01",
+      "origin_as_of": "2006-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-08-01",
+      "origin_as_of": "2006-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-09-01",
+      "origin_as_of": "2006-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-10-01",
+      "origin_as_of": "2006-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-11-01",
+      "origin_as_of": "2007-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2006-12-01",
+      "origin_as_of": "2007-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-01-01",
+      "origin_as_of": "2007-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-02-01",
+      "origin_as_of": "2007-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-03-01",
+      "origin_as_of": "2007-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-04-01",
+      "origin_as_of": "2007-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-05-01",
+      "origin_as_of": "2007-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-06-01",
+      "origin_as_of": "2007-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-07-01",
+      "origin_as_of": "2007-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-08-01",
+      "origin_as_of": "2007-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-09-01",
+      "origin_as_of": "2007-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-10-01",
+      "origin_as_of": "2007-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-11-01",
+      "origin_as_of": "2008-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2007-12-01",
+      "origin_as_of": "2008-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-01-01",
+      "origin_as_of": "2008-03-16T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-02-01",
+      "origin_as_of": "2008-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-03-01",
+      "origin_as_of": "2008-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-04-01",
+      "origin_as_of": "2008-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-05-01",
+      "origin_as_of": "2008-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-06-01",
+      "origin_as_of": "2008-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-07-01",
+      "origin_as_of": "2008-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-08-01",
+      "origin_as_of": "2008-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-09-01",
+      "origin_as_of": "2008-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-10-01",
+      "origin_as_of": "2008-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-11-01",
+      "origin_as_of": "2009-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2008-12-01",
+      "origin_as_of": "2009-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-01-01",
+      "origin_as_of": "2009-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-02-01",
+      "origin_as_of": "2009-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-03-01",
+      "origin_as_of": "2009-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-04-01",
+      "origin_as_of": "2009-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-05-01",
+      "origin_as_of": "2009-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-06-01",
+      "origin_as_of": "2009-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-07-01",
+      "origin_as_of": "2009-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-08-01",
+      "origin_as_of": "2009-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-09-01",
+      "origin_as_of": "2009-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-10-01",
+      "origin_as_of": "2009-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-11-01",
+      "origin_as_of": "2010-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2009-12-01",
+      "origin_as_of": "2010-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-01-01",
+      "origin_as_of": "2010-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-02-01",
+      "origin_as_of": "2010-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-03-01",
+      "origin_as_of": "2010-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-04-01",
+      "origin_as_of": "2010-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-05-01",
+      "origin_as_of": "2010-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-06-01",
+      "origin_as_of": "2010-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-07-01",
+      "origin_as_of": "2010-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-08-01",
+      "origin_as_of": "2010-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-09-01",
+      "origin_as_of": "2010-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-10-01",
+      "origin_as_of": "2010-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-11-01",
+      "origin_as_of": "2011-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2010-12-01",
+      "origin_as_of": "2011-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-01-01",
+      "origin_as_of": "2011-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-02-01",
+      "origin_as_of": "2011-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-03-01",
+      "origin_as_of": "2011-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-04-01",
+      "origin_as_of": "2011-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-05-01",
+      "origin_as_of": "2011-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-06-01",
+      "origin_as_of": "2011-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-07-01",
+      "origin_as_of": "2011-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-08-01",
+      "origin_as_of": "2011-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-09-01",
+      "origin_as_of": "2011-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-10-01",
+      "origin_as_of": "2011-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-11-01",
+      "origin_as_of": "2012-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2011-12-01",
+      "origin_as_of": "2012-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-01-01",
+      "origin_as_of": "2012-03-16T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-02-01",
+      "origin_as_of": "2012-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-03-01",
+      "origin_as_of": "2012-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-04-01",
+      "origin_as_of": "2012-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-05-01",
+      "origin_as_of": "2012-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-06-01",
+      "origin_as_of": "2012-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-07-01",
+      "origin_as_of": "2012-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-08-01",
+      "origin_as_of": "2012-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-09-01",
+      "origin_as_of": "2012-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-10-01",
+      "origin_as_of": "2012-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-11-01",
+      "origin_as_of": "2013-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2012-12-01",
+      "origin_as_of": "2013-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-01-01",
+      "origin_as_of": "2013-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-02-01",
+      "origin_as_of": "2013-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-03-01",
+      "origin_as_of": "2013-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-04-01",
+      "origin_as_of": "2013-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-05-01",
+      "origin_as_of": "2013-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-06-01",
+      "origin_as_of": "2013-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-07-01",
+      "origin_as_of": "2013-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-08-01",
+      "origin_as_of": "2013-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-09-01",
+      "origin_as_of": "2013-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-10-01",
+      "origin_as_of": "2013-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-11-01",
+      "origin_as_of": "2014-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2013-12-01",
+      "origin_as_of": "2014-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-01-01",
+      "origin_as_of": "2014-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-02-01",
+      "origin_as_of": "2014-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-03-01",
+      "origin_as_of": "2014-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-04-01",
+      "origin_as_of": "2014-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-05-01",
+      "origin_as_of": "2014-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-06-01",
+      "origin_as_of": "2014-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-07-01",
+      "origin_as_of": "2014-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-08-01",
+      "origin_as_of": "2014-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-09-01",
+      "origin_as_of": "2014-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-10-01",
+      "origin_as_of": "2014-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-11-01",
+      "origin_as_of": "2015-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2014-12-01",
+      "origin_as_of": "2015-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-01-01",
+      "origin_as_of": "2015-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-02-01",
+      "origin_as_of": "2015-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-03-01",
+      "origin_as_of": "2015-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-04-01",
+      "origin_as_of": "2015-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-05-01",
+      "origin_as_of": "2015-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-06-01",
+      "origin_as_of": "2015-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-07-01",
+      "origin_as_of": "2015-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-08-01",
+      "origin_as_of": "2015-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-09-01",
+      "origin_as_of": "2015-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-10-01",
+      "origin_as_of": "2015-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-11-01",
+      "origin_as_of": "2016-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2015-12-01",
+      "origin_as_of": "2016-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-01-01",
+      "origin_as_of": "2016-03-16T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-02-01",
+      "origin_as_of": "2016-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-03-01",
+      "origin_as_of": "2016-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-04-01",
+      "origin_as_of": "2016-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-05-01",
+      "origin_as_of": "2016-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-06-01",
+      "origin_as_of": "2016-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-07-01",
+      "origin_as_of": "2016-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-08-01",
+      "origin_as_of": "2016-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-09-01",
+      "origin_as_of": "2016-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-10-01",
+      "origin_as_of": "2016-12-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-11-01",
+      "origin_as_of": "2017-01-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2016-12-01",
+      "origin_as_of": "2017-02-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-01-01",
+      "origin_as_of": "2017-03-17T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-02-01",
+      "origin_as_of": "2017-04-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-03-01",
+      "origin_as_of": "2017-05-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-04-01",
+      "origin_as_of": "2017-06-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-05-01",
+      "origin_as_of": "2017-07-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-06-01",
+      "origin_as_of": "2017-08-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-07-01",
+      "origin_as_of": "2017-09-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-08-01",
+      "origin_as_of": "2017-10-15T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2017-09-01",
+      "origin_as_of": "2017-11-14T00:00:00+00:00",
+      "reason": "no eligible vintage data: no monthly observations were available at the requested as_of time"
+    },
+    {
+      "forecast_origin": "2018-02-01",
+      "origin_as_of": "2018-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-01-01, not the origin month 2018-02-01"
+    },
+    {
+      "forecast_origin": "2018-03-01",
+      "origin_as_of": "2018-05-15T00:00:00+00:00",
+      "reason": "most recent training month is 2018-02-01, not the origin month 2018-03-01"
+    },
+    {
+      "forecast_origin": "2018-05-01",
+      "origin_as_of": "2018-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2018-04-01, not the origin month 2018-05-01"
+    },
+    {
+      "forecast_origin": "2018-06-01",
+      "origin_as_of": "2018-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-05-01, not the origin month 2018-06-01"
+    },
+    {
+      "forecast_origin": "2018-09-01",
+      "origin_as_of": "2018-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-08-01, not the origin month 2018-09-01"
+    },
+    {
+      "forecast_origin": "2018-11-01",
+      "origin_as_of": "2019-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-10-01, not the origin month 2018-11-01"
+    },
+    {
+      "forecast_origin": "2018-12-01",
+      "origin_as_of": "2019-02-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-11-01, not the origin month 2018-12-01"
+    },
+    {
+      "forecast_origin": "2019-01-01",
+      "origin_as_of": "2019-03-17T00:00:00+00:00",
+      "reason": "most recent training month is 2018-12-01, not the origin month 2019-01-01"
+    },
+    {
+      "forecast_origin": "2019-02-01",
+      "origin_as_of": "2019-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2018-12-01, not the origin month 2019-02-01"
+    },
+    {
+      "forecast_origin": "2019-05-01",
+      "origin_as_of": "2019-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2019-04-01, not the origin month 2019-05-01"
+    },
+    {
+      "forecast_origin": "2019-06-01",
+      "origin_as_of": "2019-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2019-05-01, not the origin month 2019-06-01"
+    },
+    {
+      "forecast_origin": "2019-08-01",
+      "origin_as_of": "2019-10-15T00:00:00+00:00",
+      "reason": "most recent training month is 2019-07-01, not the origin month 2019-08-01"
+    },
+    {
+      "forecast_origin": "2019-09-01",
+      "origin_as_of": "2019-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2019-08-01, not the origin month 2019-09-01"
+    },
+    {
+      "forecast_origin": "2019-11-01",
+      "origin_as_of": "2020-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2019-10-01, not the origin month 2019-11-01"
+    },
+    {
+      "forecast_origin": "2020-01-01",
+      "origin_as_of": "2020-03-16T00:00:00+00:00",
+      "reason": "most recent training month is 2019-12-01, not the origin month 2020-01-01"
+    },
+    {
+      "forecast_origin": "2020-02-01",
+      "origin_as_of": "2020-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-01-01, not the origin month 2020-02-01"
+    },
+    {
+      "forecast_origin": "2020-04-01",
+      "origin_as_of": "2020-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-03-01, not the origin month 2020-04-01"
+    },
+    {
+      "forecast_origin": "2020-05-01",
+      "origin_as_of": "2020-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2020-04-01, not the origin month 2020-05-01"
+    },
+    {
+      "forecast_origin": "2020-07-01",
+      "origin_as_of": "2020-09-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-06-01, not the origin month 2020-07-01"
+    },
+    {
+      "forecast_origin": "2020-08-01",
+      "origin_as_of": "2020-10-15T00:00:00+00:00",
+      "reason": "most recent training month is 2020-07-01, not the origin month 2020-08-01"
+    },
+    {
+      "forecast_origin": "2020-09-01",
+      "origin_as_of": "2020-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-08-01, not the origin month 2020-09-01"
+    },
+    {
+      "forecast_origin": "2020-10-01",
+      "origin_as_of": "2020-12-15T00:00:00+00:00",
+      "reason": "most recent training month is 2020-09-01, not the origin month 2020-10-01"
+    },
+    {
+      "forecast_origin": "2020-11-01",
+      "origin_as_of": "2021-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-10-01, not the origin month 2020-11-01"
+    },
+    {
+      "forecast_origin": "2020-12-01",
+      "origin_as_of": "2021-02-14T00:00:00+00:00",
+      "reason": "most recent training month is 2020-11-01, not the origin month 2020-12-01"
+    },
+    {
+      "forecast_origin": "2021-02-01",
+      "origin_as_of": "2021-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-01-01, not the origin month 2021-02-01"
+    },
+    {
+      "forecast_origin": "2021-04-01",
+      "origin_as_of": "2021-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-03-01, not the origin month 2021-04-01"
+    },
+    {
+      "forecast_origin": "2021-05-01",
+      "origin_as_of": "2021-07-15T00:00:00+00:00",
+      "reason": "most recent training month is 2021-04-01, not the origin month 2021-05-01"
+    },
+    {
+      "forecast_origin": "2021-06-01",
+      "origin_as_of": "2021-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-05-01, not the origin month 2021-06-01"
+    },
+    {
+      "forecast_origin": "2021-07-01",
+      "origin_as_of": "2021-09-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-06-01, not the origin month 2021-07-01"
+    },
+    {
+      "forecast_origin": "2021-09-01",
+      "origin_as_of": "2021-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-08-01, not the origin month 2021-09-01"
+    },
+    {
+      "forecast_origin": "2021-12-01",
+      "origin_as_of": "2022-02-14T00:00:00+00:00",
+      "reason": "most recent training month is 2021-11-01, not the origin month 2021-12-01"
+    },
+    {
+      "forecast_origin": "2022-02-01",
+      "origin_as_of": "2022-04-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-01-01, not the origin month 2022-02-01"
+    },
+    {
+      "forecast_origin": "2022-03-01",
+      "origin_as_of": "2022-05-15T00:00:00+00:00",
+      "reason": "most recent training month is 2022-02-01, not the origin month 2022-03-01"
+    },
+    {
+      "forecast_origin": "2022-04-01",
+      "origin_as_of": "2022-06-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-03-01, not the origin month 2022-04-01"
+    },
+    {
+      "forecast_origin": "2022-06-01",
+      "origin_as_of": "2022-08-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-05-01, not the origin month 2022-06-01"
+    },
+    {
+      "forecast_origin": "2022-07-01",
+      "origin_as_of": "2022-09-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-06-01, not the origin month 2022-07-01"
+    },
+    {
+      "forecast_origin": "2022-09-01",
+      "origin_as_of": "2022-11-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-08-01, not the origin month 2022-09-01"
+    },
+    {
+      "forecast_origin": "2022-11-01",
+      "origin_as_of": "2023-01-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-10-01, not the origin month 2022-11-01"
+    },
+    {
+      "forecast_origin": "2022-12-01",
+      "origin_as_of": "2023-02-14T00:00:00+00:00",
+      "reason": "most recent training month is 2022-11-01, not the origin month 2022-12-01"
+    }
+  ],
+  "choose_window": {
+    "origins": 15,
+    "candidate": {
+      "fold_rows": 660,
+      "aggregate_wape": 0.05579144894384299,
+      "mean_category_wape": 0.08393802461602792,
+      "by_series": {
+        "building_material_and_garden": {
+          "wape": 0.07514136530545125
+        },
+        "clothing_and_accessories": {
+          "wape": 0.15949306656117784
+        },
+        "electronics_and_appliances": {
+          "wape": 0.16573435656003072
+        },
+        "food_and_beverage": {
+          "wape": 0.02417586685138048
+        },
+        "furniture_and_home_furnishings": {
+          "wape": 0.09538735042195871
+        },
+        "gasoline_stations": {
+          "wape": 0.09642119720138768
+        },
+        "general_merchandise": {
+          "wape": 0.026779847215302945
+        },
+        "health_and_personal_care": {
+          "wape": 0.05555092367461312
+        },
+        "motor_vehicle_and_parts": {
+          "wape": 0.06981228494085644
+        },
+        "retail_total": {
+          "wape": 0.04817832070215547
+        },
+        "sporting_goods_and_hobby": {
+          "wape": 0.10664369134199249
+        }
+      }
+    },
+    "naive": {
+      "fold_rows": 660,
+      "aggregate_wape": 0.05003432029761731,
+      "mean_category_wape": 0.08321737213282897,
+      "by_series": {
+        "building_material_and_garden": {
+          "wape": 0.05357188729517251
+        },
+        "clothing_and_accessories": {
+          "wape": 0.15324513331550604
+        },
+        "electronics_and_appliances": {
+          "wape": 0.16495402407811166
+        },
+        "food_and_beverage": {
+          "wape": 0.04835393949075731
+        },
+        "furniture_and_home_furnishings": {
+          "wape": 0.0799460788200777
+        },
+        "gasoline_stations": {
+          "wape": 0.12762888835578098
+        },
+        "general_merchandise": {
+          "wape": 0.044138697325293776
+        },
+        "health_and_personal_care": {
+          "wape": 0.025680424022575362
+        },
+        "motor_vehicle_and_parts": {
+          "wape": 0.06299077931026544
+        },
+        "retail_total": {
+          "wape": 0.03422014091024301
+        },
+        "sporting_goods_and_hobby": {
+          "wape": 0.12066110053733478
+        }
+      }
+    },
+    "theta": {
+      "fold_rows": 660,
+      "aggregate_wape": 0.04951207239606854,
+      "mean_category_wape": 0.07817797756721051,
+      "by_series": {
+        "building_material_and_garden": {
+          "wape": 0.060574812552320424
+        },
+        "clothing_and_accessories": {
+          "wape": 0.150461572614453
+        },
+        "electronics_and_appliances": {
+          "wape": 0.15559436196799378
+        },
+        "food_and_beverage": {
+          "wape": 0.031129366778025882
+        },
+        "furniture_and_home_furnishings": {
+          "wape": 0.08344161310856149
+        },
+        "gasoline_stations": {
+          "wape": 0.08829702386454183
+        },
+        "general_merchandise": {
+          "wape": 0.028455502551874942
+        },
+        "health_and_personal_care": {
+          "wape": 0.04322946176381919
+        },
+        "motor_vehicle_and_parts": {
+          "wape": 0.06386106898787158
+        },
+        "retail_total": {
+          "wape": 0.0400371437526776
+        },
+        "sporting_goods_and_hobby": {
+          "wape": 0.11487582529717591
+        }
+      }
+    },
+    "candidate_vs_naive": {
+      "mean_category_wape_delta_pp": -0.07206524831989553,
+      "improved_series_count": 4,
+      "series_count": 11,
+      "improvements_pp": {
+        "building_material_and_garden": -2.1569,
+        "clothing_and_accessories": -0.6248,
+        "electronics_and_appliances": -0.078,
+        "food_and_beverage": 2.4178,
+        "furniture_and_home_furnishings": -1.5441,
+        "gasoline_stations": 3.1208,
+        "general_merchandise": 1.7359,
+        "health_and_personal_care": -2.987,
+        "motor_vehicle_and_parts": -0.6822,
+        "retail_total": -1.3958,
+        "sporting_goods_and_hobby": 1.4017
+      },
+      "regressions": [
+        "building_material_and_garden",
+        "clothing_and_accessories",
+        "electronics_and_appliances",
+        "furniture_and_home_furnishings",
+        "health_and_personal_care",
+        "motor_vehicle_and_parts",
+        "retail_total"
+      ]
+    },
+    "candidate_vs_theta": {
+      "mean_category_wape_delta_pp": -0.5760047048817413,
+      "improved_series_count": 3,
+      "series_count": 11,
+      "improvements_pp": {
+        "building_material_and_garden": -1.4567,
+        "clothing_and_accessories": -0.9031,
+        "electronics_and_appliances": -1.014,
+        "food_and_beverage": 0.6953,
+        "furniture_and_home_furnishings": -1.1946,
+        "gasoline_stations": -0.8124,
+        "general_merchandise": 0.1676,
+        "health_and_personal_care": -1.2321,
+        "motor_vehicle_and_parts": -0.5951,
+        "retail_total": -0.8141,
+        "sporting_goods_and_hobby": 0.8232
+      },
+      "regressions": [
+        "building_material_and_garden",
+        "clothing_and_accessories",
+        "electronics_and_appliances",
+        "furniture_and_home_furnishings",
+        "gasoline_stations",
+        "health_and_personal_care",
+        "motor_vehicle_and_parts",
+        "retail_total"
+      ]
+    },
+    "candidate_by_horizon_wape": {
+      "1": 0.03771429045862357,
+      "3": 0.04546945984405839,
+      "6": 0.054857787983654274,
+      "12": 0.0840432309437387
+    },
+    "per_origin_mean_category_wape": {
+      "2017-10-01 00:00:00": 0.052160621518277585,
+      "2017-11-01 00:00:00": 0.04985948408967726,
+      "2017-12-01 00:00:00": 0.04894416180129519,
+      "2018-01-01 00:00:00": 0.04400217227854577,
+      "2018-04-01 00:00:00": 0.05111723486137332,
+      "2018-07-01 00:00:00": 0.06357826365745257,
+      "2018-08-01 00:00:00": 0.06047424683317266,
+      "2018-10-01 00:00:00": 0.05802511490976164,
+      "2019-03-01 00:00:00": 0.09560885931416294,
+      "2019-04-01 00:00:00": 0.15202109636104488,
+      "2019-07-01 00:00:00": 0.06275265259048272,
+      "2019-10-01 00:00:00": 0.1592719849986802,
+      "2019-12-01 00:00:00": 0.136308225446613,
+      "2020-03-01 00:00:00": 0.1937546420990991,
+      "2020-06-01 00:00:00": 0.07314151074266212
+    },
+    "naive_per_origin_mean_category_wape": {
+      "2017-10-01 00:00:00": 0.04162592004252235,
+      "2017-11-01 00:00:00": 0.04272474484920869,
+      "2017-12-01 00:00:00": 0.04104068705966752,
+      "2018-01-01 00:00:00": 0.04051603718685584,
+      "2018-04-01 00:00:00": 0.04415825868490891,
+      "2018-07-01 00:00:00": 0.046251742041301676,
+      "2018-08-01 00:00:00": 0.04622243097124694,
+      "2018-10-01 00:00:00": 0.04578394578452172,
+      "2019-03-01 00:00:00": 0.08943767209585717,
+      "2019-04-01 00:00:00": 0.14367451685734778,
+      "2019-07-01 00:00:00": 0.0614838681152752,
+      "2019-10-01 00:00:00": 0.15682565932144962,
+      "2019-12-01 00:00:00": 0.13424675718953208,
+      "2020-03-01 00:00:00": 0.24486694670642642,
+      "2020-06-01 00:00:00": 0.11743367855317145
+    },
+    "theta_per_origin_mean_category_wape": {
+      "2017-10-01 00:00:00": 0.044501160024615134,
+      "2017-11-01 00:00:00": 0.0430487232935634,
+      "2017-12-01 00:00:00": 0.04045152807793345,
+      "2018-01-01 00:00:00": 0.03419618880532292,
+      "2018-04-01 00:00:00": 0.04197050032465693,
+      "2018-07-01 00:00:00": 0.05237169094929024,
+      "2018-08-01 00:00:00": 0.05142239567213947,
+      "2018-10-01 00:00:00": 0.052227425862551885,
+      "2019-03-01 00:00:00": 0.08502913968105491,
+      "2019-04-01 00:00:00": 0.1396564614140775,
+      "2019-07-01 00:00:00": 0.05755209652529803,
+      "2019-10-01 00:00:00": 0.15672508861191156,
+      "2019-12-01 00:00:00": 0.13408740507843106,
+      "2020-03-01 00:00:00": 0.20809314725425535,
+      "2020-06-01 00:00:00": 0.07203393171898528
+    }
+  },
+  "advancement": {
+    "compare_to": "direct_base",
+    "n_choose_origins": 15,
+    "mean_category_delta_pp": 0.1565,
+    "improved_origins": 13,
+    "improved_origin_share": 0.8667,
+    "category_regressions_pp": {
+      "building_material_and_garden": 0.1027,
+      "general_merchandise": 0.1126,
+      "retail_total": 0.0386
+    },
+    "rule_a_positive_delta": true,
+    "rule_b_stable_origins": true,
+    "rule_c_no_category_regression": true,
+    "advance": true,
+    "required_improved_origins": 9,
+    "max_category_regression_pp_allowed": 3.0
+  },
+  "verdict_note": "ADVANCE",
+  "report_window": "fold rows stored but not aggregated during selection (predeclared \u00a76)"
+}
