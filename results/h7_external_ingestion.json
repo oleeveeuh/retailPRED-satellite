@@ -1,0 +1,41 @@
+{
+  "output": "data/alfred_external_vintages.csv",
+  "output_sha256": "e079e303e42fa89c775c15dec665d084be27c138cab59e3f70cd89cfbae456a9",
+  "row_count": 409385,
+  "series": {
+    "cpi": {
+      "fred_id": "CPIAUCSL",
+      "vintage_count": 381,
+      "vintage_first": "1995-01-11",
+      "vintage_last": "2026-11-10"
+    },
+    "dspi": {
+      "fred_id": "DSPI",
+      "vintage_count": 312,
+      "vintage_first": "1995-01-30",
+      "vintage_last": "2026-10-29"
+    },
+    "fedfunds": {
+      "fred_id": "FEDFUNDS",
+      "vintage_count": 360,
+      "vintage_first": "1996-12-03",
+      "vintage_last": "2026-11-02"
+    },
+    "umsent": {
+      "fred_id": "UMCSENT",
+      "vintage_count": 309,
+      "vintage_first": "1998-07-31",
+      "vintage_last": "2026-09-25"
+    },
+    "unrate": {
+      "fred_id": "UNRATE",
+      "vintage_count": 382,
+      "vintage_first": "1995-01-06",
+      "vintage_last": "2026-11-06"
+    }
+  },
+  "total_vintage_fetches": 1744,
+  "sampling_rule": "last archived vintage per calendar month",
+  "satellite_code_revision": "fb001ba5957a236834a563c63e3ec340ed33f833",
+  "generated_at": "2026-11-10T19:54:43.304787+00:00"
+}
