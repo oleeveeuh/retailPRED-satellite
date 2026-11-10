@@ -107,6 +107,7 @@ def main() -> None:
     frames: list[pd.DataFrame] = []
     provenance_series: dict[str, dict] = {}
     total_requests = 0
+    completed = 0
     for context_id, fred_id in sorted(EXTERNAL_SERIES.items()):
         archived = [v for v in client.fetch_vintage_dates(fred_id) if lower <= v <= upper]
         # Last archived vintage per calendar month (the MRTS sampling rule).
@@ -143,6 +144,9 @@ def main() -> None:
                 if str(observation.get("value", ".")) not in {".", "", "NaN"}
             ]
             frames.append(pd.DataFrame.from_records(rows))
+            completed += 1
+            if completed % 50 == 0:
+                print(f"  {completed}/{total_requests} vintage fetches complete", flush=True)
             time.sleep(0.4)  # FRED: no more than 120 requests per minute.
 
     ingested_at = datetime.now(timezone.utc)
