@@ -48,7 +48,9 @@ H9_EXTERNAL_SERIES: dict[str, str] = {
     "m2": "MSL",
     "indpro": "INDPRO",
     "pce": "PCE",
-    "pcedg": "PCEDG",
+    # pcedg dropped per the predeclared §5 rule (execution record
+    # 2026-11-11): PCEDG is not ALFRED-archived; dropped and reported,
+    # never substituted.
 }
 # frozen transforms: YoY log growth for these, level for the rest
 H9_EXTERNAL_YOY_IDS = frozenset({"cpi", "dspi", "m2", "indpro", "pce", "pcedg"})

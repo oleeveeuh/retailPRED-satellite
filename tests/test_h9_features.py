@@ -49,7 +49,7 @@ def synthetic_external_panel() -> pd.DataFrame:
     observation month."""
     rows = []
     for context_id in ("cpi", "dspi", "umsent", "unrate", "fedfunds",
-                       "m2", "indpro", "pce", "pcedg"):
+                       "m2", "indpro", "pce"):
         for month, first_value, revised_value in (
             ("2024-03-01", 300.0, 310.0),
             ("2024-04-01", 305.0, None),
@@ -99,8 +99,8 @@ class TestPerRowExternalAlignment(unittest.TestCase):
         context = h9_external_row_context(panel, AS_OF, ORIGIN_MONTH, months, stats)
         self.assertAlmostEqual(float(context["ext_unrate_level"].iloc[0]), 300.0)
         self.assertAlmostEqual(float(context["ext_unrate_level"].iloc[1]), 305.0)
-        # every one of the nine series exercises the mechanism on 2024-03
-        self.assertEqual(stats["diff_count"], 9)
+        # every one of the eight series exercises the mechanism on 2024-03
+        self.assertEqual(stats["diff_count"], 8)
         self.assertEqual(stats["examples"][0]["aligned_vintage"], "2024-03-13")
         self.assertEqual(stats["examples"][0]["origin_constant_vintage"], "2024-04-20")
 
@@ -155,7 +155,7 @@ class TestPerRowExternalAlignment(unittest.TestCase):
             [
                 {"series_id": f"external_{cid}", "observation_time": pd.Timestamp("2023-04-01"),
                  "value": 280.0, "vintage_time": pd.Timestamp("2023-04-13").tz_localize("UTC")}
-                for cid in ("cpi", "dspi", "m2", "indpro", "pce", "pcedg")
+                for cid in ("cpi", "dspi", "m2", "indpro", "pce")
             ]
         )
         context = h9_external_context_as_of(pd.concat([panel, year_ago], ignore_index=True), AS_OF, ORIGIN_MONTH)
@@ -210,8 +210,8 @@ class TestGroupValidation(unittest.TestCase):
             H9DirectLightGBM(version="x", h9_groups=("h9macro_row",))
 
     def test_column_lists_have_the_frozen_widths(self) -> None:
-        self.assertEqual(len(H9_GROUP_FEATURES["h9macro_const"]), 18)
-        self.assertEqual(len(H9_GROUP_FEATURES["h9macro_row"]), 18)
+        self.assertEqual(len(H9_GROUP_FEATURES["h9macro_const"]), 16)
+        self.assertEqual(len(H9_GROUP_FEATURES["h9macro_row"]), 16)
         self.assertEqual(len(H9_GROUP_FEATURES["h9market"]), 64)
 
 
