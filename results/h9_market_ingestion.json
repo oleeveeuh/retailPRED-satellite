@@ -1,0 +1,50 @@
+{
+  "output": "data/market_daily_closes.csv",
+  "output_sha256": "19a0e65ab1215b2522e787a31c43dfe251121503ffe41257cbab522791007c0a",
+  "row_count": 43622,
+  "symbols": {
+    "AAPL": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "AMZN": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "WMT": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "COST": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "SPY": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "QQQ": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "XLY": {
+      "sessions": 5499,
+      "first": "2005-01-03",
+      "last": "2026-11-10"
+    },
+    "XRT": {
+      "sessions": 5129,
+      "first": "2006-06-22",
+      "last": "2026-11-10"
+    }
+  },
+  "field_discipline": "as-traded close and volume only; no adjusted fields",
+  "satellite_code_revision": "4e6349a8fcb688ac146d6e5fb9d8288ba14a29df",
+  "generated_at": "2026-11-11T10:45:16.117587+00:00"
+}
