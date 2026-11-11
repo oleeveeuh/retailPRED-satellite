@@ -35,26 +35,43 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import RESULTS, ROOT, git_revision
 from fetch_external_vintages import OBSERVATION_START, VintageClient
-import time as _time
+
+# Predeclared pacing: ~55 requests/minute, safely under FRED's 120/min.
+# Today's crashed runs sat at the ceiling and died on burst errors.
+REQUEST_PACING_SECONDS = 0.9
+# Transient-failure backoff schedule (seconds). Every per-vintage query in
+# this run targets a probe-verified archived series, so non-200 responses
+# here are quota/burst artifacts, not absent data — retried with backoff,
+# then fatal with full context. (The genuinely-absent series fail earlier,
+# at the vintage-dates stage, where they always have been.)
+RETRY_BACKOFF_SECONDS = (5, 15, 30, 60, 120)
 
 
 class RetryingVintageClient(VintageClient):
-    """The H7 client plus bounded retry/backoff for transient connection
-    drops (a ~1,500-request run must not die on one reset). Retry covers
-    transport errors and 5xx only — a 4xx is a real API error and fails
-    loudly, exactly as before."""
+    """The H7 client plus bounded retry/backoff for transient failures —
+    transport drops, 429 rate limits, and burst 4xx artifacts on
+    probe-verified archived series. After the full schedule the failure is
+    fatal with context; a real absence still surfaces as data-shaped
+    errors at the vintage-dates stage."""
 
     def _get(self, url: str, params: dict) -> dict:
         last_error: Exception | None = None
-        for attempt in range(4):
+        for attempt, backoff in enumerate((*RETRY_BACKOFF_SECONDS, None)):
             try:
                 return super()._get(url, params)
-            except SystemExit:
-                raise
+            except SystemExit as error:
+                last_error = error
+                if backoff is None:
+                    break
+                print(f"    transient failure (attempt {attempt + 1}), retrying in {backoff}s", flush=True)
+                time.sleep(backoff)
             except Exception as error:  # transport-level failure
                 last_error = error
-                _time.sleep(2.0 * (attempt + 1))
-        raise SystemExit(f"FRED request failed after retries: {last_error}")
+                if backoff is None:
+                    break
+                print(f"    transport failure (attempt {attempt + 1}), retrying in {backoff}s", flush=True)
+                time.sleep(backoff)
+        raise SystemExit(f"FRED request failed after {len(RETRY_BACKOFF_SECONDS) + 1} attempts: {last_error}")
 
 # our context id -> FRED series id (predeclared H9_FEATURE_REVISIT.md §3/§5)
 H9_EXTERNAL_SERIES: dict[str, str] = {
@@ -95,12 +112,28 @@ def main() -> None:
     client = RetryingVintageClient(os.getenv("FRED_API_KEY", ""))
     lower = date(args.start_year, 1, 1)
     upper = date(args.end_year, 12, 31)
+    cache_dir = Path("/tmp/h9_fetch_cache")
+    cache_dir.mkdir(exist_ok=True)
 
     frames: list[pd.DataFrame] = []
     provenance_series: dict[str, dict] = {}
     total_requests = 0
     completed = 0
+    cached_series: list[str] = []
     for context_id, fred_id in sorted(H9_EXTERNAL_SERIES.items()):
+        cache_path = cache_dir / f"{context_id}.csv"
+        if cache_path.exists():
+            cached = pd.read_csv(cache_path)
+            if not cached.empty:
+                frames.append(cached)
+                cached_series.append(context_id)
+                provenance_series[context_id] = {
+                    "fred_id": fred_id,
+                    "source": "completed cache from this run's earlier attempt",
+                    "rows": int(len(cached)),
+                }
+                print(f"  {context_id} ({fred_id}): resumed from cache ({len(cached):,} rows)", flush=True)
+                continue
         archived = [v for v in client.fetch_vintage_dates(fred_id) if lower <= v <= upper]
         if not archived:
             raise SystemExit(
@@ -121,6 +154,7 @@ def main() -> None:
             "vintage_last": selected[-1].isoformat(),
         }
         print(f"  {context_id} ({fred_id}): {len(selected)} monthly vintages", flush=True)
+        series_frames: list[pd.DataFrame] = []
         for vintage_date in selected:
             payload = client.fetch_monthly_vintage(fred_id, vintage_date)
             rows = [
@@ -136,11 +170,18 @@ def main() -> None:
                 for observation in payload["observations"]
                 if str(observation.get("value", ".")) not in {".", "", "NaN"}
             ]
-            frames.append(pd.DataFrame.from_records(rows))
+            series_frames.append(pd.DataFrame.from_records(rows))
             completed += 1
             if completed % 100 == 0:
                 print(f"  {completed}/{total_requests} vintage fetches complete", flush=True)
-            time.sleep(0.4)  # FRED: no more than 120 requests per minute.
+            time.sleep(REQUEST_PACING_SECONDS)
+        series_result = pd.concat(series_frames, ignore_index=True)
+        series_result.to_csv(cache_path, index=False)
+        frames.append(series_result)
+    if cached_series:
+        payload_note = {"resumed_from_cache": cached_series}
+    else:
+        payload_note = {}
 
     ingested_at = datetime.now(timezone.utc)
     result = pd.concat(frames, ignore_index=True)
@@ -161,6 +202,7 @@ def main() -> None:
         "total_vintage_fetches": total_requests,
         "sampling_rule": "last archived vintage per calendar month",
         "h7_file_untouched": True,
+        **payload_note,
         "satellite_code_revision": git_revision(),
         "generated_at": ingested_at.isoformat(),
     }
