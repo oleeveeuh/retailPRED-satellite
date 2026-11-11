@@ -140,14 +140,17 @@ base and base+growth under identical features, and that question is closed.
   and the ladder concludes on R1/R2 — the predeclared definitions do not
   change either way.
 - Missing credentials fail loudly. No synthetic substitution anywhere.
-- **Execution record, 2026-11-11 (the §5 drop rule operating):** PCEDG is
-  not ALFRED-archived — the vintage-dates endpoint returns only the
-  current date, and observations reject `realtime_start` queries with the
+- **Execution record, 2026-11-11 (the §5 drop rule operating; corrected
+  the same day after a per-series availability probe):** **MSL is not
+  ALFRED-archived** — the vintage-dates endpoint rejects it with the
   ALFRED-absence error. Per this §5 it is **dropped and reported, never
   substituted**: the external panel carries **eight** series (macro-9 →
   macro-8, 16 context columns), recorded in
-  `results/h9_external_ingestion.json` under `dropped_series`. No other
-  listed series was affected.
+  `results/h9_external_ingestion.json` under `dropped_series`. The first
+  drop record misattributed the failure to PCEDG (the run crashed during
+  m2, before pcedg ever started); the probe verified PCEDG archived (565
+  historical vintages) and it stays. No other listed series was
+  affected.
 
 ## 6. Selection and ablation discipline (choose window only)
 

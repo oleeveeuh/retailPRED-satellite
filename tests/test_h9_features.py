@@ -49,7 +49,7 @@ def synthetic_external_panel() -> pd.DataFrame:
     observation month."""
     rows = []
     for context_id in ("cpi", "dspi", "umsent", "unrate", "fedfunds",
-                       "m2", "indpro", "pce"):
+                       "indpro", "pce", "pcedg"):
         for month, first_value, revised_value in (
             ("2024-03-01", 300.0, 310.0),
             ("2024-04-01", 305.0, None),
@@ -155,7 +155,7 @@ class TestPerRowExternalAlignment(unittest.TestCase):
             [
                 {"series_id": f"external_{cid}", "observation_time": pd.Timestamp("2023-04-01"),
                  "value": 280.0, "vintage_time": pd.Timestamp("2023-04-13").tz_localize("UTC")}
-                for cid in ("cpi", "dspi", "m2", "indpro", "pce")
+                for cid in ("cpi", "dspi", "indpro", "pce", "pcedg")
             ]
         )
         context = h9_external_context_as_of(pd.concat([panel, year_ago], ignore_index=True), AS_OF, ORIGIN_MONTH)

@@ -66,14 +66,14 @@ H9_EXTERNAL_SERIES: dict[str, str] = {
     "m2": "MSL",
     "indpro": "INDPRO",
     "pce": "PCE",
+    "pcedg": "PCEDG",
 }
-# Dropped per the predeclared §5 rule (execution record 2026-11-11): PCEDG
-# is not ALFRED-archived — the vintage-dates endpoint returns only the
-# current date and observations fail with the ALFRED-absence error. Dropped
-# and reported; never substituted. Recorded in the ingestion provenance.
+# Dropped per the predeclared §5 rule (execution record 2026-11-11,
+# corrected same day): MSL is not ALFRED-archived — the vintage-dates
+# endpoint rejects it with the ALFRED-absence error. Dropped and reported;
+# never substituted. Recorded in the ingestion provenance.
 DROPPED_SERIES: dict[str, str] = {
-    "pcedg": "PCEDG — not ALFRED-archived (no vintage history; observations "
-             "reject realtime_start queries)",
+    "m2": "MSL — not ALFRED-archived (vintage-dates rejects the series)",
 }
 OUTPUT_PATH = ROOT / "data" / "alfred_external_vintages_h9.csv"
 
