@@ -159,28 +159,61 @@ def main() -> None:
     accumulated = len(regate_origins)
     matured = sum(1 for row in rows if row["fully_matured"])
 
-    # Projection under strict one-month-per-month resumption (optimistic
-    # bound: future origins assumed to pass coverage). The month the grid
-    # reaches 24 calm origins, counted two ways.
+    # AMENDED after first execution attempt (disclosed): the re-gate grid is
+    # EMPTY on this archive — every post-2025-03 candidate fails the 45-day
+    # availability coverage because ALFRED's 15th-of-month snapshot cadence
+    # lands before MRTS's mid-month advance releases, so each vintage knows
+    # through month O-2/O-1 while the frozen rule demands the origin month
+    # itself. The projection below now projects the LIVE-PIPELINE path (the
+    # FINDINGS §5.1 assumption: the unpaused schedule records one vintage per
+    # month, pulled on release day, which is precisely what ALFRED's archive
+    # dates cannot reconstruct) and reports the observed ALFRED pass rate
+    # beside it. Enumeration and verification gates are unchanged.
     def projection(kind: str) -> dict:
         have = accumulated if kind == "accumulated" else matured
         last = regate_origins.max()
+        if pd.isna(last):
+            last = REGATE_WINDOW_START - pd.DateOffset(months=1)
         origin_needed = last + pd.DateOffset(months=REQUIRED_CALM_ORIGINS - have)
         # accumulated: window opens when the 24th origin exists (calendar
         # reaches it). matured: h=12 targets of the 24th origin must also
         # be released (calendar reaches origin + max_horizon).
         extra = 0 if kind == "accumulated" else max(horizons)
         calendar_needed = origin_needed + pd.DateOffset(months=extra)
+        months_needed = (
+            (calendar_needed.year - calendar_end.year) * 12
+            + calendar_needed.month
+            - calendar_end.month
+        )
         return {
             "current_count": have,
             "origin_month_24th": origin_needed.date().isoformat(),
             "calendar_end_needed": calendar_needed.date().isoformat(),
-            "months_of_publication_needed": int(
-                (calendar_needed.year - calendar_end.year) * 12
-                + calendar_needed.month
-                - calendar_end.month
+            "months_of_publication_needed": int(months_needed),
+            "eta_under_monthly_resumption": str(
+                (pd.Timestamp.utcnow().to_period("M") + int(months_needed)).to_timestamp(how="start").date()
             ),
         }
+
+    survivors_by_year = (
+        pd.Series(1, index=survivors).groupby(survivors.year).sum().to_dict()
+        if len(survivors)
+        else {}
+    )
+    reconstruction_verdict = (
+        "EMPTY: no post-2025-03 candidate origin passes the frozen 45-day "
+        "availability coverage on the 2026-11-04 ALFRED archive — every "
+        "candidate's as-of panel ends one month short of its origin month. "
+        "ALFRED's mid-month snapshot dates predate MRTS's mid-month advance "
+        "releases, so retrospective reconstruction cannot rebuild what a "
+        "release-day live pull would have known. The re-gate grid therefore "
+        "accumulates ONLY through live scheduled ingestion (REGATE/FINDINGS "
+        "§5.1's stated mechanism), making schedule unpausing the critical "
+        "path, and the released 2025-04 to 2026-08 months are permanently "
+        "unrecoverable as point-in-time gate origins under the frozen rule."
+        if accumulated == 0
+        else "NON-EMPTY: reconstructable origins exist"
+    )
 
     payload = provenance(
         {
@@ -196,12 +229,14 @@ def main() -> None:
                 e for e in exclusions if pd.Timestamp(e["forecast_origin"]) >= REGATE_WINDOW_START
             ],
             "regate_window": {
+                "reconstruction_verdict": reconstruction_verdict,
                 "accumulated_calm_origins": accumulated,
                 "fully_matured_calm_origins": matured,
                 "required": REQUIRED_CALM_ORIGINS,
                 "window_open_today": bool(matured >= REQUIRED_CALM_ORIGINS),
                 "origins": rows,
             },
+            "survivor_origins_per_year": {str(k): int(v) for k, v in sorted(survivors_by_year.items())},
             "projection_if_monthly_resumption": {
                 "accumulated_rule": projection("accumulated"),
                 "matured_rule": projection("matured"),
@@ -215,12 +250,18 @@ def main() -> None:
     for row in rows:
         mark = "matured" if row["fully_matured"] else f"h={row['available_horizons']}"
         print(f"  {row['forecast_origin']}  {mark:28s} calm={row['calm']}")
+    if accumulated == 0:
+        for e in payload["excluded_after_2025_04"]:
+            print(f"  excluded {e['forecast_origin']}: {e['reason']}")
+    print(f"verdict: {reconstruction_verdict[:160]}...")
+    print("survivor origins per year:", payload["survivor_origins_per_year"])
     for kind in ("accumulated_rule", "matured_rule"):
         p = payload["projection_if_monthly_resumption"][kind]
         print(
             f"{kind}: 24 origins at origin {p['origin_month_24th']} "
             f"(calendar end {p['calendar_end_needed']}, "
-            f"+{p['months_of_publication_needed']} months of publication)"
+            f"+{p['months_of_publication_needed']} months of publication, "
+            f"eta {p['eta_under_monthly_resumption']})"
         )
 
 
