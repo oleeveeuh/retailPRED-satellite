@@ -2,12 +2,14 @@
 
 Status: **predeclaration, fixed 2026-11-10 — two years before the re-gate
 window can open. Owner confirmed §2 and criteria C1–C4 as written on
-2026-11-10, before any re-gate origin exists.** Nothing here modifies the 2026-11-04 platform gate
+2026-11-10, before any re-gate origin exists, and pinned §5 (window
+opening: accumulated origins; live-origin availability: recorded ingest
+timestamps) on 2026-11-11, also before any origin exists.** Nothing here modifies the 2026-11-04 platform gate
 verdict, the 2026-11-05 holdout verdict, or the 2026-11-10 scorecard;
 those stand as recorded. This document exists so that when the post-2025
 calm-origin grid reaches ≥ 24 origins (FINDINGS §5.1), the governing
 truth, criteria, metrics, and uncertainty protocol are already fixed.
-**Any change to §2–§4 after the first re-gate origin is a goalpost move
+**Any change to §2–§5 after the first re-gate origin is a goalpost move
 and is void.** The owner confirms or amends the proposed thresholds
 *before* the window opens, in a commit that precedes it.
 
@@ -118,13 +120,69 @@ theta itself sits at parity with naive; C4 is the goalpost rule.
   permitted at any time under the same pattern: predeclared, committed
   before recalculation, zero decision input.
 
-## 5. Provenance
+## 5. Window opening and live-origin availability (owner-pinned 2026-11-11, before any origin exists)
+
+[REGATE_INVENTORY.md](REGATE_INVENTORY.md) measured the reconstructable
+post-2025 grid as EMPTY — the seventeen released months 2025-04 → 2026-08
+are permanently unrecoverable as point-in-time gate origins — so the
+re-gate grid accumulates only through live scheduled ingestion, and §4/C4
+require both decisions below to be pinned before the first live-recorded
+origin exists. This section resolves the question the inventory left open
+("REGATE_DESIGN.md does not yet pin which one governs window opening").
+
+### 5.1 Counting rule — what opens the window
+
+- **Pinned (owner, 2026-11-11): accumulated calm origins.** The re-gate
+  window opens when 24 live-recorded origins exist — the origin month has
+  arrived and the pipeline has recorded its vintage — regardless of target
+  maturity. Under monthly resumption from the current 2026-08 edge, the
+  24th origin is 2027-03 and the window opens **≈ 2027-06**
+  (REGATE_INVENTORY.md §"Timeline to ≥24 calm origins"). At opening, the
+  newest origins' h=12 targets may not yet be released; the gate scores
+  matured folds only and records ragged edges, exactly as the 2026-11-04
+  gate did. This matches FINDINGS §5.1's accumulation language ("accumulate
+  genuinely new forecast origins") and starts the re-gate at the earliest
+  honest date.
+- **Considered and rejected: fully matured origins** (every accumulated
+  origin's h=12 targets released; calendar end 2028-03, ETA ≈ 2028-06).
+  Rejected because complete folds at opening buy no additional protection
+  that ragged-edge recording does not already provide, at the cost of a
+  full extra year of gate closure.
+
+### 5.2 Availability semantics for live-recorded origins
+
+- **Pinned (owner, 2026-11-11): recorded ingest timestamps.** For a
+  live-recorded origin, the as-of panel is selected by the pipeline's
+  actual recorded pull time — release-day knowledge, stamped on every
+  silver row at retrieval. This preserves point-in-time purity (the gate
+  sees exactly what was knowable when the vintage landed, with no
+  reconstruction step that could differ from what the pipeline knew),
+  matches the live pipeline's actual behavior, and mirrors what the
+  2026-11-04 gate measured on ALFRED vintages. The frozen 45-day allowance
+  remains the rule for retrospective reconstruction of the archive grid;
+  it is not extended to live origins.
+- **Considered and rejected: extending the declared 45-day bound to live
+  origins.** Rejected because it is strictly looser than the recorded
+  behavior — it could admit a value published up to 45 days past the
+  origin that the release-day pull did not contain — and the live
+  pipeline makes reconstruction unnecessary: the knowledge is recorded as
+  it arrives.
+
+Either pin changed after the first live origin exists is a goalpost move
+and is void under §3/C4.
+
+## 6. Provenance
 
 - **Owner confirmation, 2026-11-10:** criteria C1–C4 confirmed as written
   (no amendments), completing the predeclaration. The window-opening
   inventory of the post-2025 calm-origin grid may now be assembled under
   §4's invariants — including reconstructing the released 2025-04→2026-08
   origins, which no measurement has yet evaluated.
+- **Owner pins, 2026-11-11:** §5.1 (accumulated origins) and §5.2
+  (recorded ingest timestamps) confirmed by owner choice, presented with
+  both options and their ETAs from REGATE_INVENTORY.md, and committed
+  before any live origin exists — completing §5 as the last
+  pre-unpause predeclaration.
 - Fixed 2026-11-10 after the reporting-only scorecard
   (`results/holdout_scorecard.md`) measured the uncertainty the frozen
   holdout never had; every number cited here is reproduced by that
