@@ -1,0 +1,90 @@
+{
+  "data_path": "data/alfred_mrts_vintages.csv",
+  "data_sha256": "b754ac133667eed1dbb6a3e33d2d6a19730bddcbe727d55cb5aa08237a20ec86",
+  "satellite_code_revision": "657487cdf5a84a708a5780dcbe0bbc4e0833c716",
+  "gate_code_revision_reference": "f6a769adbfc65faca86aa34cb6160ad4e769427e",
+  "protocol": {
+    "horizons": [
+      1,
+      3,
+      6,
+      12
+    ],
+    "min_train_size": 60,
+    "availability_lag_days": 45,
+    "step": 1,
+    "actual_source": "latest_revision_vintage"
+  },
+  "environment": {
+    "python": "3.11.17",
+    "lightgbm": "4.5.0",
+    "pandas": "2.2.3",
+    "numpy": "2.1.3"
+  },
+  "generated_at": "2026-11-11T02:21:17.780411+00:00",
+  "purpose": "REGATE calm-origin inventory (REGATE_DESIGN.md \u00a74); enumeration only",
+  "reference_origins_verified": {
+    "exploration": 24,
+    "holdout_cross_check_only": 8
+  },
+  "panel_vintage_extent": "2026-10-15 00:00:00+00:00",
+  "calendar_end": "2026-08-01 00:00:00",
+  "excluded_candidate_origins_total": 313,
+  "excluded_after_2025_04": [
+    {
+      "forecast_origin": "2025-04-01",
+      "reason": "most recent training month is 2025-03-01, not the origin month 2025-04-01"
+    },
+    {
+      "forecast_origin": "2025-05-01",
+      "reason": "most recent training month is 2025-04-01, not the origin month 2025-05-01"
+    },
+    {
+      "forecast_origin": "2025-06-01",
+      "reason": "most recent training month is 2025-05-01, not the origin month 2025-06-01"
+    },
+    {
+      "forecast_origin": "2025-07-01",
+      "reason": "most recent training month is 2025-06-01, not the origin month 2025-07-01"
+    },
+    {
+      "forecast_origin": "2025-08-01",
+      "reason": "most recent training month is 2025-07-01, not the origin month 2025-08-01"
+    }
+  ],
+  "regate_window": {
+    "reconstruction_verdict": "EMPTY: no post-2025-03 candidate origin passes the frozen 45-day availability coverage on the 2026-11-04 ALFRED archive \u2014 every candidate's as-of panel ends one month short of its origin month. ALFRED's mid-month snapshot dates predate MRTS's mid-month advance releases, so retrospective reconstruction cannot rebuild what a release-day live pull would have known. The re-gate grid therefore accumulates ONLY through live scheduled ingestion (REGATE/FINDINGS \u00a75.1's stated mechanism), making schedule unpausing the critical path, and the released 2025-04 to 2026-08 months are permanently unrecoverable as point-in-time gate origins under the frozen rule.",
+    "accumulated_calm_origins": 0,
+    "fully_matured_calm_origins": 0,
+    "required": 24,
+    "window_open_today": false,
+    "origins": []
+  },
+  "survivor_origins_per_year": {
+    "2017": 3,
+    "2018": 5,
+    "2019": 5,
+    "2020": 2,
+    "2021": 5,
+    "2022": 4,
+    "2023": 3,
+    "2024": 3,
+    "2025": 2
+  },
+  "projection_if_monthly_resumption": {
+    "accumulated_rule": {
+      "current_count": 0,
+      "origin_month_24th": "2027-03-01",
+      "calendar_end_needed": "2027-03-01",
+      "months_of_publication_needed": 7,
+      "eta_under_monthly_resumption": "2027-06-01"
+    },
+    "matured_rule": {
+      "current_count": 0,
+      "origin_month_24th": "2027-03-01",
+      "calendar_end_needed": "2028-03-01",
+      "months_of_publication_needed": 19,
+      "eta_under_monthly_resumption": "2028-06-01"
+    }
+  }
+}
