@@ -1,7 +1,8 @@
 # REGATE_DESIGN — predeclared design for the ≈2027 re-gate
 
 Status: **predeclaration, fixed 2026-11-10 — two years before the re-gate
-window can open.** Nothing here modifies the 2026-11-04 platform gate
+window can open. Owner confirmed §2 and criteria C1–C4 as written on
+2026-11-10, before any re-gate origin exists.** Nothing here modifies the 2026-11-04 platform gate
 verdict, the 2026-11-05 holdout verdict, or the 2026-11-10 scorecard;
 those stand as recorded. This document exists so that when the post-2025
 calm-origin grid reaches ≥ 24 origins (FINDINGS §5.1), the governing
@@ -57,7 +58,7 @@ and is void.** The owner confirms or amends the proposed thresholds
   result — the two aggregations resolving in opposite directions — is the
   standing demonstration of why neither may be dropped.
 
-## 3. Proposed promotion criteria (owner confirms before the window opens)
+## 3. Promotion criteria (owner-confirmed 2026-11-10, before the window opened)
 
 A candidate is promoted only if **all** hold on the re-gate window, scored
 on identical folds against both benchmarks (naive, and theta as third
@@ -119,6 +120,11 @@ theta itself sits at parity with naive; C4 is the goalpost rule.
 
 ## 5. Provenance
 
+- **Owner confirmation, 2026-11-10:** criteria C1–C4 confirmed as written
+  (no amendments), completing the predeclaration. The window-opening
+  inventory of the post-2025 calm-origin grid may now be assembled under
+  §4's invariants — including reconstructing the released 2025-04→2026-08
+  origins, which no measurement has yet evaluated.
 - Fixed 2026-11-10 after the reporting-only scorecard
   (`results/holdout_scorecard.md`) measured the uncertainty the frozen
   holdout never had; every number cited here is reproduced by that
