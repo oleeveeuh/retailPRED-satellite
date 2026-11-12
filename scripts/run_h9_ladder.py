@@ -87,8 +87,10 @@ def _hash_checked_panel(path: Path, record_path: Path, label: str) -> pd.DataFra
     if digest != recorded:
         raise SystemExit(f"{label} panel hash mismatch: {digest} != {recorded}")
     frame = pd.read_csv(path)
-    frame["observation_time"] = pd.to_datetime(frame["observation_time"])
-    frame["vintage_time"] = pd.to_datetime(frame["vintage_time"], utc=True)
+    # mixed formats are expected: cache-resumed series serialize midnight
+    # timestamps date-only, freshly fetched series carry " 00:00:00"
+    frame["observation_time"] = pd.to_datetime(frame["observation_time"], format="mixed")
+    frame["vintage_time"] = pd.to_datetime(frame["vintage_time"], utc=True, format="mixed")
     return frame
 
 
