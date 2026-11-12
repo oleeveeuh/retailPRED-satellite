@@ -553,3 +553,84 @@ measured and closed: it helps, and it is not enough.
 Provenance: H9_FEATURE_REVISIT.md (predeclaration), results/h9_rung_*.json
 (seven rungs), results/h9_scorecard.{json,md}, data SHAs recorded in every
 payload; environment pins unchanged.
+
+## 14. Addendum — v1 performance recovery: the missing summary, re-derived and gated (owner-directed, 2026-11-12)
+
+**Question (V1_PERFORMANCE_RECOVERY.md §1, predeclared and committed
+before any execution, git order verifiable):** the `v1-undergrad` tag
+preserves a complete deterministic training pipeline — committed data,
+committed code, fixed seeds — but its performance numbers were never
+committed. What did `backend/ml/train_73_features.py` measure on the
+tag's own frozen data, and do the committed pickles prove recovery of
+that run?
+
+**What the tag actually contains (verified against the frozen SHAs):**
+the trainer (SHA `5fcba763…`), 11 multi-resolution CSVs, and 42 pickles.
+Not in the tag: `training_outputs/training_73features_summary.json` (the
+file this trainer writes — recovering it was the point) and
+`robust_training_summary.json` (the file the API actually served; its
+"robust" trainer is not identified in the tag and remains an open
+question). The recovery: venv from the tag's own pins, corrected by
+**Amendment A** (committed pre-execution) when the predeclared pickle
+audit proved the original run's scikit-learn was **1.7.1**, not the
+backend pin's 1.5.2 — evidenced by `InconsistentVersionWarning` on every
+RandomForest pickle; after the correction, all 42 pickles load with zero
+version warnings. Trainer run twice, unmodified, from the extracted root.
+
+**Gate results (stop-on-mismatch, released as measured):**
+
+- **Gate 1 (feature count) — PASS.** All 11 categories report 73
+  features in both runs; the dead `yoy_change` column (all-NaN in the
+  four pure-daily categories) is still counted, as v1 counted it.
+- **Gate 2 (determinism) — FAILED byte-exactness, diagnosed and
+  quantified, not redefined.** LGBM is **bit-identical** across the two
+  runs (every prediction delta 0.0). RandomForest differs only by
+  last-bit float-scheduling noise (~1e-12 absolute on predictions in the
+  thousands; metric payloads differ in 19/44 entries at ≤ 2.1e-3 ppm).
+- **Gate 3 (pickle equivalence) — SPLIT BY DATA FAMILY, the session's
+  central finding.** The four **pure-daily** categories (electronics,
+  furniture, health/personal-care, sporting-goods — Family B) recover at
+  **run level**: committed pickles, committed CSVs, and the original
+  run's pickle-embedded metrics agree (LGBM embedded metrics match to
+  **0.0**; RF to ≤ 5e-14 — last-bit CSV-parse drift). The seven
+  **mixed-grain** categories (Family A — monthly rows + 2025 daily
+  stretch + trailing month-end) **do not reproduce**: prediction deltas
+  of hundreds-to-thousands of units (total_sales RF max|Δ| 1.04e4).
+  Their committed models were trained on **earlier data** (pickle
+  timestamps 2026-01-12, ~69 s coherent run; tag commit 2026-10-02 — a
+  nine-month drift window), so for them the release is a
+  **protocol-level re-derivation on the frozen data**, and the original
+  numbers survive only as the pickle-embedded metrics (released
+  separately, labeled as computed on data that predates the frozen
+  CSVs). One schema anomaly recorded: `total_sales_LGBM_model.pkl` is a
+  bare `lightgbm.Booster` — overwritten post-training by a later save
+  path; no embedded metrics; reported, never substituted.
+- **Gate 4 (provenance) — PASS** in both release artifacts.
+
+**Recovered headline numbers (v1 protocol on frozen data, flaws
+inherited, not accuracy):** mean holdout MAE across 11 categories —
+**507.95** (LGBM) / **507.36** (RandomForest) on the last-52-rows
+holdout, which on these daily-grid files is ≈ **7 calendar weeks**, not
+the "52 weeks (1 year)" the code comment claims. Derived holdout MAPE
+(labeled derived; MAE ≠ MAPE; not the audit's 9.76 %/14.11 % quantity):
+6.25 % (LGBM) / 6.77 % (RF) mean. Three-column comparison table released
+with the audit snapshot (LightGBM 9.76 %, RF 10.06 %, seasonal naive
+14.11 % average MAPE on 429 pseudo-replicated rows — different metric,
+different split, never merged) and the fabricated demo headline (90.2 %
+/ 0.26 %) appearing solely as the recorded fabrication.
+
+**Corrected record:** `train_73_features.py` substantiates v1's
+historical "73 features" claim — a 73-feature panel (76 columns minus
+`y`/`index`/`year`), a 52-row temporal holdout, `TimeSeriesSplit`
+imported (unused by this trainer), fixed seeds `random_state=42`,
+`n_estimators=200` — and produces deterministic LGBM output. But **no v1
+metric survives except this recovery**: the summary was never committed,
+the Family A pickles cannot be checked against any data in the tag, and
+the numbers the API served came from a "robust" summary whose trainer is
+not in the repository. What v1 proves is process, not performance.
+
+Provenance: V1_PERFORMANCE_RECOVERY.md (predeclaration + Amendment A),
+results/v1_training_73features_summary.recovered.{json,md}, scripts/
+v1_recovery_{pickle_audit,gates,release}.py, run transcripts with SHA
+digests in the JSON payload; data facts (mixed-grain families, NaN
+structure) recorded pre-execution only.

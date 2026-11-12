@@ -1,0 +1,531 @@
+{
+ "label": "recovered via deterministic re-derivation; original outputs were never committed",
+ "header_for_every_table": "v1 protocol, frozen 2025/2026 data, flaws inherited (monthly actuals expanded across a daily grid; holdout = last 52 rows \u2248 7 calendar weeks; inclusive rolling windows frozen into the CSVs)",
+ "recovery_session": "2026-11-12",
+ "tag": {
+  "name": "v1-undergrad",
+  "commit_sha": "605d962bb0691dae5b06722cc2232a9eff051ea2",
+  "commit_date": "2026-10-02 16:52:30 -0700",
+  "trainer": "backend/ml/train_73_features.py",
+  "trainer_sha256": "5fcba763ab7b5d1c229f78d8a6e62e91742f8c58be073faa33c2b04ca3448a08"
+ },
+ "environment": {
+  "python": "3.11.17",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "venv": "/tmp/v1_recovery_venv (throwaway; built from Amendment A pins)",
+  "pins_basis": "Amendment A: scikit-learn pinned to the original run's recorded version 1.7.1 (evidenced by InconsistentVersionWarning in the pre-execution pickle audit); lightgbm 4.5.0 / pandas 2.2.3 / numpy 2.1.3 / joblib 1.4.2 are the tag's own backend pins (original LightGBM version is not recorded in its pickles)",
+  "libraries": {
+   "joblib": "1.4.2",
+   "lightgbm": "4.5.0",
+   "numpy": "2.1.3",
+   "pandas": "2.2.3",
+   "scikit-learn": "1.7.1",
+   "scipy": "1.17.1",
+   "threadpoolctl": "3.8.0"
+  }
+ },
+ "procedure": {
+  "command": "python backend/ml/train_73_features.py  (run from the extracted tag root; trainer unmodified)",
+  "runs": 2,
+  "run1": {
+   "training_date": "2026-11-12T14:16:16.496995",
+   "duration_seconds": 34.459803
+  },
+  "run2": {
+   "training_date": "2026-11-12T14:16:58.666756",
+   "duration_seconds": 32.258204
+  },
+  "transcript_sha256": {
+   "run1.log": "35f71fd3922b5c4283e23b904f901b842ec5c3e9bb6b9725934afc10ae3ad999",
+   "run2.log": "b789b4eec9ed4c2d587de2402c6abb37a2e75e44a3956e963988eba6edd8b479",
+   "pickle_audit.json (sklearn 1.5.2 attempt)": "d4072b3975cea91668b846111efaa8ecbaae098e0f228d2d07b72fc9836c8fd0",
+   "pickle_audit_sklearn171.json": "e59592168e5f66111af4ac0fe190915797b7612a1707a884f3eb0998da763852",
+   "gates.json": "d1b2489d4269dd45bd2fa3c0da63f1fdd5ad9fb194a2c816ce39fa90e91768da"
+  }
+ },
+ "frozen_inputs_sha256": {
+  "csvs": {
+   "project_root/data_multi_resolution/retail_automobile_dealers_multi_resolution.csv": "b1eba73e41f0d65cdc579693099abd5036d0fb6b3dec9897b06ced690d6d66d3",
+   "project_root/data_multi_resolution/retail_building_material_and_garden_equipment_multi_resolution.csv": "4d8b7e2f68581ad5e5dbaab0ef15e7713c6609697599bb63ca7b7525539ed1c4",
+   "project_root/data_multi_resolution/retail_clothing_and_clothing_accessories_stores_multi_resolution.csv": "12f7fb688f6aaf766416f50dd885b0a488851a7d3096b78d7c1e196f7c88f002",
+   "project_root/data_multi_resolution/retail_electronics_and_appliance_stores_multi_resolution.csv": "c14a21b820eff6fd0641608695bb54893373b09ab8b8f89bed4452359897c3eb",
+   "project_root/data_multi_resolution/retail_food_and_beverage_stores_multi_resolution.csv": "ee5ead8e818b730a518527e4cc5d12948f4a6ec34bf86b2aba4302e6b655a75d",
+   "project_root/data_multi_resolution/retail_furniture_and_home_furnishings_stores_multi_resolution.csv": "df1240333d433002384df5a0f2f400cb7981fa579df13ddbd148ad505de1993e",
+   "project_root/data_multi_resolution/retail_gasoline_stations_multi_resolution.csv": "8510aed9a45b21575dbda5fe4f40d6e348f44a5734588a2c3bdefaf9031bcb80",
+   "project_root/data_multi_resolution/retail_general_merchandise_stores_multi_resolution.csv": "04c15a455d2e4b62dfbfd1030d3707abf8735ec383c58884f701e87253580f3b",
+   "project_root/data_multi_resolution/retail_health_and_personal_care_stores_multi_resolution.csv": "e0f1f2e6c384f866860c1661a783ba8a19bebf0d4994fa2bcbbd639797f03b2b",
+   "project_root/data_multi_resolution/retail_sporting_goods_hobby_and_musical_instrument_stores_multi_resolution.csv": "51af637118d05c2d9607e1bea6a221081780a9c361cea873a529127a2bf265a8",
+   "project_root/data_multi_resolution/retail_total_sales_multi_resolution.csv": "b38fd8f9aee9645d42a14b048e911016d41fc57b8a2bf0fbea757fb4fc1c0b88"
+  },
+  "code": {
+   "backend/ml/train_73_features.py": "5fcba763ab7b5d1c229f78d8a6e62e91742f8c58be073faa33c2b04ca3448a08",
+   "backend/ml/train_statistical_models.py": "a657a900750d837b385e53a701b2e61f0a28c5b3834e0bd577e71600839d33fe",
+   "requirements.txt": "d820b01c35d51682b5f4efcce87e4b2545874a97db2c382d3dfe42b4250148e0",
+   "backend/requirements.txt": "de8d622ea1e90c93aae59ec57775d81fc073a68d05428650175fd9c116eb51f1"
+  },
+  "pickles_backend_ml_models": {
+   "backend/ml/models/automobile_dealers_LGBM_model.pkl": "6783a8622e8146923d03972722343142c877da8e82c1270a3358861a77439638",
+   "backend/ml/models/automobile_dealers_RandomForest_model.pkl": "f1b1a7105c8c2fe338dc87f6cd01536d0ce593c2cc06470570ad8688173c0fe3",
+   "backend/ml/models/building_material_and_garden_equipment_LGBM_model.pkl": "a4941889fdd25ec9a3a89a6019d1cfea5c7d86f72a29808b07e3e8b26cbf0012",
+   "backend/ml/models/building_material_and_garden_equipment_RandomForest_model.pkl": "9e880d8ed2da32e34af594ff8f7eb68de160b9c9cbd4fbd8c65b3f9b7c4663e6",
+   "backend/ml/models/clothing_and_clothing_accessories_stores_LGBM_model.pkl": "dbf2069a32a7f11211263d7b455e02c5dcb9d7127d2be20a2403c3622813eae8",
+   "backend/ml/models/clothing_and_clothing_accessories_stores_RandomForest_model.pkl": "4a7ab83026eb0172a8d1b25ec69b65c353adb27b02e3b281c612902855cf6f2d",
+   "backend/ml/models/electronics_and_appliance_stores_LGBM_model.pkl": "292097d973299e04d862fecb3d004849f720a1028111a3498e95696dade4f15d",
+   "backend/ml/models/electronics_and_appliance_stores_RandomForest_model.pkl": "b10caa855fbe283684540a21779b9af30f07b5a9cfe364922d896df487d6c4dc",
+   "backend/ml/models/food_and_beverage_stores_LGBM_model.pkl": "4d82e52bcc104e5f5d42e695410b0850cc60d5f084afc77bb84327ec1614fa4e",
+   "backend/ml/models/food_and_beverage_stores_RandomForest_model.pkl": "05ae43b859ae499aae38f58db743597ae2a8fe13012f3f506ce1b995bae4997e",
+   "backend/ml/models/furniture_and_home_furnishings_stores_LGBM_model.pkl": "64fbc0c208d6e2fe926dae4398ecde625c4ebb8624db2f8791ad5c046af446c4",
+   "backend/ml/models/furniture_and_home_furnishings_stores_RandomForest_model.pkl": "7534ab69b878b28589b24f1e461ef97a7799cd59d883ae65261432bdc2dc6d45",
+   "backend/ml/models/gasoline_stations_LGBM_model.pkl": "9473d819bb7d94e890b4a3c73297df4c418027ce7f75ba49cbade5470eb0937e",
+   "backend/ml/models/gasoline_stations_RandomForest_model.pkl": "5b659fafc443360a32e9a173c17561f2c0bcbd544b85b530865d8d7f6250c5ad",
+   "backend/ml/models/general_merchandise_stores_LGBM_model.pkl": "eced4a9d6b3b68910c0348a4cb9ece63e6862a1bd45f31efbaa95f3ea3bbccda",
+   "backend/ml/models/general_merchandise_stores_RandomForest_model.pkl": "5d5ff3d8d9584d23690f88e915da01353c4be5e7c0de14b98d79d76e70451a3d",
+   "backend/ml/models/health_and_personal_care_stores_LGBM_model.pkl": "efd02f2436af71935a3c6691419e9ac41f890da372b12bf798ba8d8bd8c32367",
+   "backend/ml/models/health_and_personal_care_stores_RandomForest_model.pkl": "e2c51f15b66e768ee76d8086d7af3d51d46589725e0ce5b4b32e567070d8ec5f",
+   "backend/ml/models/sporting_goods_hobby_and_musical_instrument_stores_LGBM_model.pkl": "133ba94d447d1291db46a578e4d1efa67f8bdb152d08d12f2019fe44161aa2aa",
+   "backend/ml/models/sporting_goods_hobby_and_musical_instrument_stores_RandomForest_model.pkl": "e439162907e9d7bdcd2fa810d4ec5c2171670095656d6c0b7d5c6b78bc0a708e",
+   "backend/ml/models/total_sales_LGBM_model.pkl": "a060a398d5e07c25d6fa1dcaf62ff8a28c4d3800f513bdeaac63e8b3c6f6033b",
+   "backend/ml/models/total_sales_RandomForest_model.pkl": "2f5459ff0dc887bc02ed68928935d46c16027905d9d85cb85df2bd1c8e9bbe91"
+  },
+  "pickles_backend_training_outputs_models": {
+   "backend/training_outputs/models/Sporting_Goods_Hobby/LGBM_model.pkl": "2b8de74f7a11a7553328f487d9192d5e28a45504a9701c36da71ec0437ab7738",
+   "backend/training_outputs/models/Sporting_Goods_Hobby/RandomForest_model.pkl": "e738126cd35137e8555dc1b82b89f88d7ca532090dc902c7fdb0575cd71d9cbf",
+   "backend/training_outputs/models/Furniture_Home_Furnishings/LGBM_model.pkl": "6f084420c5e9be775b1389bdc550129f7954695838904f5f465bcee0e7efdf40",
+   "backend/training_outputs/models/Furniture_Home_Furnishings/RandomForest_model.pkl": "92f2aef67abbbe6def9b2de660ffe734657a05bb9cd2230f9114969419029eb3",
+   "backend/training_outputs/models/Automobile_Dealers/LGBM_model.pkl": "5e94a94ff817e256320da3b4d94e0bf54bdfd720a62e82066a0c87c4b1f2f597",
+   "backend/training_outputs/models/Automobile_Dealers/RandomForest_model.pkl": "3e4dca3860e338d279d6e2fb4c7fef01e5f5e017b07cee390755178ad7bdde1b",
+   "backend/training_outputs/models/Food_Beverage_Stores/LGBM_model.pkl": "79d318db3a0e4263fe566a11677d8d8a5d20188d5e60a79c3d5053a8b4c62521",
+   "backend/training_outputs/models/Food_Beverage_Stores/RandomForest_model.pkl": "debcf61477d84a04dae07abe9f2cc2e1214ff46230b9140745163aadcd5f002e",
+   "backend/training_outputs/models/Electronics_and_Appliances/LGBM_model.pkl": "65d57b51b644fdf44b1cb1db6586e8eb43847078f89ec09b6264dc487192e17f",
+   "backend/training_outputs/models/Electronics_and_Appliances/RandomForest_model.pkl": "83214b1ea7d4bc17d1e7e75e3d561ea593476a8c59c6c187a8250b0170e97072",
+   "backend/training_outputs/models/Clothing_Accessories/LGBM_model.pkl": "a273a763308da7452c18c50ad4fb08fa71302a857ccf87520fecb8a6b4bd88d2",
+   "backend/training_outputs/models/Clothing_Accessories/RandomForest_model.pkl": "aeb70c4d5e3e8f79206ca691a20545c25e0f0f42b82dbe6e3568481a89ec3b35",
+   "backend/training_outputs/models/Health_Personal_Care/LGBM_model.pkl": "5982e944229446e23d0e8a7944f2cb364969301eb9bb052dfab80bd4fd23cf3c",
+   "backend/training_outputs/models/Health_Personal_Care/RandomForest_model.pkl": "9a543eb32e1715f0242fa95fa2e01185b2c74cab8f36dcbdf2a967c79fbda6e3",
+   "backend/training_outputs/models/Building_Materials_Garden/LGBM_model.pkl": "dadbde1325c4c3cd1d418ce4fb760fc34884059f20026714a3055de218edaf05",
+   "backend/training_outputs/models/Building_Materials_Garden/RandomForest_model.pkl": "4aef95f0246ca5385b53d60e57b84503948708f4dbd502206ae6a0c724aae8ec",
+   "backend/training_outputs/models/General_Merchandise/LGBM_model.pkl": "6a0b006a16a91d574d10c6ad621ca9b3a3d58c8e4934a3a8544868e49be0539b",
+   "backend/training_outputs/models/General_Merchandise/RandomForest_model.pkl": "f36762ededb3351895a777e95e1a43c5a471f06a8ce34a306116cb03aa9fc120",
+   "backend/training_outputs/models/Gasoline_Stations/LGBM_model.pkl": "20ceadd61c159503555f3f89cf7a77c76c209714509b4cc4255c9cceb8f79949",
+   "backend/training_outputs/models/Gasoline_Stations/RandomForest_model.pkl": "8bcf6bc46c366fd149ace26112f50d528ae0402b9ca929fb00feb6687bfeb2b8"
+  }
+ },
+ "gate_outcomes": {
+  "gate1_feature_count": {
+   "pass": true,
+   "detail": "all 11 categories report 73 features in both runs (trainer log lines); dead yoy_change column (all-NaN in 4 pure-daily categories) still counted, as in v1"
+  },
+  "gate2_determinism": {
+   "pass_byte_exact": false,
+   "verdict": "FAILED byte-exactness, diagnosed benign and quantified: LGBM bit-identical across runs (all prediction deltas 0.0); RandomForest differs only at last-bit float-scheduling noise (~1e-12 absolute on predictions in the thousands; metric payloads differ \u2264 2.1e-3 ppm, last 1\u20132 digits). Same venv, same machine, identical invocations. Reported as failed under the frozen byte-exact rule, with the noise envelope recorded \u2014 not silently redefined as a pass.",
+   "lgbm_prediction_deltas_all_zero": false,
+   "rf_noise": "max |\u0394| run1 vs run2 across categories: 5.5e-12 (predictions), metric payloads differ in 19 of 44 entries at \u2264 2.1e-3 ppm"
+  },
+  "gate3_pickle_equivalence": {
+   "per_row_verdicts": {
+    "automobile_dealers_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "automobile_dealers_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "building_material_and_garden_equipment_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "building_material_and_garden_equipment_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "clothing_and_clothing_accessories_stores_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "clothing_and_clothing_accessories_stores_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "electronics_and_appliance_stores_RandomForest_model.pkl": "run-level within float noise (embedded metric differs \u2264 1e-13 \u2014 last-bit data-parse drift)",
+    "electronics_and_appliance_stores_LGBM_model.pkl": "run-level",
+    "food_and_beverage_stores_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "food_and_beverage_stores_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "furniture_and_home_furnishings_stores_RandomForest_model.pkl": "run-level (predictions equal to float noise; embedded metric exact)",
+    "furniture_and_home_furnishings_stores_LGBM_model.pkl": "run-level",
+    "gasoline_stations_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "gasoline_stations_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "general_merchandise_stores_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "general_merchandise_stores_LGBM_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "health_and_personal_care_stores_RandomForest_model.pkl": "run-level within float noise (embedded metric differs \u2264 1e-13 \u2014 last-bit data-parse drift)",
+    "health_and_personal_care_stores_LGBM_model.pkl": "run-level",
+    "sporting_goods_hobby_and_musical_instrument_stores_RandomForest_model.pkl": "run-level within float noise (embedded metric differs \u2264 1e-13 \u2014 last-bit data-parse drift)",
+    "sporting_goods_hobby_and_musical_instrument_stores_LGBM_model.pkl": "run-level",
+    "total_sales_RandomForest_model.pkl": "NOT reproducible on frozen data (trained on earlier data \u2014 see findings)",
+    "total_sales_LGBM_model.pkl": "not-comparable (bare Booster \u2014 schema overwritten post-training; no embedded metrics)"
+   },
+   "summary": "SPLIT BY DATA FAMILY. Family B (4 pure-daily categories: electronics, furniture, health, sporting) \u2014 RUN-LEVEL recovery proven: committed pickles reproduce the committed data exactly (LGBM embedded metrics match to 0.0; RF to \u2264 5e-14, last-bit parsing noise). Family A (7 mixed-grain categories) \u2014 committed pickles do NOT reproduce on the committed CSVs: prediction deltas of hundreds to thousands (e.g. total_sales RF max|\u0394| 1.04e4); the committed Family A models were trained on earlier, different data (pickles 2026-01-12, tag commit 2026-10-02 \u2014 a nine-month drift window). For Family A the recovery is protocol-level only."
+  },
+  "gate4_provenance": {
+   "pass": true,
+   "detail": "this artifact and the .md rendering"
+  }
+ },
+ "classification": "split: run-level for the 4 pure-daily categories (Family B); protocol-level-only for the 7 mixed-grain categories (Family A \u2014 committed models predate the frozen data); overall NOT a full run-level recovery, reported exactly as measured",
+ "recovered_metrics_run1": {
+  "automobile_dealers": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 75.77549470913995,
+     "test_mae": 1686.5226938106864
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 40.7062811690345,
+     "test_mae": 1818.2195632659418
+    },
+    "n_features": 73
+   }
+  },
+  "building_material_and_garden_equipment": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 7.225675322249597,
+     "test_mae": 120.86333755575896
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 4.083320598858592,
+     "test_mae": 131.74166945747874
+    },
+    "n_features": 73
+   }
+  },
+  "clothing_and_clothing_accessories_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 4.294284122270585,
+     "test_mae": 83.36913567666497
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 2.4428656702970613,
+     "test_mae": 60.44135463319931
+    },
+    "n_features": 73
+   }
+  },
+  "electronics_and_appliance_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 58.233583873970325,
+     "test_mae": 597.8853792229812
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 94.4030532236672,
+     "test_mae": 738.0999231380928
+    },
+    "n_features": 73
+   }
+  },
+  "food_and_beverage_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 47.28074913353562,
+     "test_mae": 1060.5811479038882
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 25.98516830971852,
+     "test_mae": 1062.7891936418202
+    },
+    "n_features": 73
+   }
+  },
+  "furniture_and_home_furnishings_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 1.0424659959987896,
+     "test_mae": 4.105024616681852
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 1.7831239100562906,
+     "test_mae": 5.233327663843334
+    },
+    "n_features": 73
+   }
+  },
+  "gasoline_stations": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 39.803848483455155,
+     "test_mae": 595.4799200504507
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 23.640962711661256,
+     "test_mae": 345.3342843628637
+    },
+    "n_features": 73
+   }
+  },
+  "general_merchandise_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 13.332308885497966,
+     "test_mae": 375.3364996861725
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 7.252228743833889,
+     "test_mae": 367.9077338264209
+    },
+    "n_features": 73
+   }
+  },
+  "health_and_personal_care_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 5.518941111938224,
+     "test_mae": 17.208680180501634
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 9.82843976132854,
+     "test_mae": 23.949434387562004
+    },
+    "n_features": 73
+   }
+  },
+  "sporting_goods_hobby_and_musical_instrument_stores": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 1.1294625130906366,
+     "test_mae": 29.50578190891271
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 1.9047871959997191,
+     "test_mae": 32.97917486575661
+    },
+    "n_features": 73
+   }
+  },
+  "total_sales": {
+   "RandomForest": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 39.05003523941243,
+     "test_mae": 1010.0949909405756
+    },
+    "n_features": 73
+   },
+   "LGBM": {
+    "status": "success",
+    "metrics": {
+     "train_mae": 23.15293905251055,
+     "test_mae": 1000.809315322949
+    },
+    "n_features": 73
+   }
+  }
+ },
+ "run2_metric_delta_note": "RandomForest entries may differ from run1 in the last 1\u20132 digits (float-scheduling noise, quantified in gate_outcomes); LGBM entries identical",
+ "original_run_metrics_as_embedded_in_committed_pickles": {
+  "automobile_dealers_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 11.588959462333968,
+    "test_mae": 73.3760860304028
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "automobile_dealers_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 19.170011079506008,
+    "test_mae": 100.80397101157912
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "building_material_and_garden_equipment_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 0.7105688789181972,
+    "test_mae": 2.002587083128884
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "building_material_and_garden_equipment_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 1.2817829747574108,
+    "test_mae": 2.3561851606801247
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "clothing_and_clothing_accessories_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 5.915047455874854,
+    "test_mae": 38.0179416097034
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "clothing_and_clothing_accessories_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 10.50187846315793,
+    "test_mae": 56.544034228368005
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "electronics_and_appliance_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 58.233583873970176,
+    "test_mae": 597.8853792229784
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "electronics_and_appliance_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 94.4030532236672,
+    "test_mae": 738.0999231380928
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "food_and_beverage_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 7.042313774410164,
+    "test_mae": 53.43295814097636
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "food_and_beverage_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 12.06783717466461,
+    "test_mae": 60.343624999160596
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "furniture_and_home_furnishings_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 1.0424659959987932,
+    "test_mae": 4.105024616681893
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "furniture_and_home_furnishings_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 1.7831239100562906,
+    "test_mae": 5.233327663843334
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "gasoline_stations_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 2.036046526175408,
+    "test_mae": 30.343946170995807
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "gasoline_stations_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 3.645115751542101,
+    "test_mae": 29.886683889599688
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "general_merchandise_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 9.928169384392676,
+    "test_mae": 177.15573198054605
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "general_merchandise_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 16.505910990339846,
+    "test_mae": 224.51130829451643
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "health_and_personal_care_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 5.518941111938228,
+    "test_mae": 17.20868018050181
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "health_and_personal_care_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 9.82843976132854,
+    "test_mae": 23.949434387562004
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "sporting_goods_hobby_and_musical_instrument_stores_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 1.1294625130906355,
+    "test_mae": 29.505781908912727
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "sporting_goods_hobby_and_musical_instrument_stores_LGBM_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 1.9047871959997191,
+    "test_mae": 32.97917486575661
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  },
+  "total_sales_RandomForest_model.pkl": {
+   "embedded_metrics": {
+    "train_mae": 39.561495539692196,
+    "test_mae": 379.3665465156761
+   },
+   "note": "recorded by the original 2026-01-12 run; for the 7 mixed-grain categories these were computed on data that predates the tag's frozen CSVs and is not recoverable from the tag"
+  }
+ },
+ "derived_holdout_mape_pct": {
+  "automobile_dealers_RandomForest_model.pkl": 10.081548740181834,
+  "automobile_dealers_LGBM_model.pkl": 10.907508211876864,
+  "building_material_and_garden_equipment_RandomForest_model.pkl": 9.099794809277057,
+  "building_material_and_garden_equipment_LGBM_model.pkl": 9.613174803074925,
+  "clothing_and_clothing_accessories_stores_RandomForest_model.pkl": 9.133358132172042,
+  "clothing_and_clothing_accessories_stores_LGBM_model.pkl": 6.44968861891854,
+  "electronics_and_appliance_stores_RandomForest_model.pkl": 0.6755970513631666,
+  "electronics_and_appliance_stores_LGBM_model.pkl": 0.8272140024702356,
+  "food_and_beverage_stores_RandomForest_model.pkl": 10.608200969697286,
+  "food_and_beverage_stores_LGBM_model.pkl": 10.523403125741513,
+  "furniture_and_home_furnishings_stores_RandomForest_model.pkl": 0.32043143413512576,
+  "furniture_and_home_furnishings_stores_LGBM_model.pkl": 0.38431165415549107,
+  "gasoline_stations_RandomForest_model.pkl": 9.609617475648147,
+  "gasoline_stations_LGBM_model.pkl": 5.430697174800018,
+  "general_merchandise_stores_RandomForest_model.pkl": 11.871229834078397,
+  "general_merchandise_stores_LGBM_model.pkl": 11.529249186435273,
+  "health_and_personal_care_stores_RandomForest_model.pkl": 0.2946508762250712,
+  "health_and_personal_care_stores_LGBM_model.pkl": 0.37538257285526294,
+  "sporting_goods_hobby_and_musical_instrument_stores_RandomForest_model.pkl": 1.5390603850341125,
+  "sporting_goods_hobby_and_musical_instrument_stores_LGBM_model.pkl": 1.69633835165104,
+  "total_sales_RandomForest_model.pkl": 11.20182765447122,
+  "total_sales_LGBM_model.pkl": 11.015837322796461
+ }
+}
