@@ -84,15 +84,18 @@ def _month_number(month: pd.Timestamp) -> int:
 
 def _aligned_series(ext_panel: pd.DataFrame, series_key: str) -> pd.DataFrame:
     """Per-month aligned values: for each observation month m, the value at
-    the latest vintage of m published at or before m + 45 days, with that
-    vintage's timestamp (the "what the row's era knew" selection)."""
+    the latest vintage of m published at or before the platform's frozen
+    first-release allowance — month END + 45 days, the same convention the
+    harness's availability rule and the scorecard's as-of gate use — with
+    that vintage's timestamp (the "what the row's era knew" selection)."""
     rows = ext_panel.loc[ext_panel["series_id"] == series_key].copy()
     if rows.empty:
         raise ValueError(f"external series {series_key} is absent from the H9 panel")
     rows["vintage_time"] = pd.to_datetime(rows["vintage_time"], utc=True)
     rows["observation_time"] = pd.to_datetime(rows["observation_time"])
     rows["allowance_end"] = (
-        rows["observation_time"].dt.tz_localize("UTC") + pd.Timedelta(days=ROW_ALLOWANCE_DAYS)
+        (rows["observation_time"] + pd.offsets.MonthEnd(0)).dt.tz_localize("UTC")
+        + pd.Timedelta(days=ROW_ALLOWANCE_DAYS)
     )
     eligible = rows.loc[rows["vintage_time"] <= rows["allowance_end"]]
     if eligible.empty:
@@ -239,7 +242,14 @@ def h9_external_row_context(
             suffix = "yoy" if context_id in H9_EXTERNAL_YOY_IDS else "level"
             columns[f"ext_{context_id}_{suffix}"].append(value)
             columns[f"ext_{context_id}_age"].append(float(origin_number - _month_number(observation_month)))
-    return {name: pd.Series(values, index=months.index) for name, values in columns.items()}
+    month_index = pd.DatetimeIndex(unique_months)
+    return {
+        name: pd.Series(
+            pd.Series(months).map(pd.Series(columns[name], index=month_index)).to_numpy(),
+            index=months.index,
+        )
+        for name in columns
+    }
 
 
 def market_monthly_aggregates(market_panel: pd.DataFrame) -> pd.DataFrame:
@@ -300,7 +310,10 @@ def h9_market_row_context(aggregates: pd.DataFrame, as_of, months: pd.Series) ->
         if table is None or table.empty:
             raise ValueError(f"market panel lacks the predeclared ticker {ticker}")
         for row_month in unique_months:
-            cutoff = min(pd.Timestamp(as_of), row_month + pd.Timedelta(days=ROW_ALLOWANCE_DAYS))
+            cutoff = min(
+                pd.Timestamp(as_of),
+                (row_month + pd.offsets.MonthEnd(0)) + pd.Timedelta(days=ROW_ALLOWANCE_DAYS),
+            )
             # newest completed month m ≤ u−1 with its stamp knowable at the cutoff
             usable = table.loc[
                 (table.index <= row_month - pd.offsets.MonthBegin(1))
@@ -333,7 +346,14 @@ def h9_market_row_context(aggregates: pd.DataFrame, as_of, months: pd.Series) ->
             columns[f"mkt_{key}_mvol_lag3"].append(mvol_lag3)
             columns[f"mkt_{key}_mom3"].append(mom3)
             columns[f"mkt_{key}_lavgvol"].append(value_at(0, "lavgvol"))
-    return {name: pd.Series(values, index=months.index) for name, values in columns.items()}
+    month_index = pd.DatetimeIndex(unique_months)
+    return {
+        name: pd.Series(
+            pd.Series(months).map(pd.Series(columns[name], index=month_index)).to_numpy(),
+            index=months.index,
+        )
+        for name in columns
+    }
 
 
 class H9DirectLightGBM(DirectLightGBM):

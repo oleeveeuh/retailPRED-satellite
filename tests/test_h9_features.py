@@ -41,12 +41,12 @@ ORIGIN_MONTH = pd.Timestamp("2024-05-01")
 
 
 def synthetic_external_panel() -> pd.DataFrame:
-    """All nine predeclared series (the harness fails loud on a missing
+    """All eight predeclared series (the harness fails loud on a missing
     series, so tests exercise the full panel). The cpi series carries the
     interesting structure: observation 2024-03 gets an in-allowance
-    vintage (~+12d) plus a later revision (~+50d, outside the 45-day
-    allowance); every other series gets one in-allowance vintage per
-    observation month."""
+    vintage (~+12d after month start) plus a later revision (~+50d after
+    MONTH END, outside the frozen month-end+45d allowance); every other
+    series gets one in-allowance vintage per observation month."""
     rows = []
     for context_id in ("cpi", "dspi", "umsent", "unrate", "fedfunds",
                        "indpro", "pce", "pcedg"):
@@ -63,7 +63,8 @@ def synthetic_external_panel() -> pd.DataFrame:
             if revised_value is not None:
                 rows.append(
                     {"series_id": series_id, "observation_time": observation,
-                     "value": revised_value, "vintage_time": observation + pd.Timedelta(days=50)}
+                     "value": revised_value,
+                     "vintage_time": observation + pd.offsets.MonthEnd(0) + pd.Timedelta(days=50)}
                 )
     frame = pd.DataFrame.from_records(rows)
     frame["vintage_time"] = frame["vintage_time"].dt.tz_localize("UTC")
@@ -102,7 +103,7 @@ class TestPerRowExternalAlignment(unittest.TestCase):
         # every one of the eight series exercises the mechanism on 2024-03
         self.assertEqual(stats["diff_count"], 8)
         self.assertEqual(stats["examples"][0]["aligned_vintage"], "2024-03-13")
-        self.assertEqual(stats["examples"][0]["origin_constant_vintage"], "2024-04-20")
+        self.assertEqual(stats["examples"][0]["origin_constant_vintage"], "2024-05-20")
 
     def test_perturbing_later_vintages_leaves_rows_unchanged(self) -> None:
         panel = synthetic_external_panel()
