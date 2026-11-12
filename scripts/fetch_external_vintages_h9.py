@@ -56,18 +56,27 @@ class RetryingVintageClient(VintageClient):
 
     def _get(self, url: str, params: dict) -> dict:
         last_error: Exception | None = None
+        diagnostics = {
+            "url": url,
+            "series_id": params.get("series_id"),
+            "key_fingerprint": f"…{self.api_key[-4:]}" if self.api_key else "(empty)",
+            "param_names": sorted(params),
+        }
         for attempt, backoff in enumerate((*RETRY_BACKOFF_SECONDS, None)):
             try:
                 return super()._get(url, params)
             except SystemExit as error:
                 last_error = error
                 if backoff is None:
+                    print(f"    failing request diagnostics: {diagnostics}", flush=True)
                     break
-                print(f"    transient failure (attempt {attempt + 1}), retrying in {backoff}s", flush=True)
+                print(f"    transient failure on {params.get('series_id')} @ {params.get('realtime_start', 'vintage-dates')} "
+                      f"(attempt {attempt + 1}), retrying in {backoff}s", flush=True)
                 time.sleep(backoff)
             except Exception as error:  # transport-level failure
                 last_error = error
                 if backoff is None:
+                    print(f"    failing request diagnostics: {diagnostics}", flush=True)
                     break
                 print(f"    transport failure (attempt {attempt + 1}), retrying in {backoff}s", flush=True)
                 time.sleep(backoff)
@@ -80,7 +89,6 @@ H9_EXTERNAL_SERIES: dict[str, str] = {
     "umsent": "UMCSENT",
     "unrate": "UNRATE",
     "fedfunds": "FEDFUNDS",
-    "m2": "MSL",
     "indpro": "INDPRO",
     "pce": "PCE",
     "pcedg": "PCEDG",
