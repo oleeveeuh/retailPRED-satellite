@@ -495,3 +495,61 @@ process (H6's OpenMP isolation). Full numbers: `NHITS_MRTS.md`.
   resolved negative already bounds what configuration search could buy
   here. Theta's selection stands; promotion exists only on future origins
   under `REGATE_DESIGN.md`.
+
+## 13. Addendum — H9: the v1 feature families, revisited vintage-safe (owner-directed, 2026-11-11)
+
+**Question (H9_FEATURE_REVISIT.md §1, predeclared before any code or pull):**
+the retired `v1-undergrad` pipeline engineered ~200 features — macro
+indicators, consumer spending, an 8-ticker stock panel — under leaky
+construction and got a lying answer. Rebuilt under the vintage protocol,
+do those families add stable information to the H7 survivor (direct
+LightGBM + growth)?
+
+**What the ladder measured (choose window, 15 origins <2021-01, frozen
+rule a/b/c):**
+
+- **Anchor** (H7 survivor): reproduced the frozen folds at max |Δ| =
+  5.82e-11 (gate 7.1). Choose mean-cat 8.39%.
+- **R1 — macro-8 origin-constant** (v1's economic axis ∪ H7's external
+  five ∪ PCE/PCEDG; MSL dropped per §5 — not ALFRED-archived): **+0.00pp,
+  4/15 origins — NO-ADVANCE.** Origin-constant external context, now at
+  eight series, adds exactly nothing — H7's external finding replicated
+  at scale.
+- **R2 — per-row historical alignment** (each row reads its own era's
+  vintage, at or before month-end+45d; FINDINGS §5's named open route):
+  **+0.21pp vs R1, 10/15 origins, worst regression 0.44pp — ADVANCE.**
+  Gate 7.5 recorded **56,364 exercised aligned-vintage differences** —
+  the mechanism is real, not degenerate. The first feature-family
+  advancement in the program's history.
+- **R3 — +market-64** (v1's exact eight tickers, as-traded daily closes
+  as facts, monthly aggregates): **+0.05pp vs R2, 10/15 origins —
+  ADVANCE.** Choose mean-cat 8.13%.
+- **Removal rungs:** −market costs −0.05pp (5/15), −macro costs −0.10pp
+  (8/15) — both removals fail the rule; every component retained.
+
+**Final scorecard (report window scored once; REGATE v2 mirror):**
+final-vintage actuals — candidate 8.85% full exploration / 8.13% choose /
+9.82% report: ahead of naive (+0.44pp, CI −0.22..+1.18, unresolved), and
+**behind theta with resolved intervals on every window** (full −1.34pp,
+CI −2.39..−0.50; report −2.80pp, CI −4.85..−0.95). REGATE mirror: **FAIL
+on all three windows** (C1 unresolved, C2 worst-category harm, C3
+demonstrably not at the frontier). First-release re-scoring (descriptive
+companion only): the candidate beats naive 10/11 (+2.26pp, CI
++1.52..+3.07) and reaches theta parity on the choose window (+0.08pp, CI
+−0.20..+0.41) — recorded, never gating.
+
+**Verdict.** The v1 instinct was half right: release-day-aligned external
+context and market facts carry measurable information (unlike the
+origin-constant form every prior experiment used), and the engineered
+challenger improved meaningfully (8.85% vs the H7 config's 9.02% and the
+gate LightGBM's 9.55%). But theta stays the resolved frontier on the
+governing actuals, and the mirror fails. **No promotion, no holdout
+contact**; R3 is pre-qualified as a challenger for the ≈2027-06 re-gate
+window (pinned §5.1 accumulated-origins rule), where it will be judged
+against naive and theta on genuinely new origins under REGATE_DESIGN §3.
+The §5 open route ("per-training-row historical alignment") is now
+measured and closed: it helps, and it is not enough.
+
+Provenance: H9_FEATURE_REVISIT.md (predeclaration), results/h9_rung_*.json
+(seven rungs), results/h9_scorecard.{json,md}, data SHAs recorded in every
+payload; environment pins unchanged.

@@ -376,7 +376,7 @@ def main() -> None:
         "provenance": provenance({"purpose": f"H9 final scorecard for {args.folds_stem}"}),
         "candidate": args.label or args.folds_stem,
         "verification": {
-            "sanity_h1": sanity,
+            "anchor_reproduction_gate_7_1": anchor.get("verification_gate_7_1"),
             "frozen_naive_mean_category_wape": frozen_naive,
             "frozen_theta_mean_category_wape": frozen_theta,
             "n_origins": int(len(grid)),
