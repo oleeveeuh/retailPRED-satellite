@@ -44,7 +44,7 @@ REQUEST_PACING_SECONDS = 0.9
 # here are quota/burst artifacts, not absent data — retried with backoff,
 # then fatal with full context. (The genuinely-absent series fail earlier,
 # at the vintage-dates stage, where they always have been.)
-RETRY_BACKOFF_SECONDS = (5, 15, 30, 60, 120)
+RETRY_BACKOFF_SECONDS = (5, 15, 30, 60, 120, 300, 600)
 
 
 class RetryingVintageClient(VintageClient):
