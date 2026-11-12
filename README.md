@@ -29,6 +29,29 @@ lives and tests whether it can be closed.
   retailPRED owner review.
 - Hyperparameters are never tuned against evaluation origins.
 
+## The arc (documents in order)
+
+- `FINDINGS.md` — the full investigation record: the failure decomposition,
+  the hypothesis graveyard (H1–H5), the window studies, the policy layer,
+  the single frozen holdout, the reporting-only scorecard, and addenda
+  §10–§13 (Chronos-2, the H7 feature ladder, H8 NHITS, and H9 — the v1
+  feature families rebuilt vintage-safe).
+- `POLICY.md` / `POLICY_FINDINGS.md` — the regime-switch selector:
+  predeclared, measured, and not carried forward.
+- `CHRONOS_MRTS.md` / `NHITS_MRTS.md` (with their predeclaration
+  companions) — the H6/H8 foundation and neural benchmarks under the
+  identical vintage protocol.
+- `H7_FEATURE_LADDER.md` / `H9_FEATURE_REVISIT.md` — predeclared feature
+  experiments. H9 rebuilds the retired v1 feature families (per-row-aligned
+  macro vintages, an eight-ticker market panel) and pre-qualifies the
+  second challenger for the ≈2027 re-gate.
+- `REGATE_DESIGN.md` / `REGATE_INVENTORY.md` — the re-gate predeclaration:
+  criteria C1–C4 owner-confirmed, the window rules owner-pinned, and the
+  measured (empty) origin inventory.
+- `results/holdout_scorecard.md`, `results/h9_scorecard.md` — released
+  scorecards, each reproducing its frozen references through verification
+  gates before releasing a number.
+
 ## Layout
 
 ```
