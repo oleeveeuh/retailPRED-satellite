@@ -53,7 +53,7 @@ H9_EXTERNAL_SERIES: dict[str, str] = {
     # reported, never substituted.
 }
 # frozen transforms: YoY log growth for these, level for the rest
-H9_EXTERNAL_YOY_IDS = frozenset({"cpi", "dspi", "m2", "indpro", "pce", "pcedg"})
+H9_EXTERNAL_YOY_IDS = frozenset({"cpi", "dspi", "indpro", "pce", "pcedg"})
 # market panel: v1's exact ticker list (survivorship caveat frozen in §3)
 H9_TICKERS = ("AAPL", "AMZN", "WMT", "COST", "SPY", "QQQ", "XLY", "XRT")
 ROW_ALLOWANCE_DAYS = 45
