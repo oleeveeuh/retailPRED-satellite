@@ -205,6 +205,38 @@ Silent patches are forbidden: the trainer is run **unmodified** (SHA
 frozen in §2.1); any compatibility shim would be a different experiment.
 The 2026-11-11 rule applies — assert, don't trust.
 
+### 4.1 Amendment A — environment corrected from pickle evidence (2026-11-12, committed BEFORE the first trainer execution)
+
+The predeclared pickle audit (§4 step 2, run in the §4 venv before any
+training) returned evidence this amendment records and acts on:
+
+- All 42 reference pickles **load** under the backend pins (0 failures;
+  every SHA matches §2.3), but every RandomForest pickle (and every tree
+  inside it) raises `InconsistentVersionWarning: … from version 1.7.1
+  when using version 1.5.2` — the original run's scikit-learn was
+  **1.7.1**, not the `backend/requirements.txt` pin (1.5.2). The pins
+  were evidently frozen at a different moment than the training run.
+- The embedded `training_time` values prove the 22 `backend/ml/models/`
+  pickles are one coherent run (2026-01-12 12:04:36 → 12:05:45, ≈69 s)
+  — the `train_73_features.py` output — while the 20
+  `backend/training_outputs/models/` pickles are two different-origin
+  groups (a 2026-01-08 23:36 run of 4 categories carrying a `category`
+  key and metrics; 12 stub-resaved pickles with `training_time=0.0`, no
+  metrics, and boosters built on a **242-feature** panel — a different,
+  larger feature pipeline), confirming the §2.3 caveat.
+
+**Amended environment** (replaces §4 step 1's library pins; everything
+else unchanged, gates untouched): rebuild `/tmp/v1_recovery_venv` with
+`scikit-learn==1.7.1` (the empirically evidenced original; LightGBM's
+original version is *not* recorded in its pickles, so the tag's own
+`lightgbm==4.5.0` pin stands and is recorded as such; pandas/numpy/
+joblib keep the tag pins 2.2.3/2.1.3/1.4.2), then re-run the pickle
+audit in the corrected venv — expected outcome: zero version-mismatch
+warnings — and keep both audit transcripts as evidence. If 1.7.1 cannot
+install on Python 3.11, fall back to the §4 pins and classify honestly
+under §5.3. This amendment is committed before the trainer's first
+execution; the pickle-audit transcript is its evidence artifact.
+
 ## 5. Verification gates (stop-on-mismatch)
 
 1. **Feature-count gate**: every category's loaded feature count == 73
